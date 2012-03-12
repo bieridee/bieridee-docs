@@ -1,0 +1,49 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage{fontspec,xltxtra,xunicode} 
+
+\defaultfontfeatures{Mapping=tex-text} 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Glossary}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+
+
+\section{Glossary}
+\subsection{Domainmodell}
+\begin{description}
+	\item[Bier] Dies bezeichnet ein Bier im Sinne einer konkreten Quantität von Bier, z.B eine Glas Guinnes. 
+	\item[Biersorte] Die grobe Einteilung eines Biers. Beispiele für Sorten sind, 'Weissbier', 'Weizenbier', 'Zwickelbier' und so weiter.
+	\item[Bewertung] Die Bewertung ist die subjektive Einordnung der güte eine Bieres innerhalb einer definierten Skala durch einen Benutzer.
+	\item[Empfehlung] Eine durch das system errechnete Bier-Empfehlung an einen Benutzer. Die Empfehlung basiert auf Vergleichen von vorlieben verschiedener Benutzer.
+	\item[Tag] Mit Hilfe von Tags können Biere mit Schlagworten beschrieben werden.
+	\item[Profil] Mit Profil ist explizit ein Brauerei-Profil gemeint. Das Profil beinhaltet eine undefinierte Menge an Informationen zu einer Brauerei.
+	\item[Aktiviäten] Als Aktivitäten werden einerseits das Bewerten eines Bieres sowie die manuell getrackte Konsumation eines Bieres bezeichnet. 
+	\item[Timeline] Bei der Timeline handelt es sich um eine chonologische liste aller Aktivitäten die vom System getrack werden.
+	\item[Grösse] Die Grösse teilt die Brauereien in eine definierte Grössenkategorie ein. Die Grösse ist nur für Brauereien bestimmt. Grössenwerte könnten sein, 'mikro', 'regional', 'national', 'international'.
+\end{description}
+
+
+
+
+\end{document}

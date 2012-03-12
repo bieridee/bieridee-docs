@@ -1,0 +1,58 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage{fontspec,xltxtra,xunicode} 
+
+\defaultfontfeatures{Mapping=tex-text} 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Evaluation REST-Framework}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\section{Evaluation}
+\subsection{Vorwort}
+Da es sich beim Projekt BierIdee - im Rahmen des Modules Software Engineering 2 Projekte - um ein Projekt mit stark beschränktem Zeitbudget handelt und zudem der Fokus auf der Anwendung des \textit{Rational Unified Process} liegt, wird diese Evaluation bewusst einfach gehalten. Die Produkt-Auswahl enthält auch subjektive Kriterien, da die Zeit für eine ausgwogene objektive Beurteilung fehlt.
+
+\subsection{Produkte}
+Zur Auswahl Stehen lediglich zwei Produkte, Jersey\footnote{http://jersey.java.net/} und Restlet\footnote{http://www.restlet.org/}. Diese Auswahl entstand durch persönliche Empfehlungen an die Mitglieder des Projektteams.
+
+\subsection{Auswahlverfahren}
+Die Auswahl zwischen den beiden Produkten passiert anhand von Kriterien die einfach und schnell zu evaluieren sind. Dazu gehören:
+
+\begin{description}
+	\item[Popularität]Einfach gemessen an Communitygrössen (Forenteilnehmer, Stackoverflow-Fragen/Antworten, Google-Suchresultate)
+	\item[Features]Grober Überblick über die angebotenen Features des jeweiligen Frameworks, anhand der Beschreibung auf der Produkt Webseite.
+	\item[Standards]In erster Linie Einhaltung des Standards für REST-APIs \textit{JAX-RS}\footnote{http://en.wikipedia.org/wiki/Java\_API\_for\_RESTful\_Web\_Services}.
+	\item[Subjektivkriterien]Wie Empfehlungen durch dritte, oder Vorlieben von Teammitgliedern. (Auf diese Kriterien wird nicht mehr weiter eingegangen)
+\end{description}
+
+\subsection{Auswahl}
+Bei den gewählten Kriterien ist ein direkter Vergleich nur schwierig möglich. Deshalb werden hier lediglich die Gedanke die zur Produktwahl geführt haben festgehalten.
+
+\begin{description}
+	\item[Popularität]Die Popularität von beiden Produkten ist hoch, für beide finden sich Zahlreiche Suchresultate sowie Hilfe durch die Community. Dieses Kriterium lässt keine eindeutige Gewichtung zu.
+	\item[Features]Bei den Features bekommt Restlet mehr Gewicht. Die Features beider Frameworks sind weitgehen deckungsgleich. Restlet bietet allerdings noch Clientlibraries für Android. Da das Projekt BierIdee einen Android Client haben wird ist dies ein klarer Vorteil. Zudem bietet Restlet einen Built-in HTTP-Server welcher die Entwicklung voraussichtlich stark vereinfacht und beschleunigt.
+	\item[Standards]Beide Produkte implementieren den \textit{JAX-RS} Standard.
+\end{description}
+
+\subsection{Evaluationsergebnis}
+Das Auswahl der Kurzevaluation fiel auf Restlet. Den Ausschlag gaben die Gründe die im Punkt Auswahl unter Features nachzulsesen sind.
+
+\end{document}
