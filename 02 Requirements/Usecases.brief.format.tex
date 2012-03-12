@@ -1,0 +1,63 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+ 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Usecases Projekt BierIdee}
+\subtitle{Brief format}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+
+
+\section{Usecases Projekt BierIdee}
+
+\subsection*{UC01: User registriert sich}
+Ein User kann sich registrieren um einen Benutzerzugang (Benutzername,Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-email der Registration.
+Diese Registration muss er mittels Link bestätigen und kann sich danach einloggen.
+\subsection*{UC02: User loggt sich ein}
+Ein User kann sich mittels Benutzernamen und Passwortkombination am System anmelden.
+Der Benutzer hat die Möglichkeit seine Anmeldeinformationen zu speichern, sodass er Sie nicht jedes Mal erneut eingeben muss
+\subsection*{UC03: User erfasst ein Bier}
+Ein User kann ein neues Bier mit den definierten Attributen in das System einpflegen.
+\subsection*{UC04: User bearbeitet erfasstes Bier}
+Ein Benutzer kann die Attribute eines im System erfassten Bieres anpassen und abspeichern.
+\subsection*{UC05: User bewertet Bier}
+Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertung versehen. Wenn der Benutzer bereits eine Bewertung erfasst hat, wird diese angezeigt und kann angepasst werden.
+\subsection*{UC06: User taggt Bier}
+Der Benutzer kann ein Bier auswählen und mit freitext "taggen". Freitext Tags werden mit Autocompletion unterstützt.
+\subsection*{uc07: User ruft Bier-Empfehlungen ab}
+Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekannte (unbewertet) Biersorten abrufen.
+\subsection*{UC08: User ruft Bier-Katalog ab}
+Der Benutzer kann den ganzen Katalog an im System erfassten Bieren in listenartiger Übersicht durchsehen. Durch auswählen eines einzelnen Bieres kann er dessen weitere Attribute abrufen.
+\subsection*{UC09: User ruft Brauerei-Katalog ab}
+Der Benutzer kann den ganzen Katalog an im System erfassten Brauereien durchsehen.
+\subsection*{UC10: User erfasst oder trackt Aktivität}
+Der Benutzer kann eine Konsum Aktivität erfassen. 
+\subsection*{UC11: User betrachet und verfolgt Timeline}
+Der Benutzer kann eine Timeline betrachten. Die Timeline zeigt letzte Aktivitäten anderer Benutzer.
+\subsection*{UC12: User schaut sein eigenes Profil (User-Aktivitäten) an}
+Der Benutzer kann im System seine erfassten Aktivitäten (Bewertungen, Konsum) anzeigen.
+\subsection*{UC13: User schaut Profile (User-Aktiviäten) eines anderen Users an}
+Der Benutzer kann Profile anderer Benutzer ansehen. Er sieht dadurch Aktivitäten anderer Benutzer. Aktivitäten sind Bewertungen und Konsumationen.
+
+\end{document}
