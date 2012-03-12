@@ -1,0 +1,43 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+
+\usepackage{fontspec,xltxtra,xunicode} 
+\defaultfontfeatures{Mapping=tex-text} 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Definition of Done}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\section*{Definition of Done}
+
+\subsection*{Entwicklung}
+
+\textit{Ein Task gilt als abgegeschlossen wenn die folgenden Punkte erfüllt sind:}
+\begin{enumerate}
+\item Das Feature wurde gemäss Redmine-Ticket implementiert (Code produziert).
+\item Der Code wurde ins Repository commited.
+\item Der Code wurde von einen Teammitglied reviewed.
+\item Der produzierte Code wurde sinnvoll kommentiert, Javadoc ist vorhanden.
+\item Es sind keine Checkstyle-Warnungen vorhanden.
+\item Unit-Tests sind vorhanden und wurden fehlerfrei durchgeführt.
+\item Ein fehlerfreier Build ist möglich.
+\item Dokumentation wurde nachgeführt oder ergänzt.
+\item Der Code wurde in den master-Branch gemerged.
+\item Das Redmine Ticket wurde dem Status entsprechen aktualisiert und Zeit wurde erfasst.
+\end{enumerate}
+Punkte 3 und 6 sind möglicherweise bei gewissen Tasks überflüssig und können weggelassen werden.
+
+\end{document}
