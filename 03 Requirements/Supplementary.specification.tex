@@ -31,66 +31,66 @@
 
 \section{Einleitung}
 
-Der Sinn und Inhalt dieses Dokumentes ist es, hautpsächlich nicht funktionale Anforderungen an das Projekt gestellt sind festzuhalten. Diese beinhalten Qualitätskritereien nach FURPS+ aber auch Anforderungen an die Umgebung wie Hardware, Netzwerk, Internationalisierung, Dokumentation.
+Der Sinn und Inhalt dieses Dokumentes ist es, nicht-funktionale Anforderungen, die an das Projekt gestellt sind, festzuhalten. Diese beinhalten Qualitätskritereien nach FURPS+ aber auch Anforderungen an die Umgebung wie Hardware, Netzwerk, Internationalisierung, Dokumentation betreffen.
 
 \section{Usability}
 \subsection{Efficiency}
-Die Benutzbarkeit der Client Software ist ein wichtiger Aspekt in diesem Projekt, da es auf mobilen Geräten, vielleicht ausschliesslich durch Toucheingaben, bedient wird. Die Applikation wird daher so entworfen, dass Sie sich mit reiner Toucheingabe bedienen lässt.
+Die Benutzbarkeit der Client Software ist ein wichtiger Aspekt in diesem Projekt, da es auf mobilen Geräten vielleicht ausschliesslich durch Toucheingaben bedient wird. Die Applikation wird daher so entworfen, dass sie sich ausschliesslich mit Toucheingabe bedienen lässt.
 \subsection{Learnability}
-Bei Applikationen für Mobiltelefonen ist es Erfolgs entscheidend, dass Sie intuitiv zu bedienen und zugleich lernfördernd sind. Es wird daher bewusst auf eine Hilfestellung in Form einer Bedienungsanleitung für die Clientseitige SW verzichtet. Die Sicherstellung dieser merkmale geschieht durch regelmässige Tests und Bewertungen durch Testpersonen. (siehe User Tests).
+Bei Applikationen für Mobiltelefone ist es Erfolgsentscheidend, dass sie intuitiv zu bedienen und zugleich lernfördernd sind. Es wird daher bewusst auf eine Hilfestellung in Form einer Bedienungsanleitung für die Clientseitige Software verzichtet. Die Sicherstellung dieser merkmale geschieht durch regelmässige Tests und Bewertungen durch Testpersonen (siehe User Tests).
 
 \section{Performance}
-Im Rahmen dieses Projektes ist das System und die Serverseitige Umgebung für den Einsatz mit <50 Benutzern, 100 Bieren, 20 Brauereien ausgelegt.
+Im Rahmen dieses Projektes ist das System und die serverseitige Umgebung für den Einsatz mit  bis zu 50 Benutzern, rund 100 Bieren und 20 Brauereien ausgelegt.
 \subsection{Response Time}
 80\% der Anfragen an das System sollen innerhalb von 3 Sekunden ausgeführt werden.
 Der durchschnitt soll bei 1.5 Sekunden liegen.
 \subsection{Computing Resource}
-Die Architektur wird so ausgelegt, dass so wenig wie möglich Rechenleistung auf Clientseite benötigt wird. D.h sämtliche Logik und Aufbereitung der Daten wird auf der Serverseite implementiert. Weil clientseitig die Unterschiede in der Verwendeten Hardware sehr gross sein können (Smartphones, Tablets, PC's), können keine Einheitlichen Anforderungen zur Rechenkapazität auf den Geräten gestellt werden. Mit der zentralen Auführung Rechenintensiver Aufgaben, ist die Kapazität genaustens bekannt und kann adäquat ausgelegt und allenfalls angepasst werden.
+Die Architektur wird so ausgelegt, dass so wenig Rechenleistung wie möglich auf der Clientseite benötigt wird. Das heisst sämtliche Logik und Aufbereitung der Daten wird auf der Serverseite implementiert. Da clientseitig die Unterschiede in der verwendeten Hardware sehr gross sein können (Smartphones, Tablets, PCs), können keine einheitlichen Anforderungen zur Rechenkapazität auf den Geräten gestellt werden. Mit der zentralen Ausführung rechenintensiver Aufgaben, ist die Kapazität bekannt und kann adäquat ausgelegt und allenfalls angepasst werden.
 
-\section{Benutzer Tests}
-Nach jeder Constructionphase wird die Applikation durch einen definierten Benutzerkreis getestet. Die Benutzer sollen Einerseits anhand einer ausgehändigten Testspezifikation das System testen. Ebenso sollen die User das System nach belieben Testen können und Feedback direkt via Ticketsystem oder Email zu melden. Dieses Feedback und ev. daraus entstandene  Tickets werden an den wöchentlichen Statusmeetings durch das Projektteam angeschaut und priorisiert.
+\section{Benutzertests}
+Nach jeder Constructionphase wird die Applikation durch einen definierten Benutzerkreis getestet. Die Benutzer sollen einerseits anhand einer ausgehändigten Testspezifikation das System testen. Ebenso sollen die User das System nach belieben testen können und Feedback direkt via Ticketsystem, Email oder Mündlich melden. Dieses Feedback und die eventuell daraus entstandenen Tickets werden an den wöchentlichen Statusmeetings durch das Projektteam angeschaut, priorisiert und bearbeitet.
 
 \section{Scalability}
-In Rahmen dieses Projektes kann die geforderte Last an das System gut eingeschätzt werden (nur Testuser und Entwickler). Falls das Projekt weitergeführt wird, muss das System möglicherweise skaliert werden. Die eingesetzten zentralen Komponenten wie Reslet und Postgres DB unterstützen eine Skalierung in hohem Masse.
+In Rahmen dieses Projektes kann die geforderte Last an das System gut eingeschätzt werden (nur Testuser und Entwickler). Falls das Projekt weitergeführt wird, muss das System möglicherweise skaliert werden. Die eingesetzten zentralen Komponenten wie Reslet und PostgreSQL unterstützen eine Skalierung in hohem Masse.
+
 \section{Reliability}
 \subsection{Security}
-Das System verfügt über Benutzerdaten wie Emailadresse, Konsumierte Getränke. Diese Benutzerdaten sind nur via Login berechtigen Benutzern zugänglich. Die gespeicherten Benutzerdaten sind aber nicht als "heikel" anzusehen, da durch deren unabsichtliche Veröffentlichung keine finanzielle sowie massgebende persönliche Schäden zur Folge haben. Daher werden keine zu erfüllenden Anforderungen in Punkto Sicherheit (zu erfüllende Standards o.ä) spezifiziert.
+Das System verfügt über Benutzerdaten wie Emailadresse oder konsumierte Getränke. Diese Benutzerdaten sind nur nach einem Login durch berechtige Benutzer zugänglich. Die gespeicherten Benutzerdaten sind aber nicht als "heikel" anzusehen, da durch deren unabsichtliche Veröffentlichung keine finanzielle sowie massgebende persönliche Schäden zur entstehen würden. Aus diesem Grund werden keine zu erfüllenden Anforderungen in Punkto Sicherheit (zu erfüllende Standards o.ä) spezifiziert.
 \subsection{Massnahmen}
-\begin{enumerate}
+\begin{description}
 \item[Passwort Policy]
 Für Admin Passwörter werden Passwörter mit mindestens 8 Zeichen Alphanummerisch verwendet.
 \item[Backup]
 Das Serversystem und die Datenbank wird täglich gesichert. (File Hot-Copy)
 Zusätzlich gibt es einen Snapshot der kompletten Serverinstanz, welches bei einem kompletten Systemausfall auf einen anderen VM Host umgezogen werden kann.
- 
-\end{enumerate}
+\end{description}
 \subsection{Availability}
-Da es sich bei diesem Projekt um ein "Fun" Projekt handelt, welches bei nicht Verfügbarkeit keine finanziellen o.ä Schäden verursacht werden keine konkreten Anforderungen an die Systemverfügbarkeit gestellt. Grundsätzlich soll das System aber dennoch möglichst Hochverfübar sein, um kontinuierliches Testen zu ermöglichen (siehe auch Punkt Benutzer Tests). Es werden aber keine Massnahmen wie z.B der Einsatz von redundanten Komponenten vorgenommen.
+Da es sich bei diesem Projekt nicht um ein kritisches Projekt handelt, sonden um ein Projekt das zur Unterhaltung dient, welches bei nicht Verfügbarkeit keine finanziellen o.ä Schäden verursacht, werden keine konkreten Anforderungen an die Systemverfügbarkeit gestellt. Grundsätzlich soll das System aber dennoch möglichst Verfübar sein um so auch kontinuierliches Testen zu ermöglichen (siehe auch Punkt Benutzertests). Es werden aber keine Massnahmen wie beispielsweise der Einsatz von redundanten Komponenten vorgenommen.
 \subsubsection{Schwachstellen}
-\begin{enumerate}
+\begin{description}
 \item[Datenbank Server]
 Das System besitzt eine zentrale Datenbank. Fällt diese Komponente aus, ist die Client Applikation nicht mehr benutzbar.
 \item[REST API]
 Ist die Serverkomponente (REST API) nicht mehr verfügbar, ist die Client Applikation nicht mehr benutzbar.
-\end{enumerate}
+\end{description}
+Diese beiden Punkte sind im Moment 'Single Points of Failure', beide könnten jedoch in Zukunft mit wenig Aufwand redundant ausgelet werden.
 \subsection{Fehlererkennung}
 Das System wird mittels Integration- und Systemtests regelmäßig auf Funktionalität und damit auch auf Verfügbarkeit getestet.
+
 \section{Supporability}
 \subsection{Internationalization}
-Das System soll verschiedene Sprachen unterstützen. Lokalisierung wird nicht unterstützt. D.h keine unterschiedlichen Masseinheiten, Währungen.
+Das System soll verschiedene Sprachen unterstützen. Lokalisierung wird nicht unterstützt. Das heisst, keine unterschiedlichen Masseinheiten, Währungen oder dergleichen.
 \section{Design Requirements}
 \section{Implementation Requirements}
 \subsection{Database}
 Für das System wird eine Relationale Datenbank mit JDBC Kompatibilität benötigt.
-In diesem Projekt wird Postgres eingesetzt.
-\subsection{Programming Language}
-Als Programmiersprache wird für alle Teilsysteme (REST API, Client) Java Version 1.6 verwendet.
+In diesem Projekt wird PostgreSQL eingesetzt die diese Anforderungen erfüllt.
+\subsection{Programminglanguage}
+Als Programmiersprache wird für alle Teilsysteme (REST-API, Client) Java Version 1.6 verwendet.
 \subsection{Frameworks}
-\begin{enumerate}
+\begin{description}
 \item[RESTlet] Version 2.0.11 (stable)
 \item[Android SDK] API Level 10, Android 2.3.3 
-\end{enumerate}
-
-
+\end{description}
 
 \end{document}
