@@ -31,9 +31,7 @@
 
 \section*{UC01: User registriert sich }
 
-Ein User kann sich registrieren um einen Benutzerzugang (Benutzername,Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-email der Registration.
-Diese Registration muss er mittels Link bestätigen und kann sich danach einloggen.
-
+Ein User kann sich registrieren um einen Benutzerzugang (Benutzername, Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-Email für die Registration. Er wird nach der Registration automatisch eingeloggt und kann bereits seinen Bierkonsum tracken. Erst wenn er die Email-Adresse per Link bestätigt hat, kann er auch neue Biere erfassen und ändern.
 
 
 \begin{description}
@@ -55,6 +53,7 @@ Diese Registration muss er mittels Link bestätigen und kann sich danach einlogg
 
 \begin{itemize}
 \item Die Android App muss auf dem Benutzergerät installiert sein.
+\item Das Benutzergerät hat eine bestehende Internetverbindung.
 \end{itemize}
 
 
@@ -67,8 +66,8 @@ Diese Registration muss er mittels Link bestätigen und kann sich danach einlogg
 \item Der Benutzer startet die Android App.
 \item Er wählt die Option zur Neuregistrierung / Eröffnung eines Benutzerkontos
 \item Der Benutzer wird aufgefordert einen Benutzernamen, Passwort und Emailadresse einzugeben.
-\item Das System meldet eine erfolgreiche Registrierung.
-\item Der Benutzer erhält eine Email mit einem Aktivierungslink
+\item Das System meldet eine erfolgreiche Registrierung und gibt einen Hinweis auf die Aktivierungs-Email.
+\item Der Benutzer erhält die Email mit einem Aktivierungslink
 \item Mittels Aktivierungslink aktiviert der Benutzer sein Konto für die Verwendung. 
 \end{enumerate}
 
@@ -80,10 +79,6 @@ Diese Registration muss er mittels Link bestätigen und kann sich danach einlogg
 	\begin{enumerate}
 	\item Der Benutzer wird aufgefordert eine andere Emailadresse und/oder Benutzernamen 		einzugeben.
 	\end{enumerate}
-\item[4a] Der Benutzer erhält keine Email mit einem Aktivierungslink.
-	\begin{enumerate}
-	\item Die Registrierung kann erneut durchgeführt werden mit Benutzernamen, die noch nicht aktiviert wurden.
-	\end{enumerate}
 
 \end{description}
 
@@ -91,25 +86,25 @@ Diese Registration muss er mittels Link bestätigen und kann sich danach einlogg
 \subsection*{Special Requirements}
 
 \begin{itemize}
-\item Das Neuregistrieren des eines Benutzerkontos sollte direkt nach dem Start der Applikation möglich sein. 
+\item Das Registrieren eines Benutzerkontos sollte direkt nach dem Start der Applikation möglich sein. 
 \end{itemize}
 
 
 
 \subsection*{Frequency of Occurrence}
 
-Die Neuregistrierung ist die Grundlage für alle weiteren Interaktionen mit dem System. Daher wird Sie von jedem Benutzer durchgeführt, dies entspricht einer Benutzung von 100%.
+Die Neuregistrierung ist die Grundlage für alle weiteren Interaktionen mit dem System. Daher wird Sie von jedem Benutzer durchgeführt, dies entspricht einer Benutzung von 100\%.
 
 
 \subsection*{Open Issues}
 
 \begin{itemize}
-\item Werden evtl. Benutzeraccounts aus anderen Systeme wie Facebook, Twitter erlaubt zum Login.
+\item Möglicherwiese wird der Login über Drittsysteme wie Facebook oder Twitter möglich sein.
 \end{itemize}
 
 
 \section*{UC05: User bewertet Bier}
-Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertung versehen. Wenn der Benutzer bereits eine Bewertung erfasst hat, wird diese angezeigt und kann angepasst werden.
+Der Benutzer kann ein Bier auswählen und es mit einer persönlichen Bewertung versehen. Wenn der Benutzer bereits eine Bewertung erfasst hat, wird diese angezeigt und kann angepasst werden.
 
 \begin{description}
 \item[Scope] BierIdee System
@@ -121,8 +116,8 @@ Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertun
 \subsection*{Stakeholders and Interests}
 
 \begin{description}
-\item[User] möchte ein Bier gemäss seinen Idealvorstellungen bewerten.
-\item[System] hat das Ziel dem Benutzer eine intuitives Interface zur Verfügung zu stellen. Und die Bewertung des Benutzers abzuspeichern.
+\item[User] möchte ein Bier gemäss seinen Vorstellungen bewerten.
+\item[System] hat das Ziel dem Benutzer eine intuitives Interface zur Verfügung zu stellen und die Bewertung des Benutzers abzuspeichern sowie anzuzeigen.
 \end{description}
 
 
@@ -130,10 +125,10 @@ Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertun
 
 \begin{itemize}
 \item Die Android App muss auf dem Benutzergerät installiert sein.
-\item Der Benutzer hat ein Benutzerkonto
-\item Der Benutzer ist am System angemeldet (Login)
-\item Im System sind bewertbare Biere erfasst
-\item Das Benutzergerät verfügt über eine Internetverbindung
+\item Der Benutzer hat ein Benutzerkonto.
+\item Der Benutzer ist am System angemeldet (Login).
+\item Im System sind bewertbare Biere erfasst.
+\item Das Benutzergerät verfügt über eine Internetverbindung.
 \end{itemize}
 
 
@@ -146,7 +141,7 @@ Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertun
 \subsection*{Main Success Scenario}
 
 \begin{enumerate}
-\item Wählt in einer Liste von Bieren ein Bier aus
+\item Der Benutzer wählt ein Bier aus einer Liste von Bieren ein Bier aus.
 \item Er kann anhand einer Skala das Bier bewerten. (Bspw. 1-5)
 \item Im Hintergrund wird die Bewertung abgespeichert
 \item Das System meldet dem Benutzer die erfolgreiche Bewertung
@@ -158,7 +153,7 @@ Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertun
 \begin{description}
 \item[1a] Die Auswahlliste ist sehr lang.
 	\begin{enumerate}
-	\item Der Benutzer kann auch gezielt nach Biernamen suchen.
+	\item Der Benutzer kann die Auswahlliste gezielt filtern.
 	\end{enumerate}
 \item[2a] Der Benutzer hat das Bier bereits bewertet.
 	\begin{enumerate}
@@ -172,26 +167,25 @@ Der Benutzer kann ein Bier auswählen und jenes mit einer persönlichen Bewertun
 \subsection*{Special Requirements}
 
 \begin{itemize}
-\item Das Suchen in der Auswahlliste soll effizient sein. Denkbar wäre eine Alphabetische Sortierung  mit Buchstaben Shortcuts oder sogar ein Filterfeld mit Autocompletion.
+\item Das Suchen in der Auswahlliste soll effizient sein. Denkbar wäre eine Alphabetische Sortierung mit Buchstaben als Shortcuts oder sogar ein Filterfeld mit Autocompletion.
 \end{itemize}
-
 
 
 \subsection*{Frequency of Occurrence}
 
-Das Bewerten von Bieren ist eine der zentralen Anwendungen die Benutzer ausführen sollen.
-Auf Basis dieser Bewertungen werden individuelle Empfehlungen generiert. Hier ergibt sich eine Benutzung von 100%.
+Das Bewerten von Bieren ist eine der zentralen Aktionen die Benutzer ausführen sollen.
+Auf Basis dieser Bewertungen werden individuelle Empfehlungen generiert. Hier ergibt sich eine Benutzung von 90\%.
 
 \subsection*{Open Issues}
 
 \begin{itemize}
-\item Wie werden Biere zur Auswahl angeboten. Mittels scrollbarer Liste oder mittels Filterfeld.
+\item Wie werden Biere zur Auswahl angeboten. Mittels scrollbarer Liste oder mittels Filterfeld oder einer Kombination von beidem.
 \end{itemize}
 
 
 
 \section*{UC07: User ruft Bier-Empfehlungen ab}
-Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekannte (unbewertet) Biersorten abrufen.
+Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekannte (unbewertete) Biersorten abrufen.
 
 \begin{description}
 \item[Scope] BierIdee System
@@ -203,8 +197,8 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 \subsection*{Stakeholders and Interests}
 
 \begin{description}
-\item[User] möchte ein Bier gemäss seines Profiles empfholen erhalten.
-\item[System] hat das Ziel dem Benutzer übersichtlich auf sein Profil abgestimmte bdas Profil basiert auf seinen erfassten Aktivitäten und Bewertungen) Bier Empfehlungen zu erhalten.
+\item[User] möchte eine Bierempfehlung anhand seines Profiles erhalten.
+\item[System] hat das Ziel dem Benutzer übersichtliche und auf sein Profil abgestimmte  Bierempfehlungen zu geben (das Profil basiert auf seinen erfassten Aktivitäten und Bewertungen).
 \end{description}
 
 
@@ -219,25 +213,26 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 
 \subsection*{Success Guarantee / Postconditions}
 \begin{itemize}
-\item Der Benutzer erhält Empfehlungen basieren auf seinen erfassten Bewertungen und Aktivitäten.
+\item Der Benutzer erhält Empfehlungen basierend auf seinen erfassten Bewertungen und Aktivitäten.
 \end{itemize}
 
 
 \subsection*{Main Success Scenario}
 
 \begin{enumerate}
-\item Der Benutzer wählt die Option Empfehlungen anzeigen
+\item Der Benutzer wählt die Option 'Empfehlungen anzeigen'.
 \item Das System listet dem Benutzer die generierten Empfehlungen auf.
-\item Der Benutzer kann diese Biere bewerten (siehe UC05)
+\item Der Benutzer kann diese Biere bewerten (siehe UC05).
 \end{enumerate}
 
 
 \subsection*{Extensions}
 
 \begin{description}
-\item[1a] Der Benutzer hat noch keine Bewertungen oder Aktivitäten erfasst.
+\item[1a] Der Benutzer hat noch keine oder zuwenige Bewertungen oder Aktivitäten erfasst.
 	\begin{enumerate}
-	\item Dem Benutzer werden keine Empfehlungen angezeigt. Das System meldet dem Benutzer, dass es keine Empfehlungen machen kann
+	\item Dem Benutzer werden keine indivuellen Empfehlungen angezeigt, sondern nur die beliebtesten Biere.
+	\item Das System meldet dem Benutzer, dass für individuelle Empfehlungen mehr Aktivität benötigt wird.
 	\end{enumerate}
 
 \end{description}
@@ -253,17 +248,17 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 
 \subsection*{Frequency of Occurrence}
 
-Das Einsehen von Empfehlungen ist eine Zentrale Funktionalität. Daher auch eine Benutzung von 100%.
+Das Einsehen von Empfehlungen ist eine Zentrale Funktionalität. Daher wird voraussichtlich  eine Benutzung von 90\% zu verzeichnen sein.
 
 \subsection*{Open Issues}
 
 \begin{itemize}
-\item nichts
+\item Keine.
 \end{itemize}
 
 
 \section*{UC10: User erfasst oder trackt Konsum}
-Der Benutzer kann eine Konsum Aktivität erfassen.
+Der Benutzer kann eine Konsumaktivität erfassen.
 
 \begin{description}
 \item[Scope] BierIdee System
@@ -275,7 +270,7 @@ Der Benutzer kann eine Konsum Aktivität erfassen.
 \subsection*{Stakeholders and Interests}
 
 \begin{description}
-\item[User] möchte ein Konsumiertes Getränkt im System erfassen.
+\item[User] möchte einen Bierkonsum im System erfassen.
 \item[System] hat das Ziel den Konsum abzuspeichern und mit dem Benutzer zu verknüpfen.
 \end{description}
 
@@ -292,16 +287,16 @@ Der Benutzer kann eine Konsum Aktivität erfassen.
 
 \subsection*{Success Guarantee / Postconditions}
 \begin{itemize}
-\item Der Benutzer hat ein Konsumiertes Getränkt erfasst. Der Konsum wirkt sich auf Empfehlungen für den Benutzer aus.
+\item Der Benutzer hat einen Bierkonsum erfasst. Der Konsum ist im Activity Stream sichtbar und wirkt sich auf Empfehlungen für den Benutzer aus.
 \end{itemize}
 
 
 \subsection*{Main Success Scenario}
 
 \begin{enumerate}
-\item Der Benutzer wählt die Option Konsum erfassen
+\item Der Benutzer wählt die Option Konsum erfassen.
 \item Der Benutzer wählt ein Bier aus einer Liste aus.
-\item Der Benutzer wählt die Art (Menge) des Konsums
+\item Der Benutzer wählt die Art (Menge) und optional den Ort des Konsums.
 \item Der Benutzer speichert den Konsum.
 \end{enumerate}
 
@@ -313,26 +308,30 @@ Der Benutzer kann eine Konsum Aktivität erfassen.
 	\begin{enumerate}
 	\item Der Benutzer kann direkt auf die Empfehlung einen Konsum erfassen.
 	\end{enumerate}
-
+\item[2b] Die Auswahlliste ist sehr lang.
+	\begin{enumerate}
+	\item Der Benutzer kann auch gezielt nach Biernamen suchen.
+	\end{enumerate}
+\item[4a] Der Benutzer kann vor dem Speichern des Konsums das Bier auch gleich bewerten.
 \end{description}
 
 
 \subsection*{Special Requirements}
 
 \begin{itemize}
-\item Die Erfassung eines Konsum soll aus jedem "Bier-Kontext" möglich sein. Bier ansehen, Bier bewerten...
+\item Die Erfassung eines Konsum soll aus jeder dafür sinnvollen Ansicht der App möglich sein, z.B. Bier ansehen, Bier bewerten.
 \end{itemize}
 
 
 
 \subsection*{Frequency of Occurrence}
 
-Das Erfassen von konsumierten Getränken ist eine Kernfunktionalität welche aber nicht verwendet werden muss um Empfehlungen zu erhalten. Die Benutzungshäufigkeit wird daher auf 50% geschätzt.
+Das Erfassen von konsumierten Getränken ist eine Kernfunktionalität welche aber nicht verwendet werden muss um Empfehlungen zu erhalten. Die Benutzungshäufigkeit wird daher auf 50\% geschätzt.
 
 \subsection*{Open Issues}
 
 \begin{itemize}
-\item nichts
+\item Keine.
 \end{itemize}
 
 \end{document}
