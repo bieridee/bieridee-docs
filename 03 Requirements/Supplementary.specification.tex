@@ -1,0 +1,96 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+ 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Supplementary Specification \\Projekt BierIdee}
+\subtitle{}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+
+
+\section{Einleitung}
+
+Der Sinn und Inhalt dieses Dokumentes ist es, hautpsächlich nicht funktionale Anforderungen an das Projekt gestellt sind festzuhalten. Diese beinhalten Qualitätskritereien nach FURPS+ aber auch Anforderungen an die Umgebung wie Hardware, Netzwerk, Internationalisierung, Dokumentation.
+
+\section{Usability}
+\subsection{Efficiency}
+Die Benutzbarkeit der Client Software ist ein wichtiger Aspekt in diesem Projekt, da es auf mobilen Geräten, vielleicht ausschliesslich durch Toucheingaben, bedient wird. Die Applikation wird daher so entworfen, dass Sie sich mit reiner Toucheingabe bedienen lässt.
+\subsection{Learnability}
+Bei Applikationen für Mobiltelefonen ist es Erfolgs entscheidend, dass Sie intuitiv zu bedienen und zugleich lernfördernd sind. Es wird daher bewusst auf eine Hilfestellung in Form einer Bedienungsanleitung für die Clientseitige SW verzichtet. Die Sicherstellung dieser merkmale geschieht durch regelmässige Tests und Bewertungen durch Testpersonen. (siehe User Tests).
+
+\section{Performance}
+Im Rahmen dieses Projektes ist das System und die Serverseitige Umgebung für den Einsatz mit <50 Benutzern, 100 Bieren, 20 Brauereien ausgelegt.
+\subsection{Response Time}
+80\% der Anfragen an das System sollen innerhalb von 3 Sekunden ausgeführt werden.
+Der durchschnitt soll bei 1.5 Sekunden liegen.
+\subsection{Computing Resource}
+Die Architektur wird so ausgelegt, dass so wenig wie möglich Rechenleistung auf Clientseite benötigt wird. D.h sämtliche Logik und Aufbereitung der Daten wird auf der Serverseite implementiert. Weil clientseitig die Unterschiede in der Verwendeten Hardware sehr gross sein können (Smartphones, Tablets, PC's), können keine Einheitlichen Anforderungen zur Rechenkapazität auf den Geräten gestellt werden. Mit der zentralen Auführung Rechenintensiver Aufgaben, ist die Kapazität genaustens bekannt und kann adäquat ausgelegt und allenfalls angepasst werden.
+
+\section{Benutzer Tests}
+Nach jeder Constructionphase wird die Applikation durch einen definierten Benutzerkreis getestet. Die Benutzer sollen Einerseits anhand einer ausgehändigten Testspezifikation das System testen. Ebenso sollen die User das System nach belieben Testen können und Feedback direkt via Ticketsystem oder Email zu melden. Dieses Feedback und ev. daraus entstandene  Tickets werden an den wöchentlichen Statusmeetings durch das Projektteam angeschaut und priorisiert.
+
+\section{Scalability}
+In Rahmen dieses Projektes kann die geforderte Last an das System gut eingeschätzt werden (nur Testuser und Entwickler). Falls das Projekt weitergeführt wird, muss das System möglicherweise skaliert werden. Die eingesetzten zentralen Komponenten wie Reslet und Postgres DB unterstützen eine Skalierung in hohem Masse.
+\section{Reliability}
+\subsection{Security}
+Das System verfügt über Benutzerdaten wie Emailadresse, Konsumierte Getränke. Diese Benutzerdaten sind nur via Login berechtigen Benutzern zugänglich. Die gespeicherten Benutzerdaten sind aber nicht als "heikel" anzusehen, da durch deren unabsichtliche Veröffentlichung keine finanzielle sowie massgebende persönliche Schäden zur Folge haben. Daher werden keine zu erfüllenden Anforderungen in Punkto Sicherheit (zu erfüllende Standards o.ä) spezifiziert.
+\subsection{Massnahmen}
+\begin{enumerate}
+\item[Passwort Policy]
+Für Admin Passwörter werden Passwörter mit mindestens 8 Zeichen Alphanummerisch verwendet.
+\item[Backup]
+Das Serversystem und die Datenbank wird täglich gesichert. (File Hot-Copy)
+Zusätzlich gibt es einen Snapshot der kompletten Serverinstanz, welches bei einem kompletten Systemausfall auf einen anderen VM Host umgezogen werden kann.
+ 
+\end{enumerate}
+\subsection{Availability}
+Da es sich bei diesem Projekt um ein "Fun" Projekt handelt, welches bei nicht Verfügbarkeit keine finanziellen o.ä Schäden verursacht werden keine konkreten Anforderungen an die Systemverfügbarkeit gestellt. Grundsätzlich soll das System aber dennoch möglichst Hochverfübar sein, um kontinuierliches Testen zu ermöglichen (siehe auch Punkt Benutzer Tests). Es werden aber keine Massnahmen wie z.B der Einsatz von redundanten Komponenten vorgenommen.
+\subsubsection{Schwachstellen}
+\begin{enumerate}
+\item[Datenbank Server]
+Das System besitzt eine zentrale Datenbank. Fällt diese Komponente aus, ist die Client Applikation nicht mehr benutzbar.
+\item[REST API]
+Ist die Serverkomponente (REST API) nicht mehr verfügbar, ist die Client Applikation nicht mehr benutzbar.
+\end{enumerate}
+\subsection{Fehlererkennung}
+Das System wird mittels Integration- und Systemtests regelmäßig auf Funktionalität und damit auch auf Verfügbarkeit getestet.
+\section{Supporability}
+\subsection{Internationalization}
+Das System soll verschiedene Sprachen unterstützen. Lokalisierung wird nicht unterstützt. D.h keine unterschiedlichen Masseinheiten, Währungen.
+\section{Design Requirements}
+\section{Implementation Requirements}
+\subsection{Database}
+Für das System wird eine Relationale Datenbank mit JDBC Kompatibilität benötigt.
+In diesem Projekt wird Postgres eingesetzt.
+\subsection{Programming Language}
+Als Programmiersprache wird für alle Teilsysteme (REST API, Client) Java Version 1.6 verwendet.
+\subsection{Frameworks}
+\begin{enumerate}
+\item[RESTlet] Version 2.0.11 (stable)
+\item[Android SDK] API Level 10, Android 2.3.3 
+\end{enumerate}
+
+
+
+\end{document}
