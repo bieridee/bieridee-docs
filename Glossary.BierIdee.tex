@@ -27,8 +27,8 @@
 \end{titlepage}
 
 
-
 \section{Glossary}
+
 \subsection{Domainmodell}
 \begin{description}
 	\item[Bier] Dies bezeichnet ein Bier, welches sich über das Bierrezept definiert. Konkret beispielsweise eine Flasche Appenzeller Quöllfrisch oder eine Büchse Feldschlösschen Premium. Die Verpackung spielt dabei keine Rolle.
@@ -40,10 +40,17 @@
 	\item[Profil] Mit Profil ist explizit ein Brauerei-Profil gemeint. Das Profil beinhaltet eine undefinierte Menge an Informationen zu einer Brauerei.
 	\item[Aktiviäten] Als Aktivitäten werden einerseits das Bewerten eines Bieres sowie die manuell getrackte Konsumation eines Bieres bezeichnet. 
 	\item[Timeline] Bei der Timeline handelt es sich um eine chonologische liste aller Aktivitäten die vom System getrack werden.
-	\item[Grösse] Die Grösse teilt die Brauereien in eine definierte Grössenkategorie ein. Die Grösse ist nur für Brauereien bestimmt. Grössenwerte könnten sein, 'mikro', 'regional', 'national', 'international'.
+	\item[Grösse] Die Grösse teilt die Brauereien in eine definierte Grössenkategorie ein. Die Grösse ist nur für Brauereien bestimmt. Grössenwerte könnten beispielsweise \textit{mikro}, \textit{regional} und \textit{national} sein.
 \end{description}
 
-
+\subsection{Architekturkomponenten}
+\begin{description}
+	\item[Frontend] Alle Komponenten, die direkt vom Benutzer bedient werden, wie zB die Android App.
+	\item[Backend] Alle Komponenten, die mit der Datenverarbeitung zu tun haben und die diese Daten dem Frontend bereitstellen.
+	\item[Android App] Die Bieridee-App für Android, momentan unsere einzige Frontend-Komponente.
+	\item[REST API] Die API, die dem Frontend-Teil die Daten via HTTP/JSON bereitstellt. Implementiert mit Restlet.
+	\item[Datenbank] Die PostgreSQL Datenbank, welche alle relevanten Daten enthält und auf welche von der REST API aus (und nur von der REST API aus) zugegriffen wird.
+\end{description}
 
 
 \end{document}
