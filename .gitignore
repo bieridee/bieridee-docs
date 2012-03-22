@@ -1,4 +1,11 @@
+*.swp
 *.aux
 *.log
 *.out
+*.toc
+*.bbl
+*.bib
+*.blg
+*.dvi
+*.ps
 *.synctex.gz
