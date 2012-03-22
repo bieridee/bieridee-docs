@@ -33,9 +33,6 @@
 
 \newpage
 	\tableofcontents
-
-	\bibliographystyle{alpha}
-	\bibliography{Supplementary.specification}
 \newpage
 
 
@@ -125,7 +122,25 @@ In Rahmen dieses Projektes können die benötigten leistungstechnischen Anforder
 
 \section{Design Requirements}
 
-TODO
+	\subsection{Internal Design}
+
+	Der Sourcecode sollte sauber und modular aufgebaut sein. Er soll möglichst lesbar sein und wo nötig kommentiert werden.
+
+	Zur Sicherstellung der Einhaltung der definierten Code Style Guidelines wird das Eclipse Plugin
+	Checkstyle verwendet. Grundsätzlich orientieren wir uns an den Oracle Java Code Conventions
+	(http://www.oracle.com/technetwork/java/codeconv-138413.html).
+
+		\subsubsection{Android-App}
+
+		Wir orientieren uns bei der Android-Entwicklung an den Hinweisen und Patterns aus dem Buch \textit{Programming Android}\cite{mednieks2012programming} aus dem O'Reilly Verlag.
+
+		\subsubsection{API}
+
+		Die API sollte möglichst konsequent ressourcenorientiert nach den REST-Richtlinien aus der bekannten Dissertation von Roy Thomas Fielding\cite{Fielding:2000:ASD:932295} aufgebaut werden. Wir orientieren uns auch an den Büchern \textit{RESTful web services}\cite{richardson2007restful} und \textit{REST API Design Rulebook}\cite{masse2011rest} aus dem O'Reilly Verlag.
+
+	\subsection{External Design}
+
+	Das externe Design sollte ansprechend und einfach benutzbar sein. Wir fokusieren uns im Rahmen dieses Projektes jedoch auf die technische Umsetzung, deshalb setzen wir uns keine Vorgaben betreffend externem Design.
 
 
 \section{Implementation Requirements}
@@ -149,7 +164,8 @@ TODO
 	\end{description}
 
 
-
+\bibliographystyle{alpha}
+\bibliography{Supplementary.specification}
 
 
 \end{document}
