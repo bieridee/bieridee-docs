@@ -1,0 +1,145 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage{fontspec,xltxtra,xunicode} 
+
+\defaultfontfeatures{Mapping=tex-text} 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Domainanalyse\\Projekt BierIdee}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Einführung}
+\subsection{Zweck}
+Dieses Dokument zeigt den Aufbau der Domain des Projekts "BierIdee".
+\subsection{Gültigkeitsbereich}
+Die Gültigkeit dieses Dokumentes erstreckt sich über die Dauer der Planung und Umsetzung des Projektes und beschränkt sich auf die Dauer des Modules SE2 Projekte FS2012.
+\subsection{Referenzen}
+\begin{itemize}
+	\item Glossary.pdf
+	\item Usecases.brief.pdf
+	\item Usecases.fully.dressed.pdf
+\end{itemize}
+\subsection{Übersicht}
+Im ersten Teil des Dokumentes wird die Domain analysiert und aufgezeichnet, darauf folgend werden die Systemsequenzdiagramme von zwei zentralen Usecases betrachtet. Im letzten Teil werden die Contracts der Systemoperationen der beandelten Systemsequenzdiagrammen besprochen.
+
+\section{Domainalayse}
+\subsection{Domainmodel}
+\includegraphics[width=\textwidth]{domain.model.bieridee.png} 
+
+\subsection{Wichtige Konzepte}
+Im Zentrum der Domäne steht die Bier-Klasse. Jedes Bier stammt aus einer Brauerei weche wiederum ein Profil und eine Grösse hat. Jedes Bier hat zudem eine Sorte die kurz beschrieben ist.\\
+Speziell ist, dass jedes Bier beliebig viele Tags haben kann. Ein Tag ist ein beschreibendes Schlagwort das mit der Häufigkeit seiner Verwendung wichtiger wird. Offen ist noch, wie mit der "Stern-zu-Stern" Multiplizität umgegangen wird. Eventuell wird der Tag in ein Attribut umgewandelt, oder es wird eine zusätzliche Zuordnungsstruktur eingeführt.\\
+Ein weiterer zentraler Punkt im Domainmodel ist die Aktivität. Eine Aktivität abstrahiert den Konsum oder die Bewwertung eines Bieres, sie ist dem entsprechend mit dem User und dem Bier verknüpft. Weiterhin ist die Aktivität mit der Timeline verbunden, die Aktiväten werden in der Timeline dargestellt.\\
+Als letztes gibt es noch eine gewichtete Empfehlung, diese wird durch das System errechnet und erstell, existiert aber doch als eigenständige Domain-Klasse.
+
+\section{Systemsequenzdiagramme}
+\subsection{Einloggen, UC02}
+\includegraphics[width=\textwidth]{ssd.uc02.png}
+
+\subsection{Bier bewerten, UC05}
+\includegraphics[width=\textwidth]{ssd.uc05.png}
+
+\section{Systemoperationen}
+\subsection{Contracts zu Usecase UC02: Einloggen}
+\subsubsection{CO01: enterCredentials}
+\begin{tabular}{|l|p{0.75\textwidth}|}
+\hline
+ \textbf{Operation} & enterCredentials(username : String, password: String) \\ 
+\hline
+\textbf{Cross references} & -- \\ 
+\hline 
+\textbf{Preconditions} & \begin{itemize} 
+							\item Benutzer ist registriert
+							\item Benuzerkonto ist aktiviert 
+						  \end{itemize}\\
+\hline 
+\textbf{Postconditions} & Authentiserte Session wurde erstellt \\
+\hline
+\end{tabular}
+
+
+\subsection{Contracts zu Usecase UC05: Bier bewerten}
+\subsubsection{CO02: showBeerList}
+\begin{tabular}{|l|p{0.75\textwidth}|}
+\hline
+ \textbf{Operation} & showBeerList() \\ 
+\hline
+\textbf{Cross references} & \begin{itemize}
+								\item Bier bearbeiten (UC04)
+								\item Bier taggen (UC06)
+								\item Bierkatalog abrufen (UC08)
+								\item Konsum erfassen (UC10)
+							\end{itemize} \\ 
+\hline 
+\textbf{Preconditions} & \begin{itemize}
+							\item Benuzer ist angemeldet
+							\item Biere sind erfasst 
+						 \end{itemize}\\
+\hline 
+\textbf{Postconditions} & -- \\
+\hline
+\end{tabular}
+
+\subsubsection{CO03: chooseBeer}
+\begin{tabular}{|l|p{0.75\textwidth}|}
+\hline
+ \textbf{Operation} & chooseBeer(beer : Beer) \\ 
+\hline
+\textbf{Cross references} & \begin{itemize}
+								\item Bier bearbeiten (UC04)
+								\item Bier taggen (UC06)
+								\item Konsum erfassen (UC10)
+						    \end{itemize} \\ 
+\hline 
+\textbf{Preconditions} & \begin{itemize}
+							\item Benuzer ist angemeldet
+							\item Biere sind erfasst 
+						 \end{itemize} \\
+\hline 
+\textbf{Postconditions} & -- \\
+\hline
+\end{tabular}
+
+\subsubsection{CO04: rateBeer}
+\begin{tabular}{|l|p{0.75\textwidth}|}
+\hline
+ \textbf{Operation} & rateBeer(ratingValue : Integer) \\ 
+\hline
+\textbf{Cross references} & -- \\ 
+\hline 
+\textbf{Preconditions} & \begin{itemize}
+							\item Benuzer ist angemeldet
+							\item Biere sind erfasst 
+						 \end{itemize}\\
+\hline 
+\textbf{Postconditions} & \begin{itemize}
+							\item Neue Bewertung wird erstellt
+							\item Neue Aktivität wird dem Benuzer zugeordnet
+							\item Timeline wird aktualisiert 
+						  \end{itemize} \\
+\hline
+\end{tabular}
+
+
+\end{document}
