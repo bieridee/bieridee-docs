@@ -50,7 +50,6 @@
     <module name="EqualsAvoidNull"/>
     <module name="EqualsHashCode"/>
     <module name="FinalLocalVariable"/>
-    <module name="HiddenField"/>
     <module name="IllegalCatch"/>
     <module name="IllegalThrows"/>
     <module name="JUnitTestCase"/>
@@ -70,6 +69,7 @@
       <property name="format" value="TODO"/>
     </module>
     <module name="UncommentedMain"/>
+    <module name="RequireThis"/>
   </module>
   <module name="FileLength"/>
   <module name="SuppressionCommentFilter"/>
