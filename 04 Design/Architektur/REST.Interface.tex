@@ -1,0 +1,83 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[utf8]{inputenc} % Unicode
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{REST Specfications\\Projekt BierIdee}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\section{HTTP Environment}
+\begin{description}
+\item[Host] http://brewery.nusszipfel.com
+\item[Port] 80
+
+\end{description}
+Die REST Ressourcen sind via http://brewery.nusszipfel.com/<Ressourcen> erreichbar.
+\section{REST Ressourcen}
+Nachfolgend sind die verfügbaren REST Ressourcen definiert.
+\subsection{Beer}
+\begin{description}
+\item[GET] Beer/\{BierID\}
+ \\Beer/
+\item[POST] Beer/
+\item[DELETE] Beer/\{BierID\}
+\item[PUT] Beer/\{BierID\}
+\end{description}
+
+\subsection{User}
+\begin{description}
+\item[GET] User/\{Username\}
+\item[PUT] User/\{Username\}
+\end{description}
+
+\subsection{Recommendation}
+\begin{description}
+\item[GET] Recommendation/\{Username\}
+\end{description}
+
+\subsection{Rating}
+\begin{description}
+\item[GET] Rating/\{Username\}/\{BeerID\}
+\item[PUT] Rating/\{Username\}/\{BeerID\}
+\end{description}
+
+\subsection{Consumption}
+\begin{description}
+\item[GET] Consumption/\{Username\}/\{BeerID\}
+\item[POST] Consumption/\{Username\}/\{BeerID\}
+\end{description}
+
+\subsection{Timeline}
+\begin{description}
+\item[GET] Timeline/?pageSize\&pageStartIndex
+\\ Timeline/?pageSize\&pageStartIndex\&username
+\end{description}
+
+\subsection{Brewery}
+\begin{description}
+\item[GET] Brewery/\{BreweryID\}
+\item[POST] /Brewery
+\item[PUT] /Brewery/\{BreweryID\}
+\end{description}
+
+\end{document}
