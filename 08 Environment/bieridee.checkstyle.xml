@@ -16,6 +16,7 @@
     <module name="MissingOverride"/>
     <module name="JavadocMethod">
       <property name="scope" value="public"/>
+      <property name="allowMissingPropertyJavadoc" value="true"/>
       <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="JavadocStyle"/>
