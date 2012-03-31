@@ -29,7 +29,9 @@
     <module name="MethodTypeParameterName"/>
     <module name="PackageName"/>
     <module name="ParameterName"/>
-    <module name="StaticVariableName"/>
+    <module name="StaticVariableName">
+      <property name="format" value="^[A-Z][A-Z0-9_]*$"/>
+    </module>
     <module name="TypeName"/>
     <module name="AvoidStarImport"/>
     <module name="AvoidStaticImport"/>
