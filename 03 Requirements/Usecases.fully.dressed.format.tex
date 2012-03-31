@@ -5,6 +5,7 @@
 \usepackage{parskip} % Skip indentation of first row
 \usepackage{graphicx} % Graphics support
 \usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
 \usepackage{hyperref} % Hyperlinks
 \usepackage[automark]{scrpage2} %kopf/fusszeile
 \usepackage[utf8x]{inputenc} % Unicode-Encoding
@@ -27,17 +28,28 @@
 	\thispagestyle{empty} % Don't start page numbers on this page
 \end{titlepage}
 
-
+\section{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1 & 21.03.2012 & Dokument erstellt & cfaessle \\  
+\hline 
+v1.1 & 01.04.2012 & Korrekturen nach Review & jfurrer \\
+\bottomrule
+\end{tabular} 
+\newpage
 
 \section*{UC01: User registriert sich }
 
-Ein User kann sich registrieren um einen Benutzerzugang (Benutzername, Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-Email für die Registration. Er wird nach der Registration automatisch eingeloggt und kann bereits seinen Bierkonsum tracken. Erst wenn er die Email-Adresse per Link bestätigt hat, kann er auch neue Biere erfassen und ändern.
+Ein User registriert sich um einen Benutzerzugang (Benutzername, Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-Email für die Registration. Er wird nach der Registration automatisch eingeloggt und kann bereits seinen Bierkonsum tracken. Erst wenn er die Email-Adresse per Link bestätigt hat, kann er auch neue Biere erfassen und ändern.
 
 
 \begin{description}
 \item[Scope] BierIdee System
 \item[Level] User Goal
 \item[Primary Actor] Der User, der sich für die Benutzung der App registrieren will.
+\item[Features] F02 (\textit{siehe `Anforderungsspezifikation'})
 \end{description}
 
 
@@ -93,7 +105,7 @@ Ein User kann sich registrieren um einen Benutzerzugang (Benutzername, Passwort)
 
 \subsection*{Frequency of Occurrence}
 
-Die Neuregistrierung ist die Grundlage für alle weiteren Interaktionen mit dem System. Daher wird Sie von jedem Benutzer durchgeführt, dies entspricht einer Benutzung von 100\%.
+Die Neuregistrierung ist die Grundlage für alle weiteren Interaktionen mit dem System. Daher wird Sie von jedem Benutzer durchgeführt, allerdings nur einmal in der ganzen Zeit der Nutzung. Die Registrationen werden sich zu Anfang häufen und dann in der Zahl immer geringer werden.
 
 
 \subsection*{Open Issues}
@@ -110,6 +122,7 @@ Der Benutzer kann ein Bier auswählen und es mit einer persönlichen Bewertung v
 \item[Scope] BierIdee System
 \item[Level] User Goal
 \item[Primary Actor] Der Benutzer welcher ein Bier bewerten will
+\item[Features] F05 (\textit{siehe `Anforderungsspezifikation'})
 \end{description}
 
 
@@ -124,11 +137,8 @@ Der Benutzer kann ein Bier auswählen und es mit einer persönlichen Bewertung v
 \subsection*{Preconditions}
 
 \begin{itemize}
-\item Die Android App muss auf dem Benutzergerät installiert sein.
-\item Der Benutzer hat ein Benutzerkonto.
 \item Der Benutzer ist am System angemeldet (Login).
 \item Im System sind bewertbare Biere erfasst.
-\item Das Benutzergerät verfügt über eine Internetverbindung.
 \end{itemize}
 
 
@@ -142,8 +152,7 @@ Der Benutzer kann ein Bier auswählen und es mit einer persönlichen Bewertung v
 
 \begin{enumerate}
 \item Der Benutzer wählt ein Bier aus einer Liste von Bieren ein Bier aus.
-\item Er kann anhand einer Skala das Bier bewerten. (Bspw. 1-5)
-\item Im Hintergrund wird die Bewertung abgespeichert
+\item Er kann anhand einer Skala das Bier bewerten.
 \item Das System meldet dem Benutzer die erfolgreiche Bewertung
 \end{enumerate}
 
@@ -174,7 +183,7 @@ Der Benutzer kann ein Bier auswählen und es mit einer persönlichen Bewertung v
 \subsection*{Frequency of Occurrence}
 
 Das Bewerten von Bieren ist eine der zentralen Aktionen die Benutzer ausführen sollen.
-Auf Basis dieser Bewertungen werden individuelle Empfehlungen generiert. Hier ergibt sich eine Benutzung von 90\%.
+Auf Basis dieser Bewertungen werden individuelle Empfehlungen generiert. Die Nutzung wird sich zu Abendzeiten und an Wochenenden häufen.
 
 \subsection*{Open Issues}
 
@@ -191,6 +200,7 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 \item[Scope] BierIdee System
 \item[Level] User Goal
 \item[Primary Actor] Der Benutzer welcher individuelle Empfehlungen erhalten möchte.
+\item[Features] F06 (\textit{siehe `Anforderungsspezifikation'})
 \end{description}
 
 
@@ -205,9 +215,7 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 \subsection*{Preconditions}
 
 \begin{itemize}
-\item Der Benutzer besitzt ein Benutzerkonto
 \item Der Benutzer ist am System angemeldet.
-\item Das Benutzergerät hat eine bestehende Internetverbindung.
 \end{itemize}
 
 
@@ -220,7 +228,7 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 \subsection*{Main Success Scenario}
 
 \begin{enumerate}
-\item Der Benutzer wählt die Option 'Empfehlungen anzeigen'.
+\item Der Benutzer wählt die Option `Empfehlungen anzeigen'.
 \item Das System listet dem Benutzer die generierten Empfehlungen auf.
 \item Der Benutzer kann diese Biere bewerten (siehe UC05).
 \end{enumerate}
@@ -248,7 +256,7 @@ Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekann
 
 \subsection*{Frequency of Occurrence}
 
-Das Einsehen von Empfehlungen ist eine Zentrale Funktionalität. Daher wird voraussichtlich  eine Benutzung von 90\% zu verzeichnen sein.
+Das Einsehen von Empfehlungen ist eine Zentrale Funktionalität. Daher wird die Nutzung häufig auftreten. 
 
 \subsection*{Open Issues}
 
@@ -257,13 +265,14 @@ Das Einsehen von Empfehlungen ist eine Zentrale Funktionalität. Daher wird vora
 \end{itemize}
 
 
-\section*{UC10: User erfasst oder trackt Konsum}
+\section*{UC10: User erfasst Konsum}
 Der Benutzer kann eine Konsumaktivität erfassen.
 
 \begin{description}
 \item[Scope] BierIdee System
 \item[Level] User Goal
 \item[Primary Actor] Der Benutzer welcher einen Konsum erfassen möchte.
+\item[Features] F10 (\textit{siehe `Anforderungsspezifikation'})
 \end{description}
 
 
@@ -278,16 +287,14 @@ Der Benutzer kann eine Konsumaktivität erfassen.
 \subsection*{Preconditions}
 
 \begin{itemize}
-\item Der Benutzer besitzt ein Benutzerkonto
 \item Der Benutzer ist am System angemeldet.
 \item Es sind Biere im System erfasst.
-\item Das Benutzergerät hat eine bestehende Internetverbindung.
 \end{itemize}
 
 
 \subsection*{Success Guarantee / Postconditions}
 \begin{itemize}
-\item Der Benutzer hat einen Bierkonsum erfasst. Der Konsum ist im Activity Stream sichtbar und wirkt sich auf Empfehlungen für den Benutzer aus.
+\item Der Benutzer hat einen Bierkonsum erfasst. Der Konsum ist in der Timeline sichtbar und wirkt sich auf Empfehlungen für den Benutzer aus.
 \end{itemize}
 
 
@@ -296,8 +303,7 @@ Der Benutzer kann eine Konsumaktivität erfassen.
 \begin{enumerate}
 \item Der Benutzer wählt die Option Konsum erfassen.
 \item Der Benutzer wählt ein Bier aus einer Liste aus.
-\item Der Benutzer wählt die Art (Menge) und optional den Ort des Konsums.
-\item Der Benutzer speichert den Konsum.
+\item Der Benutzer wählt optional den Ort des Konsums.
 \end{enumerate}
 
 
@@ -306,13 +312,13 @@ Der Benutzer kann eine Konsumaktivität erfassen.
 \begin{description}
 \item[1-2a] Der Benutzer sieht eine Empfehlung an.
 	\begin{enumerate}
-	\item Der Benutzer kann direkt auf die Empfehlung einen Konsum erfassen.
+	\item Der Benutzer kann direkt auf die Empfehlung einen Konsum erfassen \textit{(siehe UC07)}.
 	\end{enumerate}
 \item[2b] Die Auswahlliste ist sehr lang.
 	\begin{enumerate}
 	\item Der Benutzer kann auch gezielt nach Biernamen suchen.
 	\end{enumerate}
-\item[4a] Der Benutzer kann vor dem Speichern des Konsums das Bier auch gleich bewerten.
+\item[4a] Der Benutzer kann vor dem Speichern des Konsums das Bier auch gleich bewerten \textit{(siehe UC05)}.
 \end{description}
 
 
@@ -326,7 +332,7 @@ Der Benutzer kann eine Konsumaktivität erfassen.
 
 \subsection*{Frequency of Occurrence}
 
-Das Erfassen von konsumierten Getränken ist eine Kernfunktionalität welche aber nicht verwendet werden muss um Empfehlungen zu erhalten. Die Benutzungshäufigkeit wird daher auf 50\% geschätzt.
+Das Erfassen von konsumierten Getränken ist eine Kernfunktionalität welche aber nicht verwendet werden muss um Empfehlungen zu erhalten. Die Nutzung wird sich zu Abendzeiten und an Wochenenden häufen.
 
 \subsection*{Open Issues}
 

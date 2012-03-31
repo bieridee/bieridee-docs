@@ -5,6 +5,7 @@
 \usepackage{parskip} % Skip indentation of first row
 \usepackage{graphicx} % Graphics support
 \usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
 \usepackage{hyperref} % Hyperlinks
 \usepackage[automark]{scrpage2} %kopf/fusszeile
 \usepackage[utf8x]{inputenc} % Unicode-Encoding
@@ -26,14 +27,33 @@
 	\thispagestyle{empty} % Don't start page numbers on this page
 \end{titlepage}
 
+\tableofcontents
+\newpage
+
+\section{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1 & 26.03.2012 & Dokument erstellt & cfaessle \\  
+\hline 
+v1.1 & 31.03.2012 & Korrekturen nach Review & jfurrer \\
+\bottomrule
+\end{tabular} 
+\newpage
+
 
 \section{Einführung}
+
 \subsection{Zweck}
-Dieses Dokument zeigt die Resultate der Elaborationphase, in der die Anforderungen an das Produkt erfasst wurden.
+Dieses Dokument beschreibt die Anforderungen an das Projekt BierIdee.
+
 \subsection{Gültigkeitsbereich}
 Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte Modules FS2012.
+
 \subsection{Definitionen und Abkürzungen}
 Die Definitionen und Abkürzungen befinden sich im Dokument Glossary.
+
 \subsection{Referenzen}
 \begin{itemize}
 \item Glossary.BierIdee.pdf
@@ -43,84 +63,116 @@ Die Definitionen und Abkürzungen befinden sich im Dokument Glossary.
 \end{itemize}
 
 \subsection{Übersicht}
-In diesem Dokument werden die Anforderungen an das Projekt BierIdee ausgearbeitet und festgehalten. Grundsätzlich beinhalten sie die Resultate der Elaborationphase des Projektes. Das Dokument besteht im Groben aus zwei Teilen: Den funktionalen und nicht funktionalen Anforderungen. Als Anhaltspunkt für die nicht funktionalen Anforderungen gilt der FURPS+ Standard.
+In diesem Dokument werden die Anforderungen an das Projekt BierIdee ausgearbeitet und festgehalten. Das Dokument besteht aus zwei Teilen: Den funktionalen und nicht funktionalen Anforderungen. Als Anhaltspunkt für die nicht funktionalen Anforderungen gilt der FURPS+ Standard.
 \newpage
 
+
 \section{Allgemeine Beschreibung}
+
 \subsection{Produktperspektive}
-Die Perspektive dieses Produktes wurde im Projektantrag festgehalten.
+Die Perspektive dieses Produktes ist im Projektantrag festgehalten.
 
 \subsection{Produkt Funktion}
 Die Hauptfunktion des zu entwickelnden Systemes ist es, ein Portal zu bieten welches das Erfassen und bewerten von Bieren ermöglicht. Anhand von persönlichen "Aktivitäten" werden individuelle Empfehlungen für Biersorten erstellt. Da sich das Projekt sehr gut mit Features erweitern lässt, wurden die identifizierten Möglichkeiten in zwei Kategorien aufgeteilt. Für dieses Projekt stehen die primären Features im Fokus. Falls es die Zeit zulässt, kann das System problemlos um weitere Features erweitert werden.
 
 \subsubsection{Primäre Features}
-\begin{itemize}
-\item Verzeichnis mit Biersorten und Brauereien
-\item Benutzerkonten/Profile
-\item Erfassen/Bearbeiten von Bieren durch Benutzer
-\item Taggen von Bieren mit Attributen wie bspw. Sorte
-\item Bewerten von Biersorten durch Benutzer
-\item Individuelle Bier-Empfehlungen
-\item Erfassung von Benutzer-Aktivitäten (z. B Bierkonsum)
-\item Timeline mit Aktivitäten
-\item Internationalisierung 
-\end{itemize}
+\begin{description}
+\item[F01] Verzeichnis mit Biersorten und Brauereien
+\item[F02] Benutzerkonten/Profile
+\item[F03] Erfassen/Bearbeiten von Bieren durch Benutzer
+\item[F04] Taggen von Bieren mit Attributen wie bspw. Sorte
+\item[F05] Bewerten von Biersorten durch Benutzer
+\item[F06] Individuelle Bier-Empfehlungen
+\item[F07] Erfassung von Benutzer-Aktivitäten (z. B Bierkonsum)
+\item[F08] Timeline mit Aktivitäten
+\item[F09] Internationalisierung 
+\end{description}
+\newpage
 
 \subsubsection{Erweiterungemöglichkeiten}
-\begin{itemize}
-\item Location-Based Services
-\item Achievements/Badges für bestimmte Benutzeraktivitäten
-\item Biere mit Barcode erfassen
-\item Fotos von Bieren hochladen
-\item Offizielle Brauereiprofile
-\item Barprofile
-\item Checkin in Bars
-\item Bierquiz
-\item Statistiken (z. B. Top rated, most consumed etc.)
-\item Integration in bestehende Social-Networks
-\end{itemize}
+\begin{description}
+\item[F10] Location-Based Services
+\item[F11] Achievements/Badges für bestimmte Benutzeraktivitäten
+\item[F12] Biere mit Barcode erfassen
+\item[F13] Fotos von Bieren hochladen
+\item[F14] Offizielle Brauereiprofile
+\item[F15] Barprofile
+\item[F16] Checkin in Bars
+\item[F17] Bierquiz
+\item[F18] Statistiken (z. B. Top rated, most consumed etc.)
+\item[F19] Integration in bestehende Social-Networks
+\end{description}
 
 \subsection{Benutzer Charakteristik}
 Zum Zielpublikum gehören Power-User von Android Geräten welche häufig Soziale Netzwerke benutzen und gelegentlich ein Bier trinken. Es wird davon ausgegangen, dass es sich auch im technischen Sinne um Fortgeschrittene Benutzer handelt, welche bereits einige Erfahrung mit der Bedienung von Android Applikationen haben.
+
 \subsection{Einschränkungen}
 Das System beschränkt sich clientseitig auf Androidgeräte mit dem API Level 10. Weitere Angaben im Kapitel nicht funktionale Anforderungen.
+
 \subsection{Annahmen}
 Für das Projekt wurden keine Annahmen getroffen.
 
+
 \section{Funktionale Anforderungen / Use Cases}
+
 \subsection{Use Case Diagramm}
-\includegraphics[width=\textwidth]{UseCaseDiagramm.jpg} 
+\includegraphics[height=0.9\textheight]{UseCaseDiagramm.jpg}
+
+\subsection{Bemerkungen}
+Die Usecases "UC03: User erfasst ein Bier", "UC04: User bearbeitet erfasstes Bier" und "UC08: User ruft Bier-Katalog ab" werden bewusst separat geführt, auch wenn sie grundsätzlich die merkmale eines CRUD Usecases aufweisen. Der Grund für die Aufteilung liegt darin, dass es sich um zentrale und von einander losgelöste Usecases handelt zudem wird kein vollständiges CRUD ermöglicht, das Löschen ist nicht möglich.
+
 \subsection{Use Cases brief Format}
 
 \subsubsection*{UC01: User registriert sich}
-Ein User kann sich registrieren um einen Benutzerzugang (Benutzername, Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-Email für die Registration. Er wird nach der Registration automatisch eingeloggt und kann bereits seinen Bierkonsum tracken. Erst wenn er die Email-Adresse per Link bestätigt hat, kann er auch neue Biere erfassen und ändern.
+Ein User kann sich registrieren um einen Benutzerzugang (Benutzername, Passwort) zu erhalten. Der Benutzer erhält eine Bestätigungs-Email für die Registration. Er wird nach der Registration automatisch eingeloggt und kann bereits seinen Bierkonsum tracken. Erst wenn er die Email-Adresse per Link bestätigt hat, kann er auch neue Biere erfassen und ändern.\\
+\textit{Diese Usecase wird im Dokument `Usecases.fully.dressed.format.pdf' im fully dressed Format beschrieben.}
+
 \subsubsection*{UC02: User loggt sich ein}
 Ein User kann sich mittels Kombination von Benutzernamen und Passwort am System anmelden.
 Der Benutzer hat die Möglichkeit seine Anmeldeinformationen zu speichern, sodass er Sie nicht jedes Mal erneut eingeben muss.
+
 \subsubsection*{UC03: User erfasst ein Bier}
 Ein User kann ein neues Bier mit definierten Attributen in das System einpflegen.
+
 \subsubsection*{UC04: User bearbeitet erfasstes Bier}
 Ein Benutzer kann die Attribute eines im System erfassten Bieres anpassen und abspeichern.
+\newpage
 \subsubsection*{UC05: User bewertet Bier}
-Der Benutzer kann ein Bier auswählen und mit einer persönlichen Bewertung versehen. Wenn der Benutzer bereits eine Bewertung erfasst hat, wird diese angezeigt und kann angepasst werden. Der User erfasst dadurch eine Bewertungs-Aktivität.
+Der Benutzer kann ein Bier auswählen und mit einer persönlichen Bewertung versehen. Wenn der Benutzer bereits eine Bewertung erfasst hat, wird diese angezeigt und kann angepasst werden. Der User erfasst dadurch eine Bewertungs-Aktivität.\\
+\textit{Diese Usecase wird im Dokument `Usecases.fully.dressed.format.pdf' im fully dressed Format beschrieben.}
+
 \subsubsection*{UC06: User taggt Bier}
 Der Benutzer kann ein Bier auswählen und mit Schlagwörtern "taggen". Das Taggen wird mit technischen Massnahmen unterstützt, beispielsweise durch Vorschläge.
+
 \subsubsection*{UC07: User ruft Bier-Empfehlungen ab}
-Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekannte (unbewertete) Biersorten abrufen.
+Der Benutzer kann auf sein Profil bezogene Empfehlungen für ihm bisher unbekannte (unbewertete) Biere abrufen.\\
+\textit{Diese Usecase wird im Dokument `Usecases.fully.dressed.format.pdf' im fully dressed Format beschrieben.}
+
 \subsubsection*{UC08: User ruft Bier-Katalog ab}
 Der Benutzer kann den ganzen Katalog an im System erfassten Bieren in listenartiger Übersicht durchsehen. Durch auswählen eines einzelnen Bieres kann er dessen weitere Attribute abrufen.
+
 \subsubsection*{UC09: User ruft Brauerei-Katalog ab}
 Der Benutzer kann den ganzen Katalog an im System erfassten Brauereien durchsehen. Durch auswählen einer einzelnen Brauerei kann er deren weitere Attribute abrufen.
+
 \subsubsection*{UC10: User erfasst Konsum}
-Der Benutzer kann eine Konsum-Aktivität erfassen. Die dazugehörigen Informationen sind, das konsumierte Bier, der Zeitpunkt und optional der Ort.
-\subsubsection*{UC11: User betrachet und verfolgt Timeline}
+Der Benutzer kann eine Konsum-Aktivität erfassen. Die dazugehörigen Informationen sind, das konsumierte Bier, der Zeitpunkt und optional der Ort.\\
+\textit{Diese Usecase wird im Dokument `Usecases.fully.dressed.format.pdf' im fully dressed Format beschrieben.}
+
+\subsubsection*{UC11: User betrachet die Timeline}
 Der Benutzer kann eine Timeline betrachten. Die Timeline zeigt die letzten eigenen Aktivitäten sowie die der anderer Benutzer.
+
 \subsubsection*{UC12: User schaut sein eigenes Profil (User-Aktivitäten) an}
 Der Benutzer kann im System seine erfassten Aktivitäten (Bewertungen, Konsum) anzeigen.
+
 \subsubsection*{UC13: User schaut Profile (User-Aktiviäten) eines anderen Users an}
 Der Benutzer kann Profile anderer Benutzer ansehen. Er sieht dadurch Aktivitäten anderer Benutzer.
+
+
 \subsection{Use Cases fully dressed Format}
-Die Fully dressed use Cases sind im Dokument fully.dressed.usecases.pdf beschrieben.
+Die Fully dressed use Cases sind im Dokument `Usecases.fully.dressed.format.pdf' beschrieben.
+
+
 \section{Nichtfunktionale Anforderungen}
-Die Nichtfunktionalen Anforderungen wurden im Dokument Supplementary.specification.pdf festgehalten.
+Die Nichtfunktionalen Anforderungen wurden im Dokument `Supplementary.specification.pdf' festgehalten.
+
 \end{document}
