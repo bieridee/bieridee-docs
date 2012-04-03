@@ -56,17 +56,28 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 
 \begin{itemize}
 	\item REST.Interface.pdf
+	\item Evaluation.Neo4j.pdf
 \end{itemize}
 
 %\bibliographystyle{alpha}
 %\bibliography{SoftwareArchitekturDokument}
 
 \subsection{Übersicht}
-TODO
+
+Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die
+REST API und die Clientanwendung. Zwischen der API und der Android-Clientanwendung wird
+ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem API-Token
+authentifizieren. Logisch werden die Datenbank- und API-bezogenen Klassen in einem gemeinsamen
+Package geführt, das selbe gilt für das Frontend. Zusätzlich werden jedoch alle gemeinsam
+verwendeten Klassen und Interfaces in einem separatem, gemeinsam zugänglichen Package gehalten.
+Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
+Servlet-Container. Es wird aber aus Performance- und Optimierungsgründen ein Reverse Proxy
+davorgesetzt. Alle Daten werden im Backend persistent in einer Graphendatenbank gespeichert und
+durch geschickte Traversierung und eingebaute Algorithmen abgefragt. Das System soll in der
+Testphase bis zu 50 gleichzeitige Nutzer bedienen können.
 
 
 \section{Systemübersicht}
-
 Unsere Systemarchitektur gliedert sich in drei Teilbereiche: Die Datenbank, die REST API
 und die Clientanwendung.
 
@@ -118,24 +129,58 @@ und via HTTP im JSON- oder XML-Format ausgegeben.
 
 \section{Architektonische Ziele \& Einschränkungen}
 
-TODO Beschreibt die Softwareanforderungen und Objekte, welche einen Einfluss auf die
-Architektur haben (z.B. Safety, Security, Privacy, Distribution, usw.);
-Beinhaltet auch eine Beschreibung von Design und Implementationsstrategie,
-Entwicklungstools, usw
+\subsection{Safety / Security}
+
+Die API wird nicht öffentlich/frei zugreifbar sein. Das Sicherheitskonzept ist zweistufig aufgebaut.
+Einerseits erzeugt die API sogenannte API-Tokens, mit welchem sich die App als "`trustful"' App identifiziert.
+
+In einem zweiten Schritt authentifiziert und autorisiert sich der Benutzer der Android App mittels
+Benutzernamen und Passwort.
+
+\paragraph*{Security-Steps:}
+
+\begin{enumerate}
+	\item App Authentifizierung mittels App-Token
+	\item User-Authentifizierung mittels Benutzername und Passwort
+	\item Autorisierung für gewünschte Operationen
+\end{enumerate}
+ 
+Alle Schritte werden bei jeder Anforderung einer Ressource (http Request) durchgeführt, um das
+Prinzip der \textit{Statelessness} von RESTful APIs zu gewährleisten.
+
+Auf Datenbankebene wird kein Rechtesystem implementiert. Die Datenbank ist auch nicht direkt
+ansprechbar, daher kann das ganze Berechtigungssystem in der REST API realisiert werden.
 
 
 \section{Logische Architektur}
 
-TODO Beschreibung der logischen Struktur des Projekts. Pro Subsystem/Package ein
-einzelner Abschnitt und ein Übersichtsdiagramm über die einzelnen
-Subsysteme/Packages. Aufteilung in Subsysteme/Packages (zum Beispiel:
-3-Layer-Architektur mit GUI, Problem Domain und Datenhaltung). 
+Die grundsätzliche Aufteilung in Subsysteme in diesem Projekt wird bereits im Kapitel
+\textit{Systemübersicht} beschrieben, deshalb wird hier primär auf die Package-Architektur
+eingegangen.
+
+Die logische Architektur des Gesamtprojektes wird in drei Kategorien bzw. Packages unterteilt --
+\textit{front}, \textit{back} und \textit{common}. Alle drei Packages sind Unterpackages von
+\textit{ch.hsr.bieridee}.
+
+Neben den Frontend- und Backend-Packages wird ein Package \textit{ch.hsr.bieridee.common} erstellt,
+welches die gemeinsamen Teile des Front- und Backends beinhaltet (konkret die Domainobjekte und
+-interfaces, sowie die Ressourcenobjekte und -interfaces).
+
+Im Backend wird die Datenhaltung vom Package \textit{ch.hsr.bieridee.back.models} übernommen,
+welches die entsprechende Datenbanknode kapselt. Desweiteren gibt es ein \textit{config}- und ein
+\textit{utils} Package.
+
+Ähnliches gilt für das Frontend. Momentan sind die Packages \textit{config}, \textit{utils} und
+\textit{activities} als Unterpackages von \textit{ch.hsr.bieridee.front} geplant.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{PackageDiagramm.png}
 	\caption{Package Diagramm}
 	\label{fig:package_diagram}
 \end{figure}
+
+Selbstverständlich wird die Android-Applikation nach dem Model-View-Controller Modell implementiert.
+Dies ist jedoch zusammen mit dem Ressourcen-Management (Templates, Strings, Grafiken etc) ein integraler Bestandteil des Android SDKs, deshalb wird es hier nicht genauer erörtert.
 
 
 \section{Backend Architektur}
@@ -170,7 +215,7 @@ Komponenten nicht thread safe implementiert sein.
 
 \subsection{Android App}
 
-Die UI ist singlethreaded. Langlaufende Operationen werden in asynchrone Background-Threads ausgelagert und
+Die UI ist single threaded. Langlaufende Operationen werden in asynchrone Background-Threads ausgelagert und
 benachrichtigen das UI mithilfe von Callbacks.
 
 
@@ -198,9 +243,9 @@ Zur Überwachung des Systemprozesses
 wird Supervisor verwendet (nicht im Deployment Diagramm erwähnt, da kein integraler Bestandteil).
 Supervisor überwacht den Systemprozess und startet ihn, falls er abstürzt, sofort neu. 
 
-Vor den Application Server wird ein Reverse Proxy - konkret Nginx - gesetzt. Dieser nimmt alle
+Vor den Application Server wird ein Reverse Proxy -- konkret Nginx -- gesetzt. Dieser nimmt alle
 Requests entgegen und entscheidet, ob es sich dabei um statische oder um dynamisch generierte Daten
-handelt. Statische Daten - beispielsweise Bilder - werden direkt zurückgeliefert, während
+handelt. Statische Daten -- beispielsweise Bilder -- werden direkt zurückgeliefert, während
 die anderen Requests an den Application Server weitergegeben werden. So kann auch ein Caching
 problemlos implementiert werden, was den Application Server entlastet und die Skalierbarkeit stark
 erhöht.
@@ -209,11 +254,13 @@ erhöht.
 \section{Datenspeicherung}
 
 Die Daten werden in einer Graphendatenbank (konkret Neo4j) abgelegt. Diese besteht grundsätzlich nur
-aus zwei Arten von Objekten - Nodes und Relationen. Mithilfe von diesen zwei Objekten kann die
+aus zwei Arten von Objekten -- Nodes und Relationen. Mithilfe von diesen zwei Objekten kann die
 gesamte Datenstruktur sehr flexibel abgebildet werden; Abfragen können mit gezielter Traversierung
 durch eine domainspezifische Abfragesprache namens \textit{Cypher} ausgedrückt werden.
 
-Nachfolgend das allgemeine Datenbankdiagramm sowie ein Diagramm eines Beispielfalles.
+Der Evaluationsbeschrieb der Datenbank findet sich im Dokument \textit{Evaluation.Neo4j.pdf}.
+
+Nachfolgend das allgemeine Datenbankdiagramm sowie ein Diagramm eines Beispielfalles:
 
 \begin{figure}[H]
 	\includegraphics[height=\textwidth,angle=90]{Database_Design_Graph.png}
