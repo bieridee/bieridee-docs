@@ -1,15 +1,18 @@
 \documentclass[10pt,a4paper]{scrartcl}
 \pagestyle{empty}
 \usepackage{a4} % alternativ \usepackage{a4wide}
-\usepackage[utf8]{inputenc} % Unicode
 \usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
 \usepackage{parskip} % Skip indentation of first row
 \usepackage{graphicx} % Graphics support
 \usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
 \usepackage{hyperref} % Hyperlinks
-\usepackage[T1]{fontenc}
-\usepackage{textcomp}
+\usepackage{float} % Force float position
 \usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage{listings}
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+
+\lstset{basicstyle=\ttfamily}
 
 \linespread{1.3}
 
@@ -20,6 +23,7 @@
 \ihead{SE2 Projekte} %linke Kopfzeile
 \ohead{BierIdee} %rechte Kopfzeile
 
+\let\textquotedbl="
 
 \begin{document}
 
@@ -32,6 +36,19 @@
 \newpage
 	\tableofcontents
 \newpage
+
+\section*{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1.0 & 03.04.2012 & Dokument erstellt & dbargen \\  
+\hline 
+v1.1 & 05.04.2012 & Tags und Json Formate hinzugefügt & jfurrer \\
+\bottomrule
+\end{tabular} 
+\newpage
+
 
 \section{Einleitung}
 
@@ -85,6 +102,17 @@ Ein spezifisches Bier, identifiziert durch die ID.
 	\item[URI Path] \texttt{/beers/\{beer-id\}}
 	\item[Archetype] Document
 	\item[Methods] GET, PUT, DELETE
+	\item[Json Format] \hfill
+\begin{lstlisting}
+{
+	type: "beer",
+	name: "{beer-name}",
+	image: "{image-path}",
+	brand: "{brand-name}",
+	beertype: "{resource-URI}",
+	tags: "{resource-URI}?beer={beer-id}"
+}
+\end{lstlisting}
 \end{description}
 
 
@@ -94,11 +122,19 @@ Der Bestand aller Biere.
 
 \begin{description}
 	\item[URI Path] \texttt{/beers}
- 	\item[Query Parameters] \texttt{tag=\{tagName\}}
+ 	\item[Query Parameters] \texttt{tag=\{tag-name\}}
 	\item[Archetype] Collection
 	\item[Methods] GET, POST
+	\item[Json Format] \hfill
+\begin{lstlisting}
+[{
+	type: "beer",
+	name: "{beer-name}",
+	image: "{image-path}",
+	resource: "{resource-URI}"
+}]
+\end{lstlisting}
 \end{description}
-
 
 \subsection{Users}
 
@@ -108,6 +144,13 @@ Ein Benutzer, identifiziert durch den Benutzernamen.
 	\item[URI Path] \texttt{/users/\{username\}}
 	\item[Archetype] Store
 	\item[Methods] GET, PUT, DELETE
+	\item[Json Format] \hfill
+\begin{lstlisting}
+{
+	type: "user",
+	username: "{username}"
+}
+\end{lstlisting}
 \end{description}
 
 
@@ -119,6 +162,14 @@ Bier-Empfehlungen für einen bestimmten Benutzer.
 	\item[URI Path] \texttt{/users/\{username\}/recommendations}
 	\item[Archetype] Controller
 	\item[Methods] GET
+	\item[Json Format] \hfill
+\begin{lstlisting}
+[{
+	"type": "recommendation",
+	"name": "{beer-name}",
+	"beer": "{resource-URI}"
+}]
+\end{lstlisting}
 \end{description}
 
 
@@ -130,6 +181,15 @@ Eine Bier-Bewertung durch einen bestimmten Benutzer.
 	\item[URI Path] \texttt{/beers/\{beer-id\}/ratings/\{username\}}
 	\item[Archetype] Store
 	\item[Methods] GET, PUT, DELETE
+	\item[Json Format] \hfill
+\begin{lstlisting}
+{
+	type: "rating",
+	beer: "{resource-URI}",
+	user: "{resource-URI)",
+	value: {value}
+}
+	\end{lstlisting}
 \end{description}
 
 
@@ -141,6 +201,16 @@ Ein Bierkonsum, identifiziert durch die ID.
 	\item[URI Path] \texttt{/consumption/\{consumption-id\}}
 	\item[Archetype] Document
 	\item[Methods] GET, PUT, DELETE
+	\item[Json Format] \hfill
+\begin{lstlisting}
+{
+	type: "consumtion",
+	beer: "{resource-URI}",
+	user: "{resource-URI)",
+	timestamp: {value}
+	
+}
+\end{lstlisting}
 \end{description}
 
 
@@ -153,6 +223,14 @@ Der Bestand aller Bierkonsume.
  	\item[Query Parameters] \texttt{user=\{username\}, beer=\{beer-id\}}
 	\item[Archetype] Collection
 	\item[Methods] GET, POST
+	\item[Json Format] \hfill
+\begin{lstlisting}
+[{	
+	type: "consumtion",
+	resource: "{recource-URI}"
+	timestamp: {value}
+}]
+\end{lstlisting}
 \end{description}
 
 
@@ -164,6 +242,15 @@ Eine Brauerei, identifiziert durch die ID.
 	\item[URI Path] \texttt{/breweries/\{brewery-id\}}
 	\item[Archetype] Document
 	\item[Methods] GET, PUT, DELETE
+	\item[Json Format] \hfill
+\begin{lstlisting}
+{	
+	type: "brewery",
+	name: "{brewery-name}"
+	size: "{value}",
+	profile: "{value}"
+}
+\end{lstlisting}
 \end{description}
 
 
@@ -176,6 +263,14 @@ Der Bestand aller Brauereien.
 	\item[Query Parameters] \texttt{brewerySize=\{size\}}
 	\item[Archetype] Collection
 	\item[Methods] GET, POST
+	\item[Json Format] \hfill
+\begin{lstlisting}
+[{	
+	type: "brewery",
+	name: "{brewery-name}"
+	resource: "{resource-URI}"
+}]
+\end{lstlisting}
 \end{description}
 
 
@@ -188,8 +283,52 @@ Die Aktivitäts-Timeline.
 	\item[Query Parameters] \texttt{pageSize=\{size\}, pageStartIndex=\{index\}, user=\{username\}}
 	\item[Archetype] Collection
 	\item[Methods] GET
+	\item[Json Format] \hfill
+\begin{lstlisting}
+[{	
+	type: "{consumition | rating}",
+	name: "{beer-name}",
+	user: "{user-name}",
+	resource: "{resource-URI}"
+}]
+\end{lstlisting}
 \end{description}
 
+\subsection{Tag}
+
+Ein spezifischer Tag, identifiziert duch die ID.
+
+\begin{description}
+ 	\item[URI Path] \texttt{/tags/{tag-id}}
+	\item[Archetype] Document
+	\item[Methods] GET, POST
+	\item[Json Format] \hfill
+\begin{lstlisting}
+{	
+	type: "tag",
+	name: "{tag-name}"
+}
+\end{lstlisting}
+\end{description}
+
+\subsection{Tags}
+
+Liste aller Tags.
+
+\begin{description}
+ 	\item[URI Path] \texttt{/tags}
+	\item[Query Parameters] \texttt{beer=\{beer-id\},}
+	\item[Archetype] Collection
+	\item[Methods] GET
+	\item[Json Format] \hfill
+\begin{lstlisting}
+[{	
+	type: "tag",
+	name: "{tag-name}",
+	resource: "{resource-URI}"
+}]
+\end{lstlisting}
+\end{description}
 
 \bibliographystyle{alpha}
 \bibliography{REST.Interface}
