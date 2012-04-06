@@ -327,18 +327,7 @@ Der Bestand aller Bierkonsume.
 	\item[Methods] GET, POST
 	\item[JSON Format] \hfill
 \begin{lstlisting}
-[{
-	beer: {
-		name: "{beer-name}",
-		uri: "{ressource-URI}"
-	},
-	user: {
-		username: "{username}",
-		uri: "{ressource-URI)"
-	},
-	timestamp: {value},
-	uri: "{ressource-URI}"
-}]
+[<consumption document + uri>, ...]
 \end{lstlisting}
 \end{description}
 
@@ -373,12 +362,7 @@ Der Bestand aller Brauereien.
 	\item[Methods] GET, POST
 	\item[JSON Format] \hfill
 \begin{lstlisting}
-[{	
-	name: "{brewery-name}"
-	size: "{value}",
-	profile: "{ressource-URI}",
-	uri: "{ressource-URI}"
-}]
+[<brewery document + uri>, ...]
 \end{lstlisting}
 \end{description}
 
