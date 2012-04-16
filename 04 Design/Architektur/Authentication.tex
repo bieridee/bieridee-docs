@@ -35,43 +35,79 @@
 \toprule
 \textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
 \midrule
-v1.0 & 14.04.2012 & Dokument erstellt & cfa \\  
+v1.0 & 14.04.2012 & Dokument erstellt & cfaessle \\  
 \hline 
-v1.1 & 00.00.2012 & -- & kürzel \\
-\hline 
-v1.2 & 00.00.2012 & -- & kürzel \\
+v1.1 & 16.04.2012 & Review & dbargen \\
 \bottomrule
 \end{tabular} 
 \newpage
 
+
 \section{Einleitung}
-Der Zweck dieses Dokumentes ist das aufzeigen der verwendeten Authentifizierungsmechanismen für die REST API im Projekt Bieridee. Eine wichtige Voraussetzung ist, dass auch dieser Aspekt Restful implementiert ist, sprich "Zustandslos".
+Der Zweck dieses Dokumentes ist das Erläutern der verwendeten Authentifizierungsmechanismen für die
+REST API im Projekt Bieridee. Eine wichtige Voraussetzung ist, dass auch dieser Aspekt
+\textit{RESTful} implementiert ist, wobei vor allem das Prinzip der \textit{Statelessness} zum
+Tragen kommt.
+
+
 \section{Verfahren}
-Zur Authentifizierung kommt das Hash-MAC Verfahren zum Einsatz. Alle Requests (Messages) werden mittels Passwort signiert.
-\subsubsection{Registrierung}
+Zur Authentifizierung kommt das HMAC\footnote{Hash-based Message Authentication Code, siehe
+http://en.wikipedia.org/wiki/HMAC} Verfahren gemäss
+RFC2104\footnote{http://www.ietf.org/rfc/rfc2104.txt} zum Einsatz. Alle Requests (Messages) werden
+mittels Passwort und einer Hashfunktion signiert.
+
+\subsection{Registrierung}
 Der Benutzer registriert einen neuen Benutzeraccount.
-Der Benutzeraccount besitzt ein Passwort, welches dem Server gehasht (SHA-1) übermittelt wird.
-Der Hashwert wird nachfolgend "Secret" genannt. 
-\subsubsection{Schritt 1}
-Der Client bereitet seinen REST Request vor. 
-\subsubsection{Schritt 2}
-Über ein definiertes Set von Attributen wird ein Hashwert (Signatur) gebildet. Für die Bildung dieses Hashwertes wird gemäss RFC2104 das Secret verwendet.
-\subsubsection{Schritt 3}
-Der Request wird mit einem zusätzlichen Header Versehen der den Benutzernamen sowie die generierte Signatur beinhaltet. Authorization: <username>:<signatur>
+Zum Benutzeraccount gehört ein Passwort, welches dem Server hashed (SHA-256) übermittelt wird.
+Der Hashwert wird nachfolgend "`Secret"' genannt. 
+
+\subsection{HTTP Request vorbereiten}
+Der Client bereitet seinen HTTP Request vor. 
+
+\subsection{Signatur berechnen}
+Über ein definiertes Set der HTTP Request Attribute wird eine Signatur (Hashwert) gebildet. Für
+die Bildung dieses Hashwertes wird gemäss RFC2104 das Secret verwendet.
+
+\subsection{Authorization Header setzen}
+Der Request wird mit einem zusätzlichen HTTP Header versehen, welcher den Benutzernamen sowie die
+generierte Signatur beinhaltet:
+
+\begin{verbatim}
+Authorization: <username>:<signatur>
+\end{verbatim}
+
 Anschliessend wird der Request abgesendet.
-\subsubsection*{Schritt 4}
-Der Server empfängt den Request und extrahiert den Authorization Header. Anhand der des Benutzernamens kann er in der Datenbank das gemeinsame Secret ausfindig machen und über das selbe Set von Attributen auch die Signatur berechnen.
-\subsection*{Schritt 5}
-Die beiden Signaturen werden verglichen, stimmen Sie überein ist der User erfolgreich authentifiziert.
+
+\subsection{Signatur verifizieren}
+Der Server empfängt den Request und extrahiert den \texttt{Authorization} Header. Anhand des
+Benutzernamens kann er in der Datenbank das gemeinsame Secret ausfindig machen und über das selbe
+Set von Attributen auch die Signatur berechnen.
+
+\subsection{Benutzer authentifizieren}
+Die beiden Signaturen werden verglichen. Stimmen Sie überein, ist der User erfolgreich
+authentifiziert.
+
 
 \section{Technische Details}
-\subsection*{Hashing Algorithmus}
-Als Hash Algorithmus wird SHA-1 verwendet.
-\subsection*{Speicherung der Passwörter}
-Die Passwörter werden ebenfalls gehast abgespeichert. Somit haben alle Passwörter ein einheitliches Format. Keine Sonderzeichen, gleiche Länge. Für die HMAC Bildung werden die Hashwerte dieser Passwörter verwendet. Das Eigentliche Passwort ist also nicht das ursprünglich eingegebene, sondern der Hashwert davon.
-\section*{Sicherheit}
-\subsection*{Aushandlung gemeinsames Secret}
-Der Einzige Schwachpunkt der angedachten Methode ist der initiale Austausch vom gemeinsamen Secret.
-\subsection*{Hash Algorithmus}
-Der SHA-1 Algorithmus ist ein Standartisierter und weitverbreiteter Hash Algorithmus.
+
+\subsection{Hashing Algorithmus}
+Als Hash Algorithmus wird
+SHA-256\footnote{http://csrc.nist.gov/publications/fips/fips180-3/fips180-3\_final.pdf} verwendet.
+
+\subsection{Speicherung der Passwörter}
+Die Passwörter werden -- sowohl in der Datenbank wie auch im Client -- ebenfalls hashed
+gespeichert. Somit haben alle Passwörter ein einheitliches Format. Keine Sonderzeichen, gleiche
+Länge. Für die HMAC Bildung werden die Hashwerte dieser Passwörter verwendet.
+
+
+\section{Sicherheit}
+
+\subsection{Aushandlung gemeinsames Secret}
+Der einzige Schwachpunkt der angedachten Methode ist der initiale Austausch des gemeinsamen Secrets.
+
+\subsection{Hashing Algorithmus}
+Der SHA-256 Algorithmus ist ein standardisierter und weit verbreiteter Hashing-Algorithmus. Er
+bietet mehr Sicherheit als MD5 und SHA-1 und wird desweiteren von Java out-of-the-box unterstützt.
+
+
 \end{document}
