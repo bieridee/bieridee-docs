@@ -56,9 +56,6 @@
     <module name="IllegalThrows"/>
     <module name="JUnitTestCase"/>
     <module name="MagicNumber"/>
-    <module name="MultipleStringLiterals">
-      <property name="allowedDuplicates" value="2"/>
-    </module>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanReturn"/>
     <module name="StringLiteralEquality"/>
@@ -84,5 +81,8 @@
   </module>
   <module name="FileLength"/>
   <module name="SuppressionCommentFilter"/>
-  <module name="SuppressWithNearbyCommentFilter"/>
+  <module name="SuppressWithNearbyCommentFilter">
+    <property name="commentFormat" value="SUPPRESS CHECKSTYLE: (\w+)"/>
+    <property name="influenceFormat" value="1"/>
+  </module>
 </module>
