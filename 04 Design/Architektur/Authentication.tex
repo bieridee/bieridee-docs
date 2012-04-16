@@ -53,7 +53,7 @@ Tragen kommt.
 \section{Verfahren}
 Zur Authentifizierung kommt das HMAC\footnote{Hash-based Message Authentication Code, siehe
 http://en.wikipedia.org/wiki/HMAC} Verfahren gemäss
-RFC2104\footnote{http://www.ietf.org/rfc/rfc2104.txt} zum Einsatz. Alle Requests (Messages) werden
+RFC 2104\footnote{http://www.ietf.org/rfc/rfc2104.txt} zum Einsatz. Alle Requests (Messages) werden
 mittels Passwort und einer Hashfunktion signiert.
 
 \subsection{Registrierung}
@@ -66,7 +66,9 @@ Der Client bereitet seinen HTTP Request vor.
 
 \subsection{Signatur berechnen}
 Über ein definiertes Set der HTTP Request Attribute wird eine Signatur (Hashwert) gebildet. Für
-die Bildung dieses Hashwertes wird gemäss RFC2104 das Secret verwendet.
+die Bildung dieses Hashwertes wird gemäss RFC 2104 das Secret verwendet.
+
+Für das genaue Berechnungsverfahren des HMAC, siehe Anhang \textit{\ref{hmac-calc}}.
 
 \subsection{Authorization Header setzen}
 Der Request wird mit einem zusätzlichen HTTP Header versehen, welcher den Benutzernamen sowie die
@@ -109,5 +111,24 @@ Der einzige Schwachpunkt der angedachten Methode ist der initiale Austausch des 
 Der SHA-256 Algorithmus ist ein standardisierter und weit verbreiteter Hashing-Algorithmus. Er
 bietet mehr Sicherheit als MD5 und SHA-1 und wird desweiteren von Java out-of-the-box unterstützt.
 
+
+\newpage\section{Anhang}
+
+\subsection{\label{hmac-calc}Berechnung des HMAC}
+
+Der HMAC wird aus der Nachricht $N$ und einem geheimen Schlüssel $K$ mittels der Hash-Funktion
+$\mathrm{H}$ nach RFC 2104 wie folgt berechnet. $K$ wird auf die Blocklänge $B$ der Hash-Funktion (512
+Bit für die meisten gängigen Hash-Funktionen) aufgefüllt. Falls die Länge von $K$ grösser als die
+Blocklänge der Hash-Funktion ist, wird $K$ durch $\mathrm{H}(K)$ ersetzt.
+$$\mathrm{HMAC}_K(N) = \mathrm{H}\left(\left(K \oplus opad \right) \;||\; \mathrm{H}\left(\left(K
+\oplus ipad \right) \;||\; N\right)\right)$$
+
+Die Werte $opad$ und $ipad$ sind dabei Konstanten, $\oplus$ steht
+für die bitweise XOR-Operation und $\;||\;$ für die Verknüpfung durch einfaches
+Zusammensetzen (Konkatenation).
+
+Nach RFC 2104 sind beide Konstanten wie folgt definiert:
+$$opad = \underbrace{\mathrm{0x5C}\dots \mathrm{0x5C}}_{B\textrm{-mal}} \textrm{ und } ipad =
+\underbrace{\mathrm{0x36}\dots \mathrm{0x36}}_{B\textrm{-mal}}$$
 
 \end{document}
