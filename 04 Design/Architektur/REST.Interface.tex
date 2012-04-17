@@ -374,7 +374,7 @@ Die Aktivitäts-Timeline.
 \begin{description}
  	\item[URI Path] \texttt{/timeline}
 	\item[Query Parameters] \texttt{pageSize=\{size\}, pageStartIndex=\{index\}, user=\{username\}}
-	\item[Archetype] Collection
+	\item[Archetype] Readonly Collection
 	\item[Methods] GET
 	\item[JSON Format] \hfill
 \begin{lstlisting}
@@ -411,8 +411,8 @@ Liste aller Tags.
 Alle Biere die mit einem Tag markiert wurden.
 
 \begin{description}
-	\item[URI Path] \texttt{/tags/\{tag-name\}}
-	\item[Archetype] Collection
+	\item[URI Path] \texttt{/tags/\{tag-name\}/beers}
+	\item[Archetype] Readonly Collection
 	\item[Methods] GET
 	\item[JSON Format] \hfill
 \begin{lstlisting}
