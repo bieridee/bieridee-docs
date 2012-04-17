@@ -1,0 +1,134 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+ 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Authentifizierung\\ Projekt BierIdee}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section*{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1.0 & 14.04.2012 & Dokument erstellt & cfaessle \\  
+\hline 
+v1.1 & 16.04.2012 & Review & dbargen \\
+\bottomrule
+\end{tabular} 
+\newpage
+
+
+\section{Einleitung}
+Der Zweck dieses Dokumentes ist das Erläutern der verwendeten Authentifizierungsmechanismen für die
+REST API im Projekt Bieridee. Eine wichtige Voraussetzung ist, dass auch dieser Aspekt
+\textit{RESTful} implementiert ist, wobei vor allem das Prinzip der \textit{Statelessness} zum
+Tragen kommt.
+
+
+\section{Verfahren}
+Zur Authentifizierung kommt das HMAC\footnote{Hash-based Message Authentication Code, siehe
+http://en.wikipedia.org/wiki/HMAC} Verfahren gemäss
+RFC 2104\footnote{http://www.ietf.org/rfc/rfc2104.txt} zum Einsatz. Alle Requests (Messages) werden
+mittels Passwort und einer Hashfunktion signiert.
+
+\subsection{Registrierung}
+Der Benutzer registriert einen neuen Benutzeraccount.
+Zum Benutzeraccount gehört ein Passwort, welches dem Server hashed (SHA-256) übermittelt wird.
+Der Hashwert wird nachfolgend "`Secret"' genannt. 
+
+\subsection{HTTP Request vorbereiten}
+Der Client bereitet seinen HTTP Request vor. 
+
+\subsection{Signatur berechnen}
+Über ein definiertes Set der HTTP Request Attribute wird eine Signatur (Hashwert) gebildet. Für
+die Bildung dieses Hashwertes wird gemäss RFC 2104 das Secret verwendet.
+
+Für das genaue Berechnungsverfahren des HMAC, siehe Anhang \textit{\ref{hmac-calc}}.
+
+\subsection{Authorization Header setzen}
+Der Request wird mit einem zusätzlichen HTTP Header versehen, welcher den Benutzernamen sowie die
+generierte Signatur beinhaltet:
+
+\begin{verbatim}
+Authorization: <username>:<signatur>
+\end{verbatim}
+
+Anschliessend wird der Request abgesendet.
+
+\subsection{Signatur verifizieren}
+Der Server empfängt den Request und extrahiert den \texttt{Authorization} Header. Anhand des
+Benutzernamens kann er in der Datenbank das gemeinsame Secret ausfindig machen und über das selbe
+Set von Attributen auch die Signatur berechnen.
+
+\subsection{Benutzer authentifizieren}
+Die beiden Signaturen werden verglichen. Stimmen Sie überein, ist der User erfolgreich
+authentifiziert.
+
+
+\section{Technische Details}
+
+\subsection{Hashing Algorithmus}
+Als Hash Algorithmus wird
+SHA-256\footnote{http://csrc.nist.gov/publications/fips/fips180-3/fips180-3\_final.pdf} verwendet.
+
+\subsection{Speicherung der Passwörter}
+Die Passwörter werden -- sowohl in der Datenbank wie auch im Client -- ebenfalls hashed
+gespeichert. Somit haben alle Passwörter ein einheitliches Format. Keine Sonderzeichen, gleiche
+Länge. Für die HMAC Bildung werden die Hashwerte dieser Passwörter verwendet.
+
+
+\section{Sicherheit}
+
+\subsection{Aushandlung gemeinsames Secret}
+Der einzige Schwachpunkt der angedachten Methode ist der initiale Austausch des gemeinsamen Secrets.
+
+\subsection{Hashing Algorithmus}
+Der SHA-256 Algorithmus ist ein standardisierter und weit verbreiteter Hashing-Algorithmus. Er
+bietet mehr Sicherheit als MD5 und SHA-1 und wird desweiteren von Java out-of-the-box unterstützt.
+
+
+\newpage\section{Anhang}
+
+\subsection{\label{hmac-calc}Berechnung des HMAC}
+
+Der HMAC wird aus der Nachricht $N$ und einem geheimen Schlüssel $K$ mittels der Hash-Funktion
+$\mathrm{H}$ nach RFC 2104 wie folgt berechnet. $K$ wird auf die Blocklänge $B$ der Hash-Funktion (512
+Bit für die meisten gängigen Hash-Funktionen) aufgefüllt. Falls die Länge von $K$ grösser als die
+Blocklänge der Hash-Funktion ist, wird $K$ durch $\mathrm{H}(K)$ ersetzt.
+$$\mathrm{HMAC}_K(N) = \mathrm{H}\left(\left(K \oplus opad \right) \;||\; \mathrm{H}\left(\left(K
+\oplus ipad \right) \;||\; N\right)\right)$$
+
+Die Werte $opad$ und $ipad$ sind dabei Konstanten, $\oplus$ steht
+für die bitweise XOR-Operation und $\;||\;$ für die Verknüpfung durch einfaches
+Zusammensetzen (Konkatenation).
+
+Nach RFC 2104 sind beide Konstanten wie folgt definiert:
+$$opad = \underbrace{\mathrm{0x5C}\dots \mathrm{0x5C}}_{B\textrm{-mal}} \textrm{ und } ipad =
+\underbrace{\mathrm{0x36}\dots \mathrm{0x36}}_{B\textrm{-mal}}$$
+
+\end{document}
