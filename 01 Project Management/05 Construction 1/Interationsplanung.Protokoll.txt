@@ -1,20 +1,22 @@
 Protokoll 02.04.12
 ===================
 
+
 Ort:
 -----
 Cafeteria HSR
 
+
 Anwesend
-----------
+--------
 - dbargen
 - cfaessle
 - jfurrer
 
 
 Retrospektive
----------------
-- Viel passiert, viel Know-How aufgebaut vorallem im Bereich neo4j. -> Umstieg auf neo4j war guteenscheidung
+-------------
+- Viel passiert, viel Know-How aufgebaut vorallem im Bereich neo4j. -> Umstieg auf neo4j war gute Enscheidung
 - Lange Diskussion am Montag über die Architektur war gut, und notwendig.
 - Erst am Montag bemerkt, dass es Dokumentvorlagen für die Work-Product Dokumente gibt, ab jetzt unbedingt verwenden.
 - Grundsätzlich alle zufrieden mit dem Projekt, auch mit dem Vortschritt.
@@ -22,14 +24,7 @@ Retrospektive
 
 
 Iterationsplanung
-------------------
+-----------------
 - Dieses Wochenende ist das Osterwochende, d.h Montag und Dienstag fällt aus. Am Donnerstag fällt dbargen zusätzlich noch aus. 
-- Wichtig: Know-How Transfer machen, unteranderem wegen Ausfall von dbargen.
-
 - Das Wichtigste ist, den Architekturprototypen fertig zu stellen und alle dazugehörigen Dokumente.
-
-
-Priorisierung und Zuteilung Tickets
-------------------------------------
-
- -> 
+- Wichtig: Know-How Transfer machen, unteranderem wegen Ausfall von dbargen.

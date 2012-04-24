@@ -47,6 +47,8 @@ v1.0 & 03.04.2012 & Dokument erstellt & dbargen \\
 v1.1 & 05.04.2012 & Tags und JSON Formate hinzugefügt & jfurrer \\
 \hline 
 v1.2 & 06.04.2012 & Überarbeitet, BeerType hinzugefügt & dbargen \\
+\hline 
+v1.3 & 24.04.2012 & Tagresource Beers entfernt, Paging bei BeerList hinzugefügt & jfurrer \\
 \bottomrule
 \end{tabular} 
 \newpage
@@ -181,7 +183,7 @@ Der Bestand aller Biere.
 
 \begin{description}
 	\item[URI Path] \texttt{/beers}
- 	\item[Query Parameters] \texttt{tag=\{tag-name\}}
+ 	\item[Query Parameters] \texttt{tag=\{tag-name\}, pageSize=\{size\}, pageStartIndex=\{index\}, user=\{username\}}
 	\item[Archetype] Collection
 	\item[Methods] GET, POST
 	\item[JSON Format] \hfill
@@ -374,7 +376,7 @@ Die Aktivitäts-Timeline.
 \begin{description}
  	\item[URI Path] \texttt{/timeline}
 	\item[Query Parameters] \texttt{pageSize=\{size\}, pageStartIndex=\{index\}, user=\{username\}}
-	\item[Archetype] Collection
+	\item[Archetype] Readonly Collection
 	\item[Methods] GET
 	\item[JSON Format] \hfill
 \begin{lstlisting}
