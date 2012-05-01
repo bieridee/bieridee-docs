@@ -226,15 +226,15 @@ Der Bestand aller Biertypen.
 \end{description}
 
 
-\subsection{Users}
+\subsection{User}
 
 Ein Benutzer, identifiziert durch den Benutzernamen.
 
 \begin{description}
 	\item[URI Path] \texttt{/users/\{username\}}
-	\item[Archetype] Store
+	\item[Archetype] Document
 	\item[Methods] GET, PUT, DELETE
-	\item[JSON Format (Single)] \hfill
+	\item[JSON Format] \hfill
 \begin{lstlisting}
 {
 	username: "{username}",
@@ -243,7 +243,18 @@ Ein Benutzer, identifiziert durch den Benutzernamen.
 	email: "{email}"
 }
 \end{lstlisting}
-	\item[JSON Format (Multiple)] \hfill
+\end{description}
+
+
+\subsection{Users}
+
+Der Bestand aller User.
+
+\begin{description}
+	\item[URI Path] \texttt{/users}
+	\item[Archetype] Collection
+	\item[Methods] GET, POST
+	\item[JSON Format] \hfill
 \begin{lstlisting}
 [<user document + uri>, ...]
 \end{lstlisting}
@@ -268,14 +279,14 @@ Bier-Empfehlungen für einen bestimmten Benutzer.
 \end{description}
 
 
-\subsection{Ratings}
+\subsection{Rating}
 
-Eine Bier-Bewertung durch einen bestimmten Benutzer.
+Die letzte Bier-Bewertung durch einen bestimmten Benutzer.
 
 \begin{description}
 	\item[URI Path] \texttt{/beers/\{beer-id\}/ratings/\{username\}}
-	\item[Archetype] Store
-	\item[Methods] GET, PUT, DELETE
+	\item[Archetype] Readonly Document
+	\item[Methods] GET
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 {
@@ -293,14 +304,28 @@ Eine Bier-Bewertung durch einen bestimmten Benutzer.
 \end{description}
 
 
+\subsection{Ratings}
+
+Der Bestand aller Bewertungen für ein bestimmtes Bier.
+
+\begin{description}
+	\item[URI Path] \texttt{/beers/\{beer-id\}/ratings/\{username\}}
+	\item[Archetype] Collection
+	\item[Methods] GET, POST
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[<rating document + uri>, ...]
+\end{lstlisting}
+\end{description}
+
 \subsection{Consumption}
 
 Ein Bierkonsum, identifiziert durch die ID.
 
 \begin{description}
-	\item[URI Path] \texttt{/consumption/\{consumption-id\}}
-	\item[Archetype] Document
-	\item[Methods] GET, PUT, DELETE
+	\item[URI Path] \texttt{/beers/\{beer-id\}/consumptions/\{consumption-id\}}
+	\item[Archetype] Readonly Document
+	\item[Methods] GET
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 {
@@ -320,10 +345,10 @@ Ein Bierkonsum, identifiziert durch die ID.
 
 \subsection{Consumptions}
 
-Der Bestand aller Bierkonsume.
+Der Bestand aller Bierkonsume für ein bestimmtes Bier.
 
 \begin{description}
- 	\item[URI Path] \texttt{/consumption}
+	\item[URI Path] \texttt{/beers/\{beer-id\}/consumptions}
  	\item[Query Parameters] \texttt{user=\{username\}, beer=\{beer-id\}}
 	\item[Archetype] Collection
 	\item[Methods] GET, POST
