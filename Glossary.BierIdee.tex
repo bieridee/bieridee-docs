@@ -6,6 +6,7 @@
 \usepackage{parskip} % Skip indentation of first row
 \usepackage{graphicx} % Graphics support
 \usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
 \usepackage{hyperref} % Hyperlinks
 \usepackage[automark]{scrpage2} %kopf/fusszeile
 
@@ -26,22 +27,22 @@
 	\thispagestyle{empty} % Don't start page numbers on this page
 \end{titlepage}
 
+\section{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1 & 06.03.2012 & Dokument erstellt, Domainmodel Sektion hinzugefügt & jfurrer \\  
+\hline
+v1.1 & 20.03.2012 & Architekturkomponenten hinzugefügt & dbargen \\  
+\hline 
+v1.2 & 01.04.2012 & Korrekturen nach Review & jfurrer \\
+\bottomrule
+\end{tabular} 
+\newpage
+
 
 \section{Glossary}
-
-\subsection{Domainmodell}
-\begin{description}
-	\item[Bier] Dies bezeichnet ein Bier, welches sich über das Bierrezept definiert. Konkret beispielsweise eine Flasche Appenzeller Quöllfrisch oder eine Büchse Feldschlösschen Premium. Die Verpackung spielt dabei keine Rolle.
-	\item[Bierkonsum] Eine konkrete konsumierte Quantität von Bier, z.B ein Glas Guinnes. Der Bierkonsum ist auch eine \texttt{Aktivität}.
-	\item[Biersorte] Die grobe Einteilung eines Biers. Beispiele für Sorten sind, 'Weissbier', 'Weizenbier', 'Zwickelbier' und so weiter.
-	\item[Bewertung] Die Bewertung ist die subjektive Einordnung der güte eine Bieres innerhalb einer definierten Skala durch einen Benutzer.
-	\item[Empfehlung] Eine durch das system errechnete Bier-Empfehlung an einen Benutzer. Die Empfehlung basiert auf Vergleichen von vorlieben verschiedener Benutzer.
-	\item[Tag] Mit Hilfe von Tags können Biere mit Schlagworten beschrieben werden.
-	\item[Profil] Mit Profil ist explizit ein Brauerei-Profil gemeint. Das Profil beinhaltet eine undefinierte Menge an Informationen zu einer Brauerei.
-	\item[Aktiviäten] Als Aktivitäten werden einerseits das Bewerten eines Bieres sowie die manuell getrackte Konsumation eines Bieres bezeichnet. 
-	\item[Timeline] Bei der Timeline handelt es sich um eine chonologische liste aller Aktivitäten die vom System getrack werden.
-	\item[Grösse] Die Grösse teilt die Brauereien in eine definierte Grössenkategorie ein. Die Grösse ist nur für Brauereien bestimmt. Grössenwerte könnten beispielsweise \textit{mikro}, \textit{regional} und \textit{national} sein.
-\end{description}
 
 \subsection{Architekturkomponenten}
 \begin{description}
