@@ -163,7 +163,8 @@ Ein spezifisches Bier, identifiziert durch die ID.
 	\item[Methods] GET, PUT, DELETE
 	\item[JSON Format] \hfill
 \begin{lstlisting}
-{
+{	
+	id: "{beer-id}",
 	name: "{beer-name}",
 	image: "{image-path}",
 	brand: "{brand-name}",
@@ -281,12 +282,12 @@ Bier-Empfehlungen für einen bestimmten Benutzer.
 
 \subsection{Rating}
 
-Die letzte Bier-Bewertung durch einen bestimmten Benutzer.
+Die letzte Bier-Bewertung durch einen bestimmten Benutzer. Eine neue Bewertung kann mittels \texttt{POST} hinzugefügt werden.
 
 \begin{description}
 	\item[URI Path] \texttt{/beers/\{beer-id\}/ratings/\{username\}}
-	\item[Archetype] Readonly Document
-	\item[Methods] GET
+	\item[Archetype] Controller
+	\item[Methods] GET, POST
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 {
@@ -301,21 +302,6 @@ Die letzte Bier-Bewertung durch einen bestimmten Benutzer.
 	value: "{value}"
 }
 	\end{lstlisting}
-\end{description}
-
-
-\subsection{Ratings}
-
-Der Bestand aller Bewertungen für ein bestimmtes Bier.
-
-\begin{description}
-	\item[URI Path] \texttt{/beers/\{beer-id\}/ratings/\{username\}}
-	\item[Archetype] Collection
-	\item[Methods] GET, POST
-	\item[JSON Format] \hfill
-\begin{lstlisting}
-[<rating document + uri>, ...]
-\end{lstlisting}
 \end{description}
 
 \subsection{Consumption}
@@ -349,7 +335,7 @@ Der Bestand aller Bierkonsume für ein bestimmtes Bier.
 
 \begin{description}
 	\item[URI Path] \texttt{/beers/\{beer-id\}/consumptions}
- 	\item[Query Parameters] \texttt{user=\{username\}, beer=\{beer-id\}}
+ 	\item[Query Parameters] \texttt{user=\{username\}}
 	\item[Archetype] Collection
 	\item[Methods] GET, POST
 	\item[JSON Format] \hfill
