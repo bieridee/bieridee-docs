@@ -56,7 +56,8 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 
 \begin{itemize}
 	\item REST.Interface.pdf
-	\item Evaluation.Neo4j.pdf
+	\item Evaluation_Datenbank.pdf
+	\item Authentication.pdf
 \end{itemize}
 
 %\bibliographystyle{alpha}
@@ -95,7 +96,7 @@ und die Clientanwendung.
 
 Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} zum Einsatz.
 Eine Graphendatenbank hat den Hauptvorteil, dass man sehr gut mit den Relationen arbeiten kann und
-so beispielsweise die Bier-Empfehlungen durch geschickte Traversierung realisieren kann.
+so beispielsweise die Bier-Empfehlungen durch geschickte Traversierung realisieren kann. Näheres zum Entscheid zur Verwendung einer Graphendatenbank siehe Dokument Evaluation_Datenbank.pdf
 
 \subsubsection{REST API}
 
@@ -137,6 +138,8 @@ Einerseits erzeugt die API sogenannte API-Tokens, mit welchem sich die App als "
 
 In einem zweiten Schritt authentifiziert und autorisiert sich der Benutzer der Android App mittels
 Benutzernamen und Passwort.
+
+Das genaue Authentifizierungs bzw. Signierungsverfahren ist im Dokument Authentication.pdf dokumentiert.
 
 \paragraph*{Security-Steps:}
 
@@ -185,7 +188,7 @@ Dies ist jedoch zusammen mit dem Ressourcen-Management (Templates, Strings, Graf
 
 
 \newpage
-/\section{Backend Architektur}
+\section{Backend Architektur}
 
 Die Backend-Architektur ist ein ziemlich wichtiger Teil des Architekturdokumentes. Deshalb
 nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel eines Bier-Objektes.
