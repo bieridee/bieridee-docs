@@ -1,0 +1,414 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
+\usepackage{hyperref} % Hyperlinks
+\usepackage{float} % Force float position
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage{listings}
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+
+\lstset{basicstyle=\ttfamily}
+
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{REST Specfications\\Projekt BierIdee}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\let\textquotedbl="
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\newpage
+	\tableofcontents
+\newpage
+
+\section*{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1.0 & 03.04.2012 & Dokument erstellt & dbargen \\  
+\hline 
+v1.1 & 05.04.2012 & Tags und JSON Formate hinzugefügt & jfurrer \\
+\hline 
+v1.2 & 06.04.2012 & Überarbeitet, BeerType hinzugefügt & dbargen \\
+\hline 
+v1.3 & 24.04.2012 & Tagresource Beers entfernt, Paging bei BeerList hinzugefügt & jfurrer \\
+\bottomrule
+\end{tabular} 
+\newpage
+
+
+\section{Einleitung}
+
+Die Definition der Ressourcen orientiert sich an den Regeln des Buches
+\textit{REST API Design Rulebook} \cite{masse2011rest} aus dem O'Reilly Verlag.
+
+\subsubsection*{URI Definition}
+
+Bei der Bezeichnung der URIs\footnote{Uniform Resource Identifier} wurde folgende Terminologie gemäss RFC 3986 verwendet:
+
+\texttt{URI = scheme \textquotedbl ://\textquotedbl{} authority \textquotedbl /\textquotedbl{}
+path [ \textquotedbl ?\textquotedbl{} query ] [ \textquotedbl \#\textquotedbl{} fragment ]}
+
+\subsubsection*{Ressource-Archetypen}
+
+Nachfolgend die Ressource-Archetypen gemäss \cite{masse2011rest}. Die Erklärungstexte wurden direkt dem besagten
+Buch entnommen.
+
+\begin{description}
+	\item[Document] A document resource is a singular concept that is akin to an object instance or database
+		record. A document’s state representation typically includes both fields with values and
+		links to other related resources.
+	\item[Collection] A collection resource is a server-managed directory of resources. Clients may propose
+		new resources to be added to a collection. However, it is up to the collection to choose
+		to create a new resource, or not.
+	\item[Store] A store is a client-managed resource repository. A store resource lets an API client put
+		resources in, get them back out, and decide when to delete them. On their own, stores
+		do not create new resources; therefore a store never generates new URIs. Instead, each
+		stored resource has a URI that was chosen by a client when it was initially put into the
+		store.
+	\item[Controller] A controller resource models a procedural concept. Controller resources are like
+		executable functions, with parameters and return values; inputs and outputs.
+		Like a traditional web application’s use of HTML forms, a REST API relies on controller
+		resources to perform application-specific actions that cannot be logically mapped to
+		one of the standard methods (create, retrieve, update, and delete, also known as
+		CRUD).
+\end{description}
+
+
+\section{Repräsentations-Designprinzipien}
+
+Die JSON-Repräsentation ist abhängig vom Ressource-Archetypen.
+
+\begin{description}
+	\item[Document] Ein Document gibt ein JSON Objekt zurück, welches alle relevanten Felder enthält.
+		Informationen, welche durch die Ressource-URI bereits gegeben sind (zB type), müssen nicht
+		erneut in der Liste erscheinen.\\
+		Falls im Document Unterobjekte auftauchen (zB das Bier einer Bewertung), wird für das Feld ein
+		JSON-Objekt erstellt, welches die Ressource-URI und falls sinnvoll ein oder zwei relevante
+		Felder enthält.\\
+		Beispiel: \hfill
+\begin{lstlisting}
+{
+	feld1: "{wert1}",
+	feld2: "{wert2}",
+	unterobjekt: {
+		feld1: "{wert1}",
+		uri: "{ressource-uri}"
+	},
+	untercollection: [
+		{
+			feld1: "{wert1}",
+			uri: "{ressource-uri}"
+		},
+		{
+			feld1: "{wert1}",
+			uri: "{ressource-uri}"
+		}
+	]
+}
+\end{lstlisting}
+	\item[Collection] Eine Collection gibt eine Liste mit allen enthaltenen (ggf. gefilterten)
+		JSON-Objekten zurück. Die Objekte werden zusätzlich jeweils um ein Feld \texttt{uri} ergänzt,
+		welches die Ressource-URI des jeweiligen Objektes enthält.\\
+		Beispiel: \hfill
+\begin{lstlisting}
+{
+	{
+		feld1: "{wert1}",
+		uri: "{ressource-uri}"
+	},
+	{
+		feld1: "{wert1}",
+		uri: "{ressource-uri}"
+	},
+}
+\end{lstlisting}
+	\item[Store] Ein Store verhält sich wie eine Collection, wenn sie direkt angesprochen wird
+		(\texttt{/store}) und wie ein Document, wenn ein spezifisches Element des Store angesprochen
+		wird (\texttt{/store/\{element-id\}}).
+	\item[Controller] Der Output des Controllers ist abhängig vom Verwendungszweck.
+\end{description}
+
+
+\section{REST Ressourcen}
+
+Nachfolgend sind die verfügbaren REST Ressourcen definiert. Alle Ressourcen sind
+unter der URI Authority \texttt{http://brauhaus.nusszipfel.com/} erreichbar.
+
+
+\subsection{Beer}
+
+Ein spezifisches Bier, identifiziert durch die ID.
+
+\begin{description}
+	\item[URI Path] \texttt{/beers/\{beer-id\}}
+	\item[Archetype] Document
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+{
+	name: "{beer-name}",
+	image: "{image-path}",
+	brand: "{brand-name}",
+	beertype: "{ressource-URI}",
+	tags: [{
+		name: "{tag-name}",
+		uri: "{ressource-URI}"
+	}]
+}
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Beers}
+
+Der Bestand aller Biere.
+
+\begin{description}
+	\item[URI Path] \texttt{/beers}
+ 	\item[Query Parameters] \texttt{tag=\{tag-name\}, pageSize=\{size\}, pageStartIndex=\{index\}, user=\{username\}}
+	\item[Archetype] Collection
+	\item[Methods] GET, POST
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[<beer document + uri>, ...]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Beertype}
+
+Ein Biertyp, identifiziert durch die ID.
+
+\begin{description}
+	\item[URI Path] \texttt{/beertypes/\{beertype-id\}}
+	\item[Archetype] Document
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+{
+	name: "{beertype-name}",
+	description: "{description}",
+}
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Beertypes}
+
+Der Bestand aller Biertypen.
+
+\begin{description}
+	\item[URI Path] \texttt{/beertypes}
+	\item[Archetype] Collection
+	\item[Methods] GET, POST
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[<beertype document + uri>, ...]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Users}
+
+Ein Benutzer, identifiziert durch den Benutzernamen.
+
+\begin{description}
+	\item[URI Path] \texttt{/users/\{username\}}
+	\item[Archetype] Store
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format (Single)] \hfill
+\begin{lstlisting}
+{
+	username: "{username}",
+	firstName: "{first-name}",
+	lastName: "{last-name}",
+	email: "{email}"
+}
+\end{lstlisting}
+	\item[JSON Format (Multiple)] \hfill
+\begin{lstlisting}
+[<user document + uri>, ...]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Recommendations}
+
+Bier-Empfehlungen für einen bestimmten Benutzer.
+
+\begin{description}
+	\item[URI Path] \texttt{/users/\{username\}/recommendations}
+	\item[Archetype] Controller
+	\item[Methods] GET
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[{
+	"name": "{beer-name}",
+	"uri": "{ressource-URI}"
+}]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Ratings}
+
+Eine Bier-Bewertung durch einen bestimmten Benutzer.
+
+\begin{description}
+	\item[URI Path] \texttt{/beers/\{beer-id\}/ratings/\{username\}}
+	\item[Archetype] Store
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+{
+	beer: {
+		name: "{beer-name}",
+		uri: "{ressource-URI}"
+	},
+	user: {
+		username: "{username}",
+		uri: "{ressource-URI)"
+	},
+	value: "{value}"
+}
+	\end{lstlisting}
+\end{description}
+
+
+\subsection{Consumption}
+
+Ein Bierkonsum, identifiziert durch die ID.
+
+\begin{description}
+	\item[URI Path] \texttt{/consumption/\{consumption-id\}}
+	\item[Archetype] Document
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+{
+	beer: {
+		name: "{beer-name}",
+		uri: "{ressource-URI}"
+	},
+	user: {
+		username: "{username}",
+		uri: "{ressource-URI)"
+	},
+	timestamp: "{value}"
+}
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Consumptions}
+
+Der Bestand aller Bierkonsume.
+
+\begin{description}
+ 	\item[URI Path] \texttt{/consumption}
+ 	\item[Query Parameters] \texttt{user=\{username\}, beer=\{beer-id\}}
+	\item[Archetype] Collection
+	\item[Methods] GET, POST
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[<consumption document + uri>, ...]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Brewery}
+
+Eine Brauerei, identifiziert durch die ID.
+
+\begin{description}
+	\item[URI Path] \texttt{/breweries/\{brewery-id\}}
+	\item[Archetype] Document
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+{	
+	name: "{brewery-name}"
+	size: "{value}",
+	profile: "{ressource-URI}"
+}
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Breweries}
+
+Der Bestand aller Brauereien.
+
+\begin{description}
+	\item[URI Path] \texttt{/breweries}
+	\item[Query Parameters] \texttt{brewerySize=\{size\}}
+	\item[Archetype] Collection
+	\item[Methods] GET, POST
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[<brewery document + uri>, ...]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Timeline}
+
+Die Aktivitäts-Timeline.
+
+\begin{description}
+ 	\item[URI Path] \texttt{/timeline}
+	\item[Query Parameters] \texttt{pageSize=\{size\}, pageStartIndex=\{index\}, user=\{username\}}
+	\item[Archetype] Readonly Collection
+	\item[Methods] GET
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[{	
+	type: "consumpton | rating",
+	name: "{beer-name}",
+	user: "{user-name}",
+	uri: "{ressource-URI}"
+}]
+\end{lstlisting}
+\end{description}
+
+
+\subsection{Tags}
+
+Liste aller Tags.
+
+\begin{description}
+	\item[URI Path] \texttt{/tags/\{tag-name\}}
+	\item[Archetype] Store
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[{	
+	name: "{tag-name}",
+	uri: "{ressource-URI}"
+}]
+\end{lstlisting}
+\end{description}
+
+
+\bibliographystyle{alpha}
+\bibliography{REST.Interface}
+
+\end{document}

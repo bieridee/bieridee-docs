@@ -1,0 +1,51 @@
+Protokoll 16.04.12
+===================
+
+
+Ort:
+-----
+Cafeteria HSR
+
+
+Anwesend
+----------
+- dbargen
+- cfaessle
+- jfurrer
+
+
+Retrospektive 14:40
+-------------------
+
+Positiv:
+- Wir haben alle Gas gegeben und viel zustande gebracht.
+- Android Prototyp funktioniert
+- API funktioniert auch schon
+
+Verbessern:
+- (jfurrer) Regelmässiger Zeit erfassen
+- Kleinere Tasks erstellen, häufiger committen, häufiger reviewen & mergen
+- Instabile Umgebung, wir brauchen besseres automatisches Deployment
+- Kurze Skizze Testumgebung (Server, Firewall etc)
+- Fertig benutzbare App leider nicht zustande gebracht
+
+
+Iterationsplanung 14:55
+-----------------------
+
+- Funktionierender Prototyp muss fertig sein für Tester!
+- Stärkere Fokussierung auf Usecases
+- Usecase Registrierung/Anmeldung muss funktionieren
+- Usecase Bierliste anzeigen muss funktionieren
+- Usecase Konsum erfassen muss funktionieren
+- Fokus Woche 1: Backend
+- Fokus Woche 2: Frontend
+
+
+Tickets erfassen & priorisieren 15:25
+-------------------------------------
+
+Siehe Redmine
+
+Ende 16:15
+----------

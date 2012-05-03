@@ -4,7 +4,6 @@
 *.out
 *.toc
 *.bbl
-*.bib
 *.blg
 *.dvi
 *.ps

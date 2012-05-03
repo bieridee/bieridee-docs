@@ -56,9 +56,6 @@
     <module name="IllegalThrows"/>
     <module name="JUnitTestCase"/>
     <module name="MagicNumber"/>
-    <module name="MultipleStringLiterals">
-      <property name="allowedDuplicates" value="5"/>
-    </module>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanReturn"/>
     <module name="StringLiteralEquality"/>
