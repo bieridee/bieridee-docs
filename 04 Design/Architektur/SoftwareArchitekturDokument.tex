@@ -72,7 +72,7 @@ REST API und die Clientanwendung. Zwischen der API und der Android-Clientanwendu
 ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem
 API-Token authentifizieren und die Requests mit einem kryptografischen Verfahren signieren. 
 Logisch werden im Backend die Datenbank- und API-bezogenen Klassen in einem gemeinsamen Package
-geführt. Das Frontend wird nach dem MVC Prinzip und gemäss Android Best Practices implementiert. 
+geführt. Das Frontend wird nach dem MVC Pattern und gemäss Android Best Practices implementiert. 
 Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
 Servlet-Container. Es wird aber aus Performance- und Optimierungsgründen ein Reverse Proxy
 davorgesetzt. Alle Daten werden im Backend persistent in einer Graphendatenbank gespeichert und
