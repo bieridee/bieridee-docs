@@ -56,7 +56,7 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 
 \begin{itemize}
 	\item REST.Interface.pdf
-	\item Evaluation_Datenbank.pdf
+	\item Evaluation.Datenbank.pdf
 	\item Authentication.pdf
 \end{itemize}
 
@@ -96,7 +96,7 @@ und die Clientanwendung.
 
 Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} zum Einsatz.
 Eine Graphendatenbank hat den Hauptvorteil, dass man sehr gut mit den Relationen arbeiten kann und
-so beispielsweise die Bier-Empfehlungen durch geschickte Traversierung realisieren kann. Näheres zum Entscheid zur Verwendung einer Graphendatenbank siehe Dokument Evaluation_Datenbank.pdf
+so beispielsweise die Bier-Empfehlungen durch geschickte Traversierung realisieren kann. Näheres zum Entscheid zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
 
 \subsubsection{REST API}
 
@@ -197,6 +197,18 @@ nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel ei
 	\includegraphics[height=\textwidth,angle=90]{BackendArchitektur.png}
 	\caption{Backend Architektur}
 	\label{fig:backend_architecture}
+\end{figure}
+
+\newpage
+\section{Frontend Architektur}
+
+Dieses Diagramm zeigt einen Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste. Die
+Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben.
+
+\begin{figure}[H]
+	\includegraphics[height=\textwidth,angle=90]{FrontendArchitektur.png}
+	\caption{Frontend Architektur}
+	\label{fig:frontend_architecture}
 \end{figure}
 
 
