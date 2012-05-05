@@ -38,8 +38,10 @@
 \textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
 \midrule
 v1.0 & 02.04.2012 & Dokument erstellt & dbargen \\  
-%\hline 
-%v1.1 & 00.00.2012 & -- & kürzel \\
+\hline 
+v1.1 & 05.05.2012 & Frontendarchitekturdiagramm & dbargen \\  
+\hline 
+v1.2 & 05.05.2012 & Dokument überarbeitet & dbargen \\  
 \bottomrule
 \end{tabular} 
 \newpage
@@ -67,15 +69,15 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 
 Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die
 REST API und die Clientanwendung. Zwischen der API und der Android-Clientanwendung wird
-ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem API-Token
-authentifizieren. Logisch werden die Datenbank- und API-bezogenen Klassen in einem gemeinsamen
-Package geführt, das selbe gilt für das Frontend. Zusätzlich werden jedoch alle gemeinsam
-verwendeten Klassen und Interfaces in einem separatem, gemeinsam zugänglichen Package gehalten.
+ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem
+API-Token authentifizieren und die Requests mit einem kryptografischen Verfahren signieren. 
+Logisch werden im Backend die Datenbank- und API-bezogenen Klassen in einem gemeinsamen Package
+geführt. Das Frontend wird nach dem MVC Prinzip und gemäss Android Best Practices implementiert. 
 Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
 Servlet-Container. Es wird aber aus Performance- und Optimierungsgründen ein Reverse Proxy
 davorgesetzt. Alle Daten werden im Backend persistent in einer Graphendatenbank gespeichert und
-durch geschickte Traversierung und eingebaute Algorithmen abgefragt. Das System soll in der
-Testphase bis zu 50 gleichzeitige Nutzer bedienen können.
+durch Traversierung und eingebaute Algorithmen abgefragt. Das System soll in der Testphase bis zu
+50 gleichzeitige Nutzer bedienen können.
 
 
 \newpage
@@ -96,7 +98,8 @@ und die Clientanwendung.
 
 Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} zum Einsatz.
 Eine Graphendatenbank hat den Hauptvorteil, dass man sehr gut mit den Relationen arbeiten kann und
-so beispielsweise die Bier-Empfehlungen durch geschickte Traversierung realisieren kann. Näheres zum Entscheid zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
+so beispielsweise die Bier-Empfehlungen durch Traversierung realisieren kann. Näheres zum Entscheid
+zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
 
 \subsubsection{REST API}
 
@@ -134,10 +137,12 @@ und via HTTP im JSON- oder XML-Format ausgegeben.
 \subsection{Safety / Security}
 
 Die API wird nicht öffentlich/frei zugreifbar sein. Das Sicherheitskonzept ist zweistufig aufgebaut.
-Einerseits erzeugt die API sogenannte API-Tokens, mit welchem sich die App als "`trustful"' App identifiziert.
+Einerseits erzeugt die API sogenannte API-Tokens, mit welchem sich die App als "`trustful"' App
+identifiziert.
 
 In einem zweiten Schritt authentifiziert und autorisiert sich der Benutzer der Android App mittels
-Benutzernamen und Passwort.
+Benutzernamen und Passwort-Hash. Die Daten werden jedoch nicht direkt übertragen, sondern werden nur
+benutzt um die Requests mithilfe des HMAC-SHA256 Verfahrens zu signieren.
 
 Das genaue Authentifizierungs bzw. Signierungsverfahren ist im Dokument Authentication.pdf dokumentiert.
 
@@ -162,20 +167,11 @@ Die grundsätzliche Aufteilung in Subsysteme in diesem Projekt wird bereits im K
 \textit{Systemübersicht} beschrieben, deshalb wird hier primär auf die Package-Architektur
 eingegangen.
 
-Die logische Architektur des Gesamtprojektes wird in drei Kategorien bzw. Packages unterteilt --
-\textit{front}, \textit{back} und \textit{common}. Alle drei Packages sind Unterpackages von
+Die logische Architektur des Gesamtprojektes wird in zwei Hauptkategorien bzw. Packages unterteilt --
+\textit{android} und \textit{back}. Beide Packages sind Unterpackages von
 \textit{ch.hsr.bieridee}.
 
-Neben den Frontend- und Backend-Packages wird ein Package \textit{ch.hsr.bieridee.common} erstellt,
-welches die gemeinsamen Teile des Front- und Backends beinhaltet (konkret die Domainobjekte und
--interfaces, sowie die Ressourcenobjekte und -interfaces).
-
-Im Backend wird die Datenhaltung vom Package \textit{ch.hsr.bieridee.back.models} übernommen,
-welches die entsprechende Datenbanknode kapselt. Desweiteren gibt es ein \textit{config}- und ein
-\textit{utils} Package.
-
-Ähnliches gilt für das Frontend. Momentan sind die Packages \textit{config}, \textit{utils} und
-\textit{activities} als Unterpackages von \textit{ch.hsr.bieridee.front} geplant.
+Im nachfolgenden Diagramm sieht man die Aufteilung der Projektteile in Packages.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{PackageDiagramm.png}
@@ -184,7 +180,8 @@ welches die entsprechende Datenbanknode kapselt. Desweiteren gibt es ein \textit
 \end{figure}
 
 Selbstverständlich wird die Android-Applikation nach dem Model-View-Controller Modell implementiert.
-Dies ist jedoch zusammen mit dem Ressourcen-Management (Templates, Strings, Grafiken etc) ein integraler Bestandteil des Android SDKs, deshalb wird es hier nicht genauer erörtert.
+Dies ist jedoch zusammen mit dem Ressourcen-Management (Templates, Strings, Grafiken etc) ein
+integraler Bestandteil des Android SDKs, deshalb wird es hier nicht genauer erörtert.
 
 
 \newpage
