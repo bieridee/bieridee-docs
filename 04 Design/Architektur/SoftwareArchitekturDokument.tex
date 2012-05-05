@@ -196,6 +196,17 @@ nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel ei
 	\label{fig:backend_architecture}
 \end{figure}
 
+\subsection{Repräsentatives SSD}
+\begin{figure}[H]
+	\includegraphics[height=\textwidth,angle=90]{PostRatingSSD.png}
+	\caption{Post Rating SSD}
+	\label{fig:post_rating_ssd}
+\end{figure}
+
+Das SSD PostRating beschreibt den vorgang einer Bier-Bewertung. Der Einstiegspunkt in diesen Vorgang ist die Rating Resource die auf einen Post Request reagiert und danach den Vorgang startet. Um nicht direkt von der Resource auf die Datenbank zuzugreifen werden für das betroffene Bier sowie den Betroffenen Benutzer die entsprechenden Models instanziert. Der Zugriff auf die Datenbank passiert über eine Utility Klasse.
+Wenn wenn dann alle die Informationen zum Bier und zum Benutzer zurverfügung stehen wird ein neues Rating Model instanziert und daduch auch, wieder mit hilfe der DBUtil Klasse die neue Rating-Node erstellt. Wenn nun das Rating in der Datenbank exisiert muss noch die durchschnittliche Gesamtbewertung des betroffenen Bieres neu berechnet werden. Dies passiert direkt auf der Datenbank mit hilfe einer Cypher-Query. Diese wird über das Bier Model initiiert und über ein Cyher Utility ausgeführt, um auch in diesem Fall die Resource von der Datenbank getrennt zu halten.
+Wenn alle Vorgänge die in diesem SSD beschrieben sind erfolgreich durchgeführt wurden, wurde eine neue Rating Node in der Datenbank erstellt und korrekt mit den benötigten Index-Nodes verbunden und die durchschnittliche Bewertung des betroffenen Bieres wurde auf der dazugehörenden Daten-Node in der Datenbank aktualisiert.
+
 \newpage
 \section{Frontend Architektur}
 
@@ -207,6 +218,16 @@ Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Rich
 	\caption{Frontend Architektur}
 	\label{fig:frontend_architecture}
 \end{figure}
+
+\subsection*{Repräsentatives SSD}
+\begin{figure}[H]
+	\includegraphics[height=\textwidth,angle=90]{BeerlistSSD.png}
+	\caption{Frontend zu Backend Kommunikation SSD}
+	\label{fig:beerlist_ssd}
+\end{figure}
+
+Das SSD Beerlist beschreibt den prinzipiellen Ablauf der Kommunikation zwischen der Android App und der Server API.
+Einstiegspunkt ist das starten des BeerList Screens. Als erstes wird zur HTTP Kommunikation aus der ClientResourceFactory eine ClientResource Instanz angefordert. Vor dem Absenden des Requests wird eine Completion Callback Methode definiert (setOnResponse). Somit kann der Request asynchron ausgeführt, und das GUI später bei Erfolg aktualisiert werden. Als nächstes wird mittels Put Methode ein HTTP Put Request auf die definierte URL abgesetzt. Serverseitig wird Request geparst und allenfalls nötige Attribute wie Header, Query und Post Daten extrahiert und geparst. Der Serverseitige Empfänger des Requests ist ein Resource Handler, welche für jede URL definiert ist. Der Resource Handler veranlasst die Instanzierung der notwendigen Models, diese wiederum kümmern sich um Abfragen in der Datenbank und erstellen die Domain Objekte. Die Models werden danach in einen JSON String serialisiert und mittels HTTP an den Client geschickt. Das GUI wird danach über den aktualisierten Datenbestand informiert.
 
 
 \section{Prozesse und Threads}
