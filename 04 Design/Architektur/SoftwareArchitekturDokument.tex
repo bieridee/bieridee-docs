@@ -188,6 +188,8 @@ integraler Bestandteil des Android SDKs, deshalb wird es hier nicht genauer erö
 
 \newpage
 \section{Backend Architektur}
+Nachfolgend werden wichtige architektonische Klassen und deren Zusammenhang im Backend mittels Klassendiagramm beschrieben. Ebenso wird ein für die Architektur typischer Ablauf, das erfassen einer Bewertung, mit den wichtigsten Systemoperationen anhand von einem Systemsequenzdiagramm aufgezeigt.
+\subsection{Klassendiagramm}
 
 Die Backend-Architektur ist ein ziemlich wichtiger Teil des Architekturdokumentes. Deshalb
 nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel eines Bier-Objektes.
@@ -198,7 +200,7 @@ nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel ei
 	\label{fig:backend_architecture}
 \end{figure}
 
-\subsection{Repräsentatives SSD}
+\subsection{Typische Systemoperationen}
 \begin{figure}[H]
 	\includegraphics[height=\textwidth,angle=90]{PostRatingSSD.png}
 	\caption{Post Rating SSD}
@@ -223,17 +225,17 @@ Daten-Node in der Datenbank aktualisiert.
 
 \newpage
 \section{Frontend Architektur}
+Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt. Die
+Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine System typische Interaktion zwischen Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten Systemoperationen enthalten.
 
-Dieses Diagramm zeigt einen Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste. Die
-Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben.
-
+\subsection{Klassendiagramm}
 \begin{figure}[H]
 	\includegraphics[height=\textwidth,angle=90]{FrontendArchitektur.png}
 	\caption{Frontend Architektur}
 	\label{fig:frontend_architecture}
 \end{figure}
 
-\subsection{Repräsentatives SSD}
+\subsection{Typische Systemoperationen}
 \begin{figure}[H]
 	\includegraphics[height=\textwidth,angle=90]{BeerlistSSD.png}
 	\caption{Frontend zu Backend Kommunikation SSD}
