@@ -42,6 +42,8 @@ v1.0 & 02.04.2012 & Dokument erstellt & dbargen \\
 v1.1 & 05.05.2012 & Frontendarchitekturdiagramm & dbargen \\  
 \hline 
 v1.2 & 05.05.2012 & Dokument überarbeitet & dbargen \\  
+\hline 
+v1.3 & 05.05.2012 & SSDs hinzugefügt & cfaessler \\  
 \bottomrule
 \end{tabular} 
 \newpage
@@ -186,6 +188,8 @@ integraler Bestandteil des Android SDKs, deshalb wird es hier nicht genauer erö
 
 \newpage
 \section{Backend Architektur}
+Nachfolgend werden wichtige architektonische Klassen und deren Zusammenhang im Backend mittels Klassendiagramm beschrieben. Ebenso wird ein für die Architektur typischer Ablauf, das Erfassen einer Bewertung, mit den wichtigsten Systemoperationen anhand von einem Systemsequenzdiagramm aufgezeigt.
+\subsection{Klassendiagramm}
 
 Die Backend-Architektur ist ein ziemlich wichtiger Teil des Architekturdokumentes. Deshalb
 nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel eines Bier-Objektes.
@@ -196,17 +200,61 @@ nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel ei
 	\label{fig:backend_architecture}
 \end{figure}
 
+\subsection{Typische Systemoperationen}
+\begin{figure}[H]
+	\includegraphics[height=\textwidth,angle=90]{PostRatingSSD.png}
+	\caption{Post Rating SSD}
+	\label{fig:post_rating_ssd}
+\end{figure}
+
+Das SSD PostRating beschreibt den Vorgang einer Bier-Bewertung. Der Einstiegspunkt in diesen
+Vorgang ist die Rating Ressource, welche auf einen POST Request reagiert und daraufhin den Vorgang
+startet. Um nicht direkt von der Ressource auf die Datenbank zuzugreifen, werden für das betroffene
+Bier sowie für den betroffenen Benutzer die entsprechenden Models instanziert. Der Zugriff auf die
+Datenbank passiert über eine Utility Klasse.
+Wenn dann alle die Informationen zum Bier und zum Benutzer zur Verfügung stehen, wird ein neues
+Rating Model instanziert und daduch auch -- wieder mithilfe der DBUtil Klasse -- die neue
+Rating-Node erstellt. Wenn nun das Rating in der Datenbank exisiert muss noch die durchschnittliche
+Gesamtbewertung des betroffenen Bieres neu berechnet werden. Dies passiert direkt auf der Datenbank
+mithilfe eines Cypher-Queries. Dieses wird über das Bier Model initiiert und über ein Cyher Utility
+ausgeführt, um auch in diesem Fall die Ressource von der Datenbank getrennt zu halten.
+Wenn alle Vorgänge die in diesem SSD beschrieben sind erfolgreich durchgeführt wurden, wurde eine
+neue Rating Node in der Datenbank erstellt und korrekt mit den benötigten Index-Nodes verbunden.
+Desweiteren wurde die durchschnittliche Bewertung des betroffenen Bieres auf der dazugehörenden
+Daten-Node in der Datenbank aktualisiert.
+
 \newpage
 \section{Frontend Architektur}
+Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt. Die
+Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine systemtypische Interaktion zwischen Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten Systemoperationen enthalten.
 
-Dieses Diagramm zeigt einen Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste. Die
-Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben.
-
+\subsection{Klassendiagramm}
 \begin{figure}[H]
 	\includegraphics[height=\textwidth,angle=90]{FrontendArchitektur.png}
 	\caption{Frontend Architektur}
 	\label{fig:frontend_architecture}
 \end{figure}
+
+\subsection{Typische Systemoperationen}
+\begin{figure}[H]
+	\includegraphics[height=\textwidth,angle=90]{BeerlistSSD.png}
+	\caption{Frontend zu Backend Kommunikation SSD}
+	\label{fig:beerlist_ssd}
+\end{figure}
+
+Das SSD Beerlist beschreibt den prinzipiellen Ablauf der Kommunikation zwischen der Android App und
+der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. Als Erstes wird zur HTTP
+Kommunikation aus der \texttt{ClientResourceFactory} eine \texttt{ClientResource} Instanz
+angefordert. Vor dem Absenden des Requests wird eine Completion Callback Methode definiert
+(\texttt{setOnResponse}). Somit kann der Request asynchron ausgeführt und das GUI später bei Erfolg
+aktualisiert werden. Als nächstes wird ein HTTP PUT Request auf die definierte URL abgesetzt.
+Serverseitig wird der Request verarbeitet; allenfalls werden wichtige Attribute wie Header, Query
+und Request Daten extrahiert und geparst. Der serverseitige Empfänger des Requests ist ein Resource
+Handler. Solche Resource Handler sind für jede URL im Dispatcher definiert.  Der Resource Handler
+veranlasst die Instanzierung der notwendigen Models, diese wiederum kümmern sich um Abfragen in der
+Datenbank und erstellen die Domain Objekte. Die Models werden danach in einen JSON String
+serialisiert und mittels HTTP an den Client geschickt. Das GUI wird anschliessend über den
+aktualisierten Datenbestand informiert.
 
 
 \section{Prozesse und Threads}
