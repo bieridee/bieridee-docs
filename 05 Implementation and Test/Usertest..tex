@@ -1,0 +1,180 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+ 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Usertest Feedback Appero\#1\\ Projekt BierIdee}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section*{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1.0 & 07.05.2012 & Dokument erstellt & cfaessle \\  
+\hline 
+\bottomrule
+\end{tabular} 
+\newpage
+
+\section{Registration}
+Starte die Applikation und registriere dich als neuer Benutzer. 
+(Versuche beim Registrationsformular auch unübliche Eingaben wie Zahlen und Umlaute. Prüfe auch das Verhalten beim nicht Ausfüllen von geforderten Feldern.)
+Wenn die Registrierung erfolgreich war solltest du wieder auf dem Login Screen landen, auf welchem deine Eingaben bereits eingetragen sind.
+
+\subsubsection*{Aufgabenspezifische Bewertung}
+\begin{tabular}{|l|c|c|}
+\hline 
+\textbf{Artefakt} & \textbf{Erfüllt} & \textbf{Nicht Erfüllt} \\ 
+\hline 
+Der Registrierungsscreen konnte aufgerufen werden &  &  \\ 
+\hline 
+Die automatische Rückkehr auf Loginscreen ist erfolgt &  &  \\ 
+\hline 
+Benutzername und Passwort wurde im Loginscreen gespeichert &  &  \\ 
+\hline 
+\end{tabular}
+\\
+\\
+\\
+\textbf{Kommentar (wichtig im Fehlerfall/nicht Erfüllung)}
+\vspace*{8cm}
+
+\subsubsection*{Allgemeine GUI Bewertung}
+\begin{tabular}{|l|c|c|c|}
+\hline 
+\rule[-1ex]{0pt}{2.5ex} \textbf{Artefakt} & \textbf{Gut} & \textbf{Genügend} & \textbf{Ungenügend} \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Die Oberfläche reagiert schnell auf Eingaben &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Status über getätigte Eingaben ist ersichtlich (Erfolgsinfo, Update des Screens) &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Das Design ist einheitlich &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Der aktuelle Standort innerhalb der Applikation ist klar &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Falsche Eingaben können rückgängig gemacht werden &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Controls sind gut bedienbar, einfach zu erreichen &  &  &  \\  
+\hline 
+\end{tabular} 
+\\
+\\
+\\
+\textbf{Kommentar (wichtig im Fehlerfall/nicht Erfüllung}
+\vspace*{8cm}
+
+\section{Bier bewerten}
+Starte die Applikation und wähle auf dem Dashboardscreen den Punkt Bierliste. Wähle ein Bier deines Geschmackes. Gib eine Bewertung für das Bier ab mittels Sternchen Control in der Mittel. Überprüfe ob Sich das Durchschnittsrating aktualisiert.
+
+\subsubsection*{Aufgabenspezifische Bewertung}
+\begin{tabular}{|l|c|c|}
+\hline 
+\textbf{Artefakt} & \textbf{Erfüllt} & \textbf{Nicht Erfüllt} \\ 
+\hline 
+Der Bierlistescreen konnte aufgerufen werden &  &  \\ 
+\hline 
+Das Bier konnte ausgewählt werden und wird in einem neuen Beer Detail Screen angezeigt &  &  \\ 
+\hline 
+Das Durchschnittsrating wird nach jeder Bewertung aktualisiert &  &  \\ 
+\hline 
+\end{tabular}
+\\
+\\
+\\
+\textbf{Kommentar (wichtig im Fehlerfall/nicht Erfüllung)}
+\vspace*{8cm}
+
+\subsubsection*{Allgemeine GUI Bewertung}
+\begin{tabular}{|l|c|c|c|}
+\hline 
+\rule[-1ex]{0pt}{2.5ex} \textbf{Artefakt} & \textbf{Gut} & \textbf{Genügend} & \textbf{Ungenügend} \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Die Oberfläche reagiert schnell auf Eingaben &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Status über getätigte Eingaben ist ersichtlich (Erfolgsinfo, Update des Screens) &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Das Design ist einheitlich &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Der aktuelle Standort innerhalb der Applikation ist klar &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Falsche Eingaben können rückgängig gemacht werden &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Controls sind gut bedienbar, einfach zu erreichen &  &  &  \\  
+\hline 
+\end{tabular} 
+\\
+\\
+\\
+\textbf{Kommentar (wichtig im Fehlerfall/nicht Erfüllung}
+\vspace*{8cm}
+
+\section{Bier Konsum erfassen}
+Starte die Applikation und wähle auf dem Dashboardscreen den Punkt Bierliste. Wähle ein Bier deines Geschmackes. Erfasse einen Konsum indem du auf den entsprechenden Button drückst. Die erfolgreiche Speicherung sollte im GUI ersichtlich sein.
+
+\subsubsection*{Aufgabenspezifische Bewertung}
+\begin{tabular}{|l|c|c|}
+\hline 
+\textbf{Artefakt} & \textbf{Erfüllt} & \textbf{Nicht Erfüllt} \\ 
+\hline 
+Der Bierlistescreen konnte aufgerufen werden &  &  \\ 
+\hline 
+Das Bier konnte ausgewählt werden und wird in einem neuen Beer Detail Screen angezeigt &  &  \\ 
+\hline 
+Der erfasste Konsum wird mittels Toast bestätigt &  &  \\ 
+\hline 
+\end{tabular}
+\\
+\\
+\\
+\textbf{Kommentar (wichtig im Fehlerfall/nicht Erfüllung)}
+\vspace*{8cm}
+
+\subsubsection*{Allgemeine GUI Bewertung}
+\begin{tabular}{|l|c|c|c|}
+\hline 
+\rule[-1ex]{0pt}{2.5ex} \textbf{Artefakt} & \textbf{Gut} & \textbf{Genügend} & \textbf{Ungenügend} \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Die Oberfläche reagiert schnell auf Eingaben &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Status über getätigte Eingaben ist ersichtlich (Erfolgsinfo, Update des Screens) &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Das Design ist einheitlich &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Der aktuelle Standort innerhalb der Applikation ist klar &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Falsche Eingaben können rückgängig gemacht werden &  &  &  \\ 
+\hline 
+\rule[-1ex]{0pt}{2.5ex} Controls sind gut bedienbar, einfach zu erreichen &  &  &  \\  
+\hline 
+\end{tabular} 
+\\
+\\
+\\
+\textbf{Kommentar (wichtig im Fehlerfall/nicht Erfüllung}
+\vspace*{8cm}
+\end{document}
