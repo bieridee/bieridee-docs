@@ -222,10 +222,22 @@ neue Rating Node in der Datenbank erstellt und korrekt mit den benötigten Index
 Desweiteren wurde die durchschnittliche Bewertung des betroffenen Bieres auf der dazugehörenden
 Daten-Node in der Datenbank aktualisiert.
 
-\newpage
+\subsection{Wichtige Design Aspekte}
+\subsubsection*{Trennung Datenhaltung Domain}
+Um eine saubere Trennung zwischen Persistenz (Datenbank) und der eigentlichen Domain zu erhalten, haben wir uns des DAO (Data Access Object) Pattern verwendet, um so die Persistenz von der Domain zu trennen. Einerseits erreichen wir dadurch die klare Aufteilung der Zuständigkeiten eine höhere Kohäsion und auch eine gewisse Flexibilität in Datenbankspezifischen Spezialitäten. Sprich, es ist somit einfacher die Datenbank durch eine Andere zu ersetzen. Auch für die übrige Applikationslogik, so zum Beispiel Resource-Handlern, besitzen keine Kenntnis über die Datenbank. Das zentrale Interface für sämtliche Datenbank Operationen sind die Models. Daraus resultiert auch eine erstrebenswerte Verringerung der Kopplung.
+
+\subsubsection*{Use Case Controller}
+Sämtliche HTTP Anfragen werden in Resource-Handlern bearbeitet.
+Das Design der Resource-Handler ist so ausgelegt, dass wenn möglich pro Use Case ein separater Handler existiert.
+
+\subsubsection*{Abbildung von REST Archetypen }
+Um den REST Spezifikationen gerecht zu werden sind für alle benötigten Archetypen entsprechende Interfaces definiert. Die verschiedenen Resourcen implementieren diese Interfaces, dadurch wird sichergestellt, dass sämtliche Resourcen den geforderten REST Spezifikationen entsprechen.
+
 \section{Frontend Architektur}
 Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt. Die
 Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine systemtypische Interaktion zwischen Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten Systemoperationen enthalten.
+
+\newpage
 
 \subsection{Klassendiagramm}
 \begin{figure}[H]
