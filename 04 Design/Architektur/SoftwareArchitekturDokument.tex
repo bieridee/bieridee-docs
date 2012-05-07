@@ -44,6 +44,8 @@ v1.1 & 05.05.2012 & Frontendarchitekturdiagramm & dbargen \\
 v1.2 & 05.05.2012 & Dokument überarbeitet & dbargen \\  
 \hline 
 v1.3 & 05.05.2012 & SSDs hinzugefügt & cfaessler \\  
+\hline 
+v1.4 & 07.05.2012 & Wichtige Designaspekte & cfaessler, jfurrer, dbargen \\  
 \bottomrule
 \end{tabular} 
 \newpage
@@ -224,21 +226,34 @@ Daten-Node in der Datenbank aktualisiert.
 
 \subsection{Wichtige Design Aspekte}
 \subsubsection*{Trennung Datenhaltung Domain}
-Um eine saubere Trennung zwischen Persistenz (Datenbank) und der eigentlichen Domain zu erhalten, haben wir uns des DAO (Data Access Object) Pattern verwendet, um so die Persistenz von der Domain zu trennen. Einerseits erreichen wir dadurch die klare Aufteilung der Zuständigkeiten eine höhere Kohäsion und auch eine gewisse Flexibilität in Datenbankspezifischen Spezialitäten. Sprich, es ist somit einfacher die Datenbank durch eine Andere zu ersetzen. Auch für die übrige Applikationslogik, so zum Beispiel Resource-Handlern, besitzen keine Kenntnis über die Datenbank. Das zentrale Interface für sämtliche Datenbank Operationen sind die Models. Daraus resultiert auch eine erstrebenswerte Verringerung der Kopplung.
-
+Um eine saubere Trennung zwischen Persistenz (Datenbank) und der eigentlichen Domain zu erhalten,
+wurde das DAO (Data Access Object) Pattern verwendet, um so die Persistenz von der Domain zu
+trennen. Einerseits erreicht man durch die klare Aufteilung der Zuständigkeiten eine höhere
+Kohäsion und auch eine gewisse Flexibilität in datenbankspezifischen Spezialitäten. Sprich, es ist
+somit einfacher die Datenbank durch eine andere zu ersetzen. Auch die übrige Applikationslogik,
+(so zum Beispiel die Resource-Handler) besitzt keine Kenntnis über die Datenbank. Das zentrale
+Interface für sämtliche Datenbankoperationen sind die Models. Daraus resultiert auch eine
+erstrebenswerte Verringerung der Kopplung.
 
 \subsubsection*{Abbildung von REST Archetypen }
-Um den REST Spezifikationen gerecht zu werden sind für alle benötigten Archetypen entsprechende Interfaces definiert. Die verschiedenen Resourcen implementieren diese Interfaces, dadurch wird sichergestellt, dass sämtliche Resourcen den geforderten REST Spezifikationen entsprechen.
+Um den REST Best Practices gerecht zu werden, sind für alle benötigten
+Archetypen\footnote{REST Archetypen sind gemäss dem Buch \textit{REST API Design Rulebook} von
+O'Reilly Patterns für das Resource-Design einer API.} entsprechende Interfaces definiert. Die
+verschiedenen Resourcen implementieren diese Interfaces, dadurch wird sichergestellt, dass
+sämtliche Resourcen den geforderten REST Archetypen entsprechen.
 
 \newpage
 
 \section{Frontend Architektur}
-Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt. Die
-Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine systemtypische Interaktion zwischen Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten Systemoperationen enthalten.
+Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt.
+Die Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien
+vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine systemtypische Interaktion zwischen
+Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten
+Systemoperationen enthalten.
 
 \subsection{Klassendiagramm}
 \begin{figure}[H]
-	\includegraphics[height=\textwidth,angle=90]{FrontendArchitektur.png}
+	\includegraphics[height=0.9\textwidth,angle=90]{FrontendArchitektur.png}
 	\caption{Frontend Architektur}
 	\label{fig:frontend_architecture}
 \end{figure}
@@ -264,7 +279,28 @@ Datenbank und erstellen die Domain Objekte. Die Models werden danach in einen JS
 serialisiert und mittels HTTP an den Client geschickt. Das GUI wird anschliessend über den
 aktualisierten Datenbestand informiert.
 
+\subsection{Wichtige Design Aspekte}
 
+\subsubsection*{Model-View-Controller}
+
+Die Android-Applikation wird gemäss den Android-Developer-Richtlinien strikt nach dem
+MVC-Pattern aufgebaut. Alle GUI-Bezogenen Layouts werden als XML-Ressourcen erstellt, alle Strings
+in übersetzbare String-Ressourcen ausgelagert. Die Activities fungieren als Controller, die Daten
+werden durch Content Provider und entsprechende Adapter von der Controllerlogik getrennt.
+
+\subsubsection*{Auslagerung des HTTP-Clientresource-Handling}
+
+Die HTTP Client-Ressourcen werden in eine entsprechende \texttt{ClientResourceFactoy}
+ausgelagert, um tiefe Kopplung und hohe Kohäsion zu erreichen. Die \texttt{ClientResourceFactoy}
+initialisiert die \texttt{ClientResource} Objekte und gibt die frisch erstellte Instanz zurück.
+
+Mithilfe eines \texttt{ResourceSigningDecorator}s können existierende Client Ressourcen signiert
+werden. Dies wird im Decorator mithilfe des \textit{Chain of Responsibility} Patterns gelöst. Der
+\texttt{ClientResource} werden sogenannte \texttt{next}-Objekte zugewiesen, welche man "`chainen"`
+kann um mehrere Verarbeitungsschritte durchzuführen.
+
+
+\newpage
 \section{Prozesse und Threads}
 
 \subsection{Datenbank}
