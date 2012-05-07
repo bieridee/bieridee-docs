@@ -224,11 +224,21 @@ Daten-Node in der Datenbank aktualisiert.
 
 \subsection{Wichtige Design Aspekte}
 \subsubsection*{Trennung Datenhaltung Domain}
-Um eine saubere Trennung zwischen Persistenz (Datenbank) und der eigentlichen Domain zu erhalten, haben wir uns des DAO (Data Access Object) Pattern verwendet, um so die Persistenz von der Domain zu trennen. Einerseits erreichen wir dadurch die klare Aufteilung der Zuständigkeiten eine höhere Kohäsion und auch eine gewisse Flexibilität in Datenbankspezifischen Spezialitäten. Sprich, es ist somit einfacher die Datenbank durch eine Andere zu ersetzen. Auch für die übrige Applikationslogik, so zum Beispiel Resource-Handlern, besitzen keine Kenntnis über die Datenbank. Das zentrale Interface für sämtliche Datenbank Operationen sind die Models. Daraus resultiert auch eine erstrebenswerte Verringerung der Kopplung.
-
+Um eine saubere Trennung zwischen Persistenz (Datenbank) und der eigentlichen Domain zu erhalten,
+haben wir das DAO (Data Access Object) Pattern verwendet, um so die Persistenz von der Domain zu
+trennen. Einerseits erreichen wir durch die klare Aufteilung der Zuständigkeiten eine höhere
+Kohäsion und auch eine gewisse Flexibilität in datenbankspezifischen Spezialitäten. Sprich, es ist
+somit einfacher die Datenbank durch eine andere zu ersetzen. Auch die übrige Applikationslogik,
+(so zum Beispiel die Resource-Handler) besitzt keine Kenntnis über die Datenbank. Das zentrale
+Interface für sämtliche Datenbankoperationen sind die Models. Daraus resultiert auch eine
+erstrebenswerte Verringerung der Kopplung.
 
 \subsubsection*{Abbildung von REST Archetypen }
-Um den REST Spezifikationen gerecht zu werden sind für alle benötigten Archetypen entsprechende Interfaces definiert. Die verschiedenen Resourcen implementieren diese Interfaces, dadurch wird sichergestellt, dass sämtliche Resourcen den geforderten REST Spezifikationen entsprechen.
+Um den REST Best Practices gerecht zu werden, sind für alle benötigten
+Archetypen\footnote{REST Archetypen sind gemäss dem Buch \textit{REST API Design Rulebook} von
+O'Reilly Patterns für das Resource-Design einer API.} entsprechende Interfaces definiert. Die
+verschiedenen Resourcen implementieren diese Interfaces, dadurch wird sichergestellt, dass
+sämtliche Resourcen den geforderten REST Archetypen entsprechen.
 
 \newpage
 
