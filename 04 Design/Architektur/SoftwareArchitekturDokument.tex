@@ -243,12 +243,15 @@ sämtliche Resourcen den geforderten REST Archetypen entsprechen.
 \newpage
 
 \section{Frontend Architektur}
-Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt. Die
-Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine systemtypische Interaktion zwischen Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten Systemoperationen enthalten.
+Nachfolgend wird ein Ausschnitt aus der Frontendarchitektur am Beispiel der Bierliste aufgezeigt.
+Die Architektur ist grösstenteils durch das Android SDK und ihre Best-Practice Richtlinien
+vorgegeben. Anhand eines Systemsequenzdiagrammes wird eine systemtypische Interaktion zwischen
+Android App und Server API aufgezeigt. Es sind nur die für die Architektur wichtigsten
+Systemoperationen enthalten.
 
 \subsection{Klassendiagramm}
 \begin{figure}[H]
-	\includegraphics[height=\textwidth,angle=90]{FrontendArchitektur.png}
+	\includegraphics[height=0.9\textwidth,angle=90]{FrontendArchitektur.png}
 	\caption{Frontend Architektur}
 	\label{fig:frontend_architecture}
 \end{figure}
@@ -274,7 +277,28 @@ Datenbank und erstellen die Domain Objekte. Die Models werden danach in einen JS
 serialisiert und mittels HTTP an den Client geschickt. Das GUI wird anschliessend über den
 aktualisierten Datenbestand informiert.
 
+\subsection{Wichtige Design Aspekte}
 
+\subsubsection*{Model-View-Controller}
+
+Die Android-Applikation wird gemäss den Android-Developer-Richtlinien strikt nach dem
+MVC-Pattern aufgebaut. Alle GUI-Bezogenen Layouts werden als XML-Ressourcen erstellt, alle Strings
+in übersetzbare String-Ressourcen ausgelagert. Die Activities fungieren als Controller, die Daten
+werden durch Content Provider und entsprechende Adapter von der Controllerlogik getrennt.
+
+\subsubsection*{Auslagerung des HTTP-Clientresource-Handling}
+
+Die HTTP Client-Ressourcen werden in eine entsprechende \texttt{ClientResourceFactoy}
+ausgelagert, um tiefe Kopplung und hohe Kohäsion zu erreichen. Die \texttt{ClientResourceFactoy}
+initialisiert die \texttt{ClientResource} Objekte und gibt die frisch erstellte Instanz zurück.
+
+Mithilfe eines \texttt{ResourceSigningDecorator}s können existierende Client Ressourcen signiert
+werden. Dies wird im Decorator mithilfe des \textit{Chain of Responsibility} Patterns gelöst. Der
+\texttt{ClientResource} werden sogenannte \texttt{next}-Objekte zugewiesen, welche man "`chainen"`
+kann um mehrere Verarbeitungsschritte durchzuführen.
+
+
+\newpage
 \section{Prozesse und Threads}
 
 \subsection{Datenbank}
