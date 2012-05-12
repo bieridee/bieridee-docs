@@ -50,7 +50,9 @@ v1.2 & 06.04.2012 & Überarbeitet, BeerType hinzugefügt & dbargen \\
 \hline 
 v1.3 & 24.04.2012 & Tagresource Beers entfernt, Paging bei BeerList hinzugefügt & jfurrer \\
 \hline
-v1.4 & 3.5.2012 & Definitionen von Consumptions und Ratings Resourcen angepasst & cfaessle\\
+v1.4 & 03.05.2012 & Definitionen von Consumptions und Ratings Resourcen angepasst & cfaessle\\
+\hline
+v1.5 & 12.05.2012 & Definitionen von Tag und Timeline Resourcen angepasst & jfurrer\\
 \bottomrule
 \end{tabular} 
 \newpage
@@ -395,28 +397,51 @@ Die Aktivitäts-Timeline.
 \begin{lstlisting}
 [{	
 	type: "consumpton | rating",
-	name: "{beer-name}",
-	user: "{user-name}",
-	uri: "{ressource-URI}"
+	date: "{date}",
+	timestamp: {timestamp},
+	beer: {
+		name: "{beer-name}",
+		uri: "{beer-uri}"
+	},
+	user: {
+		user: "{user-name}",
+		uri: "{user-uri}"	
+	},
+	rating: {rating}
 }]
 \end{lstlisting}
 \end{description}
 
+
+\subsection{Tag}
+
+Ein Tag identifizert durch die ID.
+
+\begin{description}
+	\item[URI Path] \texttt{/tags/\{tag-id\}}
+	\item[Archetype] Document
+	\item[Methods] GET, PUT, DELETE
+	\item[JSON Format] \hfill
+\begin{lstlisting}
+[{	
+	id: "{tag-id}"
+	name: "{tag-name}",
+	uri: "{ressource-URI}"
+}]
+\end{lstlisting}
+\end{description}
 
 \subsection{Tags}
 
 Liste aller Tags.
 
 \begin{description}
-	\item[URI Path] \texttt{/tags/\{tag-name\}}
+	\item[URI Path] \texttt{/tags}
 	\item[Archetype] Store
-	\item[Methods] GET, PUT, DELETE
+	\item[Methods] GET, POST
 	\item[JSON Format] \hfill
 \begin{lstlisting}
-[{	
-	name: "{tag-name}",
-	uri: "{ressource-URI}"
-}]
+[<tag document>, ...]
 \end{lstlisting}
 \end{description}
 
