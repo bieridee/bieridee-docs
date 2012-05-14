@@ -266,6 +266,20 @@ Der Bestand aller User.
 \end{description}
 
 
+\subsection{Usercredentials}
+
+Eine Controller-Ressource, welche einen signierten POST-Request entgegennimmt und die
+HMAC-Authentifizierungsdetails überprüft.
+
+Als Response-Statuscode wird 204 (No Content) oder 401 (Unauthorized) zurückgegeben.
+
+\begin{description}
+	\item[URI Path] \texttt{/usercredentials}
+	\item[Archetype] Controller
+	\item[Methods] POST
+\end{description}
+
+
 \subsection{Recommendations}
 
 Bier-Empfehlungen für einen bestimmten Benutzer.
