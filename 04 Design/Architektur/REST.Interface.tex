@@ -208,7 +208,8 @@ Ein Biertyp, identifiziert durch die ID.
 	\item[Methods] GET, PUT, DELETE
 	\item[JSON Format] \hfill
 \begin{lstlisting}
-{
+{	
+	id: "{beertype-id}",
 	name: "{beertype-name}",
 	description: "{description}",
 }
@@ -277,6 +278,7 @@ Bier-Empfehlungen für einen bestimmten Benutzer.
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 [{
+	"id": "{beer-id}",
 	"name": "{beer-name}",
 	"uri": "{ressource-URI}"
 }]
