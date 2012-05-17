@@ -1,0 +1,176 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\pagestyle{empty}
+\usepackage{a4} % alternativ \usepackage{a4wide}
+\usepackage[ngerman]{babel} % Neudeutsche Silbentrennung (mehrsprachiges Dokument)
+\usepackage{parskip} % Skip indentation of first row
+\usepackage{graphicx} % Graphics support
+\usepackage{longtable} % Tables across several pages
+\usepackage{booktabs}
+\usepackage{hyperref} % Hyperlinks
+\usepackage[automark]{scrpage2} %kopf/fusszeile
+\usepackage[utf8x]{inputenc} % Unicode-Encoding
+
+% amsmath (large fractions)
+\usepackage{amsmath}
+
+% Tikz
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+ 
+\linespread{1.3}
+
+\author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
+\title{Bier-Empfehlungen\\ Projekt BierIdee}
+
+\pagestyle{scrheadings}
+\ihead{SE2 Projekte} %linke Kopfzeile
+\ohead{BierIdee} %rechte Kopfzeile
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\vspace{120mm}
+	\thispagestyle{empty} % Don't start page numbers on this page
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section*{Änderungshistorie}
+\begin{tabular}{p{0.1\textwidth}p{0.15\textwidth}p{0.55\textwidth}p{0.1\textwidth}}
+\toprule
+\textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
+\midrule
+v1.0 & 15.05.2012 & Dokument erstellt & dbargen \\  
+\bottomrule
+\end{tabular} 
+\newpage
+
+
+\section{Einleitung}
+
+Der Zweck dieses Dokumentes ist das Erläutern des verwendeten Bierempfehlungs-Algorithmus.
+
+
+\section{Glossar}
+
+In diesem Dokument werden folgende Bezeichnungen verwendet:
+
+\begin{description}
+	\item[Zielbenutzer] Der Benutzer, der sich eine Empfehlung ausstellen lassen will
+	\item[Like-Nachbarn] Andere User, deren Biergeschmack sich mit dem des Zielbenutzers überschneidet
+\end{description}
+
+
+\section{Verfahren}
+
+Um die Empfehlungen zu berechnen, werden verschiedene Faktoren berechnet und unterschiedlich
+gewichtet.
+
+\subsection{Schritt 1: Like-Nachbarn}
+
+Um Like-Nachbarn zu berechnen, geht man von allen Bieren aus, die vom Zielbenutzer eine Bewertung
+von 3 oder höher erhalten haben.
+
+\vspace{10mm}
+
+\begin{center}
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick,scale=2.0,
+			zieluser/.style={circle,draw,font=\sffamily\large\bfseries},
+			beer/.style={circle,draw,font=\sffamily\large\bfseries},
+			user/.style={circle,draw,font=\sffamily\large\bfseries,color=red,fill=red!10!orange!10},
+		]
+
+		\node[zieluser] (Z) at (3,3) {Zieluser};
+
+		\node[beer] (B1) at (2,2) {Bier1};
+		\node[beer] (B2) at (4,2) {Bier2};
+
+		\node[user] (U1) at (1,1) {User1};
+		\node[user] (U2) at (3,1) {User2};
+		\node[user] (U3) at (5,1) {User3};
+
+		\path[every node/.style={font=\sffamily\small}]
+			(Z)
+				edge node [swap] {rates 4} (B1)
+				edge node {rates 5} (B2)
+			(U1)
+				edge node {rates 4} (B1)
+			(U2)
+				edge node {rates 5} (B1)
+				edge node [swap] {rates 3} (B2)
+			(U3)
+				edge node [swap] {rates 5} (B2);
+
+	\end{tikzpicture}
+\end{center}
+
+\newpage
+
+Die Bewertungen werden dabei abgestuft gewichtet:
+
+\begin{tabular}{cc}
+	\toprule
+	Bewertung & Multiplikator \\
+	\midrule
+	3 & 0.5 \\
+	4 & 1 \\
+	5 & 2 \\
+	\bottomrule
+\end{tabular}
+
+\vspace{5mm}
+
+Für jeden Like-Nachbarn werden dann die entsprechenden Gewichte der Bewertungen summiert. Für
+das obige Beispiel wären das folgende Summen:
+
+\begin{tabular}{llc}
+	\toprule
+	Like-Nachbar & Berechnung & Summe \\
+	\midrule
+	User1 & Rating 4 (1) & 1 \\
+	User2 & Rating 5 (2) + Rating 3 (0.5) & 2.5 \\
+	User3 & Rating 5 (2) & 2 \\
+	\bottomrule
+\end{tabular}
+
+\vspace{5mm}
+
+Schlussendlich werden diese Bewertungssummen verwendet, um die Gewichtung eines Like-Nachbars zu bestimmen.
+Da diese Gewichtung einen Wert zwischen 1-3 annehmen soll, werden die Summen linear daziwschen verteilt.
+
+$$usergewichtung = 1 + 2 \cdot \frac{s}{m}$$
+
+Dabei ist $s$ die oben berechnete Bewertungssumme und $m$ ist die höchste vorkommende Summe, also max($summen$).
+
+\begin{tabular}{lllc}
+	\toprule
+	Like-Nachbar & Summe & Berechnung & Gewichtung \\
+	\midrule
+	User1 & 1   & $1 + 2 \cdot \frac{1}{2.5}$   & 1.8 \\
+	User2 & 2.5 & $1 + 2 \cdot \frac{2.5}{2.5}$ & 3   \\
+	User3 & 2   & $1 + 2 \cdot \frac{2}{2.5}$   & 2.6 \\
+	\bottomrule
+\end{tabular}
+
+
+\subsection{Schritt 2: Biergewichtung}
+
+Als nächster Schritt werden die Lieblingsbiere aller Like-Nachbarn aus der Datenbank geholt. Als
+Lieblingsbiere gelten wiederum alle Biere mit einer Bewertung von 3-5.
+
+Von allen diesen Bieren werden die Bewertungen erneut gemäss der Multiplikator-Tabelle aus Schritt
+1 gewichtet. Zusätzlich wird die Usergewichtung als Multiplikator verwendet.
+
+$$rg = rm \cdot ug$$
+
+Dabei ist $rg$ die Rating-Gewichtung, $rm$ der Rating-Multiplikator und $ug$ die Usergewichtung.
+
+Um die Biergewichtung zu errechnen, muss man nun einfach die Gewichtungen der einzelnen Ratings
+addieren.
+
+$$bg = rg_1 + rg_2 + \cdots + rg_n$$
+
+
+\end{document}
