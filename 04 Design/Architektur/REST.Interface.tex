@@ -212,6 +212,7 @@ Ein Biertyp, identifiziert durch die ID.
 	id: "{beertype-id}",
 	name: "{beertype-name}",
 	description: "{description}",
+	uri : "{Ressource-URI}"
 }
 \end{lstlisting}
 \end{description}
@@ -376,9 +377,12 @@ Eine Brauerei, identifiziert durch die ID.
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 {	
-	name: "{brewery-name}"
+	id: "{brewery-id},
+	name: "{brewery-name}",
 	size: "{value}",
-	profile: "{ressource-URI}"
+	description: "{brewery-description}",
+	picture: "{brewery-picture}",
+	uri : "{ressource-URI}"
 }
 \end{lstlisting}
 \end{description}
