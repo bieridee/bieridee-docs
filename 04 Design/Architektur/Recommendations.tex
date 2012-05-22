@@ -52,7 +52,7 @@ v1.1 & 22.05.2012 & Dokument erweitert & dbargen \\
 
 \section{Einleitung}
 
-Der Zweck dieses Dokumentes ist das Erläutern des verwendeten Bierempfehlungs-Algorithmus.
+Der Zweck dieses Dokumentes ist es, den im Projekt BierIdee verwerndeten Bierempfehlungs-Algorithmus zu Erläutern.
 
 
 \section{Glossar}
@@ -67,13 +67,13 @@ In diesem Dokument werden folgende Bezeichnungen verwendet:
 
 \section{Verfahren}
 
-Um die Empfehlungen zu berechnen, werden verschiedene Faktoren berechnet und unterschiedlich
+Um die Empfehlungen zu ermitteln, werden verschiedene Faktoren berechnet und unterschiedlich
 gewichtet.
 
 \subsection{Schritt 1: Like-Nachbarn}
 
-Um Like-Nachbarn zu berechnen, geht man von allen Bieren aus, die vom Zielbenutzer eine Bewertung
-von 3 oder höher erhalten haben.
+Um Like-Nachbarn zu ermitteln, geht man von allen Bieren aus, die vom Zielbenutzer eine Bewertung
+von 3 oder höher erhalten haben, die maximale Bewertung ist 5.
 
 \vspace{10mm}
 
@@ -110,7 +110,7 @@ von 3 oder höher erhalten haben.
 
 \newpage
 
-Die Bewertungen werden dabei abgestuft gewichtet:
+Die Bewertungen werden dabei in fix definierten Stufen gewichtet:
 
 \begin{table}[h!]
 	\begin{center}
@@ -148,7 +148,7 @@ das obige Beispiel wären das folgende Summen:
 \end{table}
 
 Schlussendlich werden diese Bewertungssummen verwendet, um die Gewichtung eines Like-Nachbars zu bestimmen.
-Da diese Gewichtung einen Wert zwischen 1-3 annehmen soll, werden die Summen linear daziwschen verteilt.
+Da diese Gewichtung einen Wert zwischen 1-3 annehmen soll, werden die Summen linear in diesem Bereich verteilt.
 
 $$usergewichtung = 1 + 2 \cdot \frac{s}{m}$$
 
@@ -224,7 +224,7 @@ Dann werden die Bewertungs-Multiplikatoren gemäss Tabelle~\ref{table:bewertungs
 (Seite~\pageref{table:bewertungs-multiplikatoren}) auf die einzelnen Biere angewendet. Die Summe der
 gewichteten Bewertungen pro Biertyp ergeben die Biertyp-Bewertungssumme.
 
-$$S_{beertype} = \sum R_{beer} \cdot M_{rating}$$
+$$S_{beertype} = \sum M_{rating}$$
 
 In obigem Beispiel wären das folgende Werte:
 
@@ -244,10 +244,9 @@ In obigem Beispiel wären das folgende Werte:
 	\label{table:biertyp-bewertungs-summen}
 \end{table}
 
-Dabei ist $S_{beertype}$ die Summe der Bewertungs-Gewichtungen pro Biertyp, $R_{beer}$ die Bewertung
-für das jeweilige Bier und $M_{rating}$ der Bewertungs-Multiplikator.
+Dabei ist $S_{beertype}$ die Summe der Bewertungs-Gewichtungen pro Biertyp und $M_{rating}$ der Bewertungs-Multiplikator für das jeweilige Bier.
 
-Von diesen Summen der Typen werden die fünf höchstbewerteten linear auf einer Skala von 1 bis 2
+Von diesen Typen-Summen werden die fünf höchstbewerteten linear auf einer Skala zwischen 1 und 2
 abgebildet.
 
 $$biertypgewichtung = 1 + \frac{S_{beertype}}{m}$$
@@ -267,7 +266,7 @@ $m$ ist dabei die höchste vorkommende Summe, also $\textrm{max}(summen)$.
 		\end{tabular}
 	\end{center}
 	\label{like-nachbar-multiplikatoren}
-	\caption{Like-Nachbar-Multiplikatoren}
+	\caption{Biertyp Gewichtungen}
 \end{table}
 
 
@@ -275,7 +274,7 @@ $m$ ist dabei die höchste vorkommende Summe, also $\textrm{max}(summen)$.
 \subsection{Schritt 3: Biergewichtung}
 
 Als nächster Schritt werden die Lieblingsbiere aller Like-Nachbarn aus der Datenbank geholt. Als
-Lieblingsbiere gelten wiederum alle Biere mit einer Bewertung von 3-5.
+Lieblingsbiere gelten wiederum alle Biere mit einer Bewertung von 3 bis 5.
 
 Von allen diesen Bieren werden die Bewertungen erneut gemäss der Multiplikator-Tabelle aus Schritt
 1 gewichtet. Zusätzlich wird die Usergewichtung als Multiplikator verwendet.
