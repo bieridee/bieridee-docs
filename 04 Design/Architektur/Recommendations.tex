@@ -7,6 +7,7 @@
 \usepackage{longtable} % Tables across several pages
 \usepackage{booktabs}
 \usepackage{hyperref} % Hyperlinks
+\usepackage{float} % Force float position
 \usepackage[automark]{scrpage2} %kopf/fusszeile
 \usepackage[utf8x]{inputenc} % Unicode-Encoding
 
@@ -45,6 +46,8 @@
 v1.0 & 15.05.2012 & Dokument erstellt & dbargen \\  
 \hline
 v1.1 & 22.05.2012 & Dokument erweitert & dbargen \\  
+\hline
+v1.2 & 23.05.2012 & Dokument fertiggestellt & dbargen \\  
 \bottomrule
 \end{tabular} 
 \newpage
@@ -52,7 +55,9 @@ v1.1 & 22.05.2012 & Dokument erweitert & dbargen \\
 
 \section{Einleitung}
 
-Der Zweck dieses Dokumentes ist es, den im Projekt BierIdee verwerndeten Bierempfehlungs-Algorithmus zu Erläutern.
+Der Zweck dieses Dokumentes ist es, den im Projekt BierIdee verwendeten Bierempfehlungs-Algorithmus
+zu erläutern. Der Algorithmus dient dazu, einem Benutzer ein Bier zu empfehlen, welches ihm
+möglicherweise gut schmeckt.
 
 
 \section{Glossar}
@@ -60,63 +65,69 @@ Der Zweck dieses Dokumentes ist es, den im Projekt BierIdee verwerndeten Bieremp
 In diesem Dokument werden folgende Bezeichnungen verwendet:
 
 \begin{description}
-	\item[Zielbenutzer] Der Benutzer, der sich eine Empfehlung ausstellen lassen will
-	\item[Like-Nachbarn] Andere User, deren Biergeschmack sich mit dem des Zielbenutzers überschneidet
+	\item[Zieluser] Der User, der sich eine Empfehlung ausstellen lassen will.
+	\item[Like-Nachbarn] Andere User, deren Biergeschmack sich mit dem des Zielusers überschneidet.
+	\item[Beliebtes Bier] Ein Bier, das eine Bewertung zwischen 3 und 5 erhalten hat.
 \end{description}
 
 
 \section{Verfahren}
 
 Um die Empfehlungen zu ermitteln, werden verschiedene Faktoren berechnet und unterschiedlich
-gewichtet.
+gewichtet. Schlussendlich werden diese Faktoren multipliziert, um eine Gesamtgewichtung für das
+Bier zu erhalten. Die Biere mit der höchsten Gewichtung werden dann zu Empfehlungen für den
+Zieluser.
 
 \subsection{Schritt 1: Like-Nachbarn}
 
-Um Like-Nachbarn zu ermitteln, geht man von allen Bieren aus, die vom Zielbenutzer eine Bewertung
-von 3 oder höher erhalten haben, die maximale Bewertung ist 5.
+Um die Like-Nachbarn zu ermitteln, geht man von allen beliebten Bieren des Zielusers aus (d.h. von
+ihm mit $\ge$ 3 bewertet). Alle User, die diese Biere auch mit 3 bis 5 Sternen bewertet haben, sind
+Like-Nachbarn.
 
-\vspace{10mm}
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick,scale=2.0,
+				zieluser/.style={circle,draw,font=\sffamily\large\bfseries},
+				beer/.style={circle,draw,font=\sffamily\large\bfseries},
+				user/.style={circle,draw,font=\sffamily\large\bfseries,color=red,fill=red!10!orange!10},
+			]
 
-\begin{center}
-	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick,scale=2.0,
-			zieluser/.style={circle,draw,font=\sffamily\large\bfseries},
-			beer/.style={circle,draw,font=\sffamily\large\bfseries},
-			user/.style={circle,draw,font=\sffamily\large\bfseries,color=red,fill=red!10!orange!10},
-		]
+			\node[zieluser] (Z) at (3,3) {Zieluser};
 
-		\node[zieluser] (Z) at (3,3) {Zieluser};
+			\node[beer] (B1) at (2,2) {Bier1};
+			\node[beer] (B2) at (4,2) {Bier2};
 
-		\node[beer] (B1) at (2,2) {Bier1};
-		\node[beer] (B2) at (4,2) {Bier2};
+			\node[user] (U1) at (1,1) {User1};
+			\node[user] (U2) at (3,1) {User2};
+			\node[user] (U3) at (5,1) {User3};
 
-		\node[user] (U1) at (1,1) {User1};
-		\node[user] (U2) at (3,1) {User2};
-		\node[user] (U3) at (5,1) {User3};
+			\path[every node/.style={font=\sffamily\small}]
+				(Z)
+					edge node [swap] {rates 4} (B1)
+					edge node {rates 5} (B2)
+				(U1)
+					edge node {rates 4} (B1)
+				(U2)
+					edge node {rates 5} (B1)
+					edge node [swap] {rates 3} (B2)
+				(U3)
+					edge node [swap] {rates 5} (B2);
 
-		\path[every node/.style={font=\sffamily\small}]
-			(Z)
-				edge node [swap] {rates 4} (B1)
-				edge node {rates 5} (B2)
-			(U1)
-				edge node {rates 4} (B1)
-			(U2)
-				edge node {rates 5} (B1)
-				edge node [swap] {rates 3} (B2)
-			(U3)
-				edge node [swap] {rates 5} (B2);
-
-	\end{tikzpicture}
-\end{center}
+		\end{tikzpicture}
+	\end{center}
+	\caption{Beispiel Like-Nachbarn}
+	\label{fig:beispiel-like-nachbarn}
+\end{figure}
 
 \newpage
 
 Die Bewertungen werden dabei in fix definierten Stufen gewichtet:
 
-\begin{table}[h!]
+\begin{table}[H]
 	\begin{center}
 		\begin{tabular}{cc}
 			\toprule
-			Bewertung & Multiplikator \\
+			Bewertung & Gewichtung \\
 			\midrule
 			3 & 0.5 \\
 			4 & 1 \\
@@ -124,18 +135,18 @@ Die Bewertungen werden dabei in fix definierten Stufen gewichtet:
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\caption{Bewertungs-Multiplikatoren}
-	\label{table:bewertungs-multiplikatoren}
+	\caption{Bewertungs-Gewichtungen}
+	\label{table:bewertungs-gewichtungen}
 \end{table}
 
 Für jeden Like-Nachbarn werden dann die entsprechenden Gewichte der Bewertungen summiert. Für
 das obige Beispiel wären das folgende Summen:
 
-\begin{table}[h!]
+\begin{table}[H]
 	\begin{center}
 		\begin{tabular}{llc}
 			\toprule
-			Like-Nachbar & Berechnung & Summe \\
+			Like-Nachbar & Berechnung & Summe $s$ \\
 			\midrule
 			User1 & Rating 4 (1) & 1 \\
 			User2 & Rating 5 (2) + Rating 3 (0.5) & 2.5 \\
@@ -143,22 +154,29 @@ das obige Beispiel wären das folgende Summen:
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\label{like-nachbar-bewertungssummen}
+	\label{table:like-nachbar-bewertungssummen}
 	\caption{Beispiel: Like-Nachbar-Bewertungssummen}
 \end{table}
 
-Schlussendlich werden diese Bewertungssummen verwendet, um die Gewichtung eines Like-Nachbars zu bestimmen.
-Da diese Gewichtung einen Wert zwischen 1-3 annehmen soll, werden die Summen linear in diesem Bereich verteilt.
+Die Menge aller Summen wird nachfolgend mit $S$ bezeichnet. Eine einzelne Summe wird mit $s$
+bezeichnet.
 
-$$usergewichtung = 1 + 2 \cdot \frac{s}{m}$$
+$$S = \{ \textrm{s $|$ s ist die Bewertungs-Gewichtungssumme eines Like-Nachbars} \}$$
 
-Dabei ist $s$ die oben berechnete Bewertungssumme und $m$ ist die höchste vorkommende Summe, also max($summen$).
+Schlussendlich werden diese Bewertungssummen verwendet, um die Gewichtung $g_{user}$, also die
+Wichtigkeit, eines Like-Nachbars zu bestimmen. Da diese Gewichtung einen Wert zwischen 1-3 annehmen
+soll, werden die Summen linear in diesem Bereich verteilt.
 
-\begin{table}[h!]
+$$g_{user} = 1 + 2 \cdot \frac{s}{\max(S)}$$
+
+Nachfolgend die Berechnung der Gewichtungen am Beispiel der Abbildung~\ref{fig:beispiel-like-nachbarn}
+auf Seite~\pageref{fig:beispiel-like-nachbarn}.
+
+\begin{table}[H]
 	\begin{center}
 		\begin{tabular}{lllc}
 			\toprule
-			Like-Nachbar & Summe & Berechnung & Gewichtung \\
+			Like-Nachbar & Summe $s$ & Berechnung & Gewichtung $g_{user}$ \\
 			\midrule
 			User1 & 1   & $1 + 2 \cdot \frac{1}{2.5}$   & \textbf{1.8} \\
 			User2 & 2.5 & $1 + 2 \cdot \frac{2.5}{2.5}$ & \textbf{3}   \\
@@ -177,62 +195,65 @@ Dabei ist $s$ die oben berechnete Bewertungssumme und $m$ ist die höchste vorko
 Als nächster Schritt werden alle Biertypen gewichtet. Folgende Illustration zeigt ein Beispiel für
 die Biertyp-Gewichtungs-Berechnung.
 
-\begin{center}
-	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick,scale=2.0,
-			user/.style={circle,draw,font=\sffamily\large\bfseries},
-			lager/.style={circle,draw,font=\sffamily\large\bfseries,color=orange,fill=orange!10!yellow!10},
-			weizen/.style={circle,draw,font=\sffamily\large\bfseries,color=red!80,fill=red!10!orange!10},
-			stout/.style={circle,draw,font=\sffamily\large\bfseries,color=green!60!black!80,fill=green!10},
-		]
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick,scale=2.0,
+				user/.style={circle,draw,font=\sffamily\large\bfseries},
+				lager/.style={circle,draw,font=\sffamily\large\bfseries,color=orange,fill=orange!10!yellow!10},
+				weizen/.style={circle,draw,font=\sffamily\large\bfseries,color=red!80,fill=red!10!orange!10},
+				stout/.style={circle,draw,font=\sffamily\large\bfseries,color=green!60!black!80,fill=green!10},
+			]
 
-		\node[user] (Z) {Zieluser};
+			\node[user] (Z) {Zieluser};
 
-		\node[lager] (B1) [above of=Z] {Bier1};
-		\node[lager] (B2) [above right of=Z] {Bier2};
-		\node[weizen] (B3) [right of=Z] {Bier3};
-		\node[weizen] (B4) [below right of=Z] {Bier4};
-		\node[weizen] (B5) [below of=Z] {Bier5};
-		\node[stout] (B6) [below left of=Z] {Bier6};
-		\node[stout] (B7) [left of=Z] {Bier7};
-		\node[stout] (B8) [above left of=Z] {Bier8};
+			\node[lager] (B1) [above of=Z] {Bier1};
+			\node[lager] (B2) [above right of=Z] {Bier2};
+			\node[weizen] (B3) [right of=Z] {Bier3};
+			\node[weizen] (B4) [below right of=Z] {Bier4};
+			\node[weizen] (B5) [below of=Z] {Bier5};
+			\node[stout] (B6) [below left of=Z] {Bier6};
+			\node[stout] (B7) [left of=Z] {Bier7};
+			\node[stout] (B8) [above left of=Z] {Bier8};
 
-		\path[every node/.style={font=\sffamily\small}]
-			(Z)
-				edge node {rates 4} (B1)
-				edge node {rates 3} (B2)
+			\path[every node/.style={font=\sffamily\small}]
+				(Z)
+					edge node {rates 4} (B1)
+					edge node {rates 3} (B2)
 
-				edge node {rates 3} (B3)
-				edge node {rates 5} (B4)
-				edge node {rates 4} (B5)
+					edge node {rates 3} (B3)
+					edge node {rates 5} (B4)
+					edge node {rates 4} (B5)
 
-				edge node {rates 5} (B6)
-				edge node {rates 4} (B7)
-				edge node {rates 5} (B8)
-		  ;
+					edge node {rates 5} (B6)
+					edge node {rates 4} (B7)
+					edge node {rates 5} (B8)
+				;
 
-	\end{tikzpicture}
-\end{center}
+		\end{tikzpicture}
+	\end{center}
+	\caption{Beispiel Biertyp-Gewichtungen}
+	\label{fig:beispiel-biertyp-gewichtungen}
+\end{figure}
 
 Die orangen Biere stehen für Lagerbier, die roten für Weizenbier und die grünen für Stout.
 
-Zuerst nimmt man alle vom Zielbenutzer bewerteten Biere, die von ihm eine Bewertung von 3 oder
-höher erhalten haben.
+Zuerst nimmt man alle beliebten Biere des Zielusers.
 
-$$M_{likedbeers} = \{ \textrm{b $|$ b ist ein Bier mit einer Bewertung} \ge 3 \}$$
+$$B = \{ \textrm{b $|$ b ist ein beliebtes Bier des Zielusers} \}$$
 
-Dann werden die Bewertungs-Multiplikatoren gemäss Tabelle~\ref{table:bewertungs-multiplikatoren}
-(Seite~\pageref{table:bewertungs-multiplikatoren}) auf die einzelnen Biere angewendet. Die Summe der
-gewichteten Bewertungen pro Biertyp ergeben die Biertyp-Bewertungssumme.
+Dann werden die Bewertungs-Gewichtungen gemäss Tabelle~\ref{table:bewertungs-gewichtungen}
+(Seite~\pageref{table:bewertungs-gewichtungen}) auf die einzelnen Biere angewendet. Die Summe der
+Bewertungs-Gewichtungen pro Biertyp ergeben die Biertyp-Bewertungssumme $s$.
 
-$$S_{beertype} = \sum M_{rating}$$
+$$s = \sum_{i=1}^k |B_i|$$
 
-In obigem Beispiel wären das folgende Werte:
+Im obigem Beispiel (Abbildung~\ref{fig:beispiel-biertyp-gewichtungen}) wären das folgende Werte:
 
-\begin{table}[h!]
+\begin{table}[H]
 	\begin{center}
 		\begin{tabular}{llc}
 			\toprule
-			Biertyp & Berechnung & $S_{beertype}$ \\
+			Biertyp & Berechnung & Summe $s$ \\
 			\midrule
 			Stout  & $2 + 1 + 2$   & 5 \\
 			Weizen & $0.5 + 2 + 1$ & 3.5 \\
@@ -244,20 +265,19 @@ In obigem Beispiel wären das folgende Werte:
 	\label{table:biertyp-bewertungs-summen}
 \end{table}
 
-Dabei ist $S_{beertype}$ die Summe der Bewertungs-Gewichtungen pro Biertyp und $M_{rating}$ der Bewertungs-Multiplikator für das jeweilige Bier.
+Von diesen Typen-Summen $T$ werden die fünf höchstbewerteten linear auf einer Skala zwischen 1 und
+2 abgebildet. Dies ergibt die Biertyp-Gewichtung $g_{biertyp}$.
 
-Von diesen Typen-Summen werden die fünf höchstbewerteten linear auf einer Skala zwischen 1 und 2
-abgebildet.
+$$T = \{ \textrm{s $|$ s ist eine Biertyp-Bewertungssumme} \}$$
+$$g_{biertyp} = 1 + \frac{s}{\max(T)}$$
 
-$$biertypgewichtung = 1 + \frac{S_{beertype}}{m}$$
+Nachfolgend die konkreten Gewichtungen gemäss Abbildung~\ref{fig:beispiel-biertyp-gewichtungen}.
 
-$m$ ist dabei die höchste vorkommende Summe, also $\textrm{max}(summen)$.
-
-\begin{table}[h!]
+\begin{table}[H]
 	\begin{center}
 		\begin{tabular}{lllc}
 			\toprule
-			Biertyp & $S_{biertyp}$ & Berechnung & Gewichtung \\
+			Biertyp & Summe $s$ & Berechnung & Gewichtung \\
 			\midrule
 			Stout  & 5   & $1 + \frac{5}{5}$   & \textbf{2} \\
 			Weizen & 3.5 & $1 + \frac{3.5}{5}$ & \textbf{1.7}   \\
@@ -265,28 +285,31 @@ $m$ ist dabei die höchste vorkommende Summe, also $\textrm{max}(summen)$.
 			\bottomrule
 		\end{tabular}
 	\end{center}
-	\label{like-nachbar-multiplikatoren}
-	\caption{Biertyp Gewichtungen}
+	\label{biertyp-gewichtungen}
+	\caption{Biertyp-Gewichtungen}
 \end{table}
-
 
 
 \subsection{Schritt 3: Biergewichtung}
 
-Als nächster Schritt werden die Lieblingsbiere aller Like-Nachbarn aus der Datenbank geholt. Als
-Lieblingsbiere gelten wiederum alle Biere mit einer Bewertung von 3 bis 5.
+Nun werden alle beliebten Biere der Like-Nachbarn, welche dem Zieluser noch nicht bekannt sind,
+gewichtet, um die Gesamtgewichtung $G_{bier}$ zu erhalten. Darin fliessen folgende drei Faktoren
+ein:
 
-Von allen diesen Bieren werden die Bewertungen erneut gemäss der Multiplikator-Tabelle aus Schritt
-1 gewichtet. Zusätzlich wird die Usergewichtung als Multiplikator verwendet.
+\begin{itemize}
+	\item Gewichtung der Like-Nachbarn $g_{user}$ (1 - 3)
+	\item Gewichtung der Biertypen $g_{biertyp}$ (1 - 2)
+	\item Gewichtung der Bewertungen durch Like-Nachbarn $g_{bier}$ (0.5 - 2)
+\end{itemize}
 
-$$rg = rm \cdot ug$$
+Wenn ein Bier von mehreren Like-Nachbarn bewertet wurde, wird jeweils der Durchschnitt der
+Like-Nachbar-Gewichtungen sowie der Bier-Bewertungs-Gewichtungen verwendet.
 
-Dabei ist $rg$ die Rating-Gewichtung, $rm$ der Rating-Multiplikator und $ug$ die Usergewichtung.
+Die Gesamtgewichtung wird folgendermassen berechnet:
 
-Um die Biergewichtung zu errechnen, muss man nun einfach die Gewichtungen der einzelnen Ratings
-addieren.
+$$G_{bier} = g_{user} \cdot g_{biertyp} \cdot g_{bier}$$
 
-$$bg = \sum_{i=1}^n rg_i$$
+Damit ist der Empfehlungs-Algorithmus abgeschlossen.
 
 
 \end{document}
