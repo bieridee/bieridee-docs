@@ -212,6 +212,7 @@ Ein Biertyp, identifiziert durch die ID.
 	id: "{beertype-id}",
 	name: "{beertype-name}",
 	description: "{description}",
+	uri : "{Ressource-URI}"
 }
 \end{lstlisting}
 \end{description}
@@ -231,15 +232,45 @@ Der Bestand aller Biertypen.
 \end{lstlisting}
 \end{description}
 
+\subsection{Usercredentials}
+
+Eine Controller-Ressource, welche einen signierten POST-Request entgegennimmt und die
+HMAC-Authorisierungsdetails überprüft.
+
+\begin{description}
+	\item[URI Path] \texttt{/usercredentials}
+	\item[Archetype] Controller
+	\item[Methods] POST
+	\item[Response Statuscodes] \hfill
+		\begin{description}
+			\item[204 No Content] Logindaten sind gültig
+			\item[401 Unauthorized] Logindaten sind ungültig
+		\end{description}
+\end{description}
+
 
 \subsection{User}
 
 Ein Benutzer, identifiziert durch den Benutzernamen.
 
+Um einen User zu erstellen, einen PUT Request ohne Authorization Header absenden. Der Username muss
+dabei nicht mitgesendet werden, da er schon in der URI enthalten ist.
+
+Um einen User zu ändern, einen authorisierten PUT Request absenden.
+
 \begin{description}
 	\item[URI Path] \texttt{/users/\{username\}}
 	\item[Archetype] Document
 	\item[Methods] GET, PUT, DELETE
+	\item[Response Statuscodes] \hfill
+		\begin{description}
+			\item[201 Created] User wurde erfolgreich erstellt
+			\item[204 No Content] User wurde erfolgreich geändert
+			\item[400 Bad Request] Response Entity fehlt oder ist unvollständig
+			\item[401 Unauthorized] Authorisierungsdaten sind ungültig oder fehlen
+			\item[404 Not Found] Zu ändernder User nicht gefunden
+			\item[409 Conflict] Zu erstellender User existiert bereits
+		\end{description}
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 {
@@ -264,20 +295,6 @@ Der Bestand aller User.
 \begin{lstlisting}
 [<user document + uri>, ...]
 \end{lstlisting}
-\end{description}
-
-
-\subsection{Usercredentials}
-
-Eine Controller-Ressource, welche einen signierten POST-Request entgegennimmt und die
-HMAC-Authentifizierungsdetails überprüft.
-
-Als Response-Statuscode wird 204 (No Content) oder 401 (Unauthorized) zurückgegeben.
-
-\begin{description}
-	\item[URI Path] \texttt{/usercredentials}
-	\item[Archetype] Controller
-	\item[Methods] POST
 \end{description}
 
 
@@ -376,9 +393,12 @@ Eine Brauerei, identifiziert durch die ID.
 	\item[JSON Format] \hfill
 \begin{lstlisting}
 {	
-	name: "{brewery-name}"
+	id: "{brewery-id},
+	name: "{brewery-name}",
 	size: "{value}",
-	profile: "{ressource-URI}"
+	description: "{brewery-description}",
+	picture: "{brewery-picture}",
+	uri : "{ressource-URI}"
 }
 \end{lstlisting}
 \end{description}
