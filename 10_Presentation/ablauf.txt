@@ -1,0 +1,55 @@
+Schlusspräsentation BierIdee
+=============================
+
+Grober Ablauf, so ist alles drin was gemäss Anleitung drin sein muss:
+- Ziele der Arbeit, Was wurde erreicht? 
+- Demonstration des Programmes (ca. 5 Minuten)‏ 
+- Übersichten: Analyse Modell, Architektur, Design Modell 
+- Umfang: Anzahl eigene/verwendete Klassen, eigene/fremde/generierte Codezeilen‏ 
+- Angaben über geleisteten Stunden-Aufwand und Soll-Ist Vergleich 
+- Projektverlauf: Was ist gut gelaufen? Probleme? Was gelernt? 
+
+Die Zeit ist extrem Knapp!
+--> Zeigbudget 10min Basis + 5min pro Person -> 25min
+
+Vorschlag:
+-----------
+
+- Titel
+
+- Wer sind wir (evtl.)
+
+- Was ist BierIdee (5min)
+    - Was war die Idee? Was soll es können? (Usecases)
+    - Was waren die Konkreten Ziele?
+    - Was haben wir erreicht?
+        - Erwähnen des Empfehlungsalgorithmus
+--> Demo am Schluss (aus Gründen)
+
+- Wie ist BierIdee aufgebaut? (3min)
+    - Domainmodel, Klassenmodell/Packagemodel (Vergleich)
+    - Architektur
+    - Daten-Modell (mit Verweis auf Neo4J, JESUS!)
+
+- Welche Technologien wurden verwendet? (4min)
+    - Technologiestack (Android/Restlet/Neo4J)
+    - Kurzer Einblick/Demo Neo4J
+    - Erwähnung HMAC
+
+- Was für einen Umfang hat BierIdee? (3min)
+    - Einige Metriken (FUCKING LINES OF FUCKING CODE!, Anzahl Klasse/Methoden, Testabdeckung, ...)
+    - Loadtest
+
+- Wie war der Projektverlauf? (5min)
+    - Zeitaufwände (Vergleich Ist/Soll, Aufwand pro Phase, Aufwand für Doku) (redmine time-bla plugin: https://github.com/MischaTheEvil/redmine_spent_time_column)
+    - Vorgehen (Pairprogramming, Reviews auf GitHub)
+    - Was haben wir gelernt, wo lagen Probleme (Wir erkennen demütig, dass wir uns Verschätzt haben, vllt. lernen wir es eines Tages)
+
+--> Fragen?
+
+- DEMO! (5min)
+    - (Usecases von Punkt 1 aufgreifen)
+
+--> Fragen?
+
+- Besten Dank und Prost!
