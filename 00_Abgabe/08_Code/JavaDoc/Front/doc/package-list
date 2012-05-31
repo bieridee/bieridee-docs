@@ -1,0 +1,9 @@
+ch.hsr.bieridee.android
+ch.hsr.bieridee.android.activities
+ch.hsr.bieridee.android.adapters
+ch.hsr.bieridee.android.config
+ch.hsr.bieridee.android.exceptions
+ch.hsr.bieridee.android.http
+ch.hsr.bieridee.android.http.requestprocessors
+ch.hsr.bieridee.android.layouts
+ch.hsr.bieridee.android.utils
