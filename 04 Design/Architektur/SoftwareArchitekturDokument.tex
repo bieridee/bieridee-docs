@@ -45,7 +45,11 @@ v1.2 & 05.05.2012 & Dokument überarbeitet & dbargen \\
 \hline 
 v1.3 & 05.05.2012 & SSDs hinzugefügt & cfaessler \\  
 \hline 
-v1.4 & 07.05.2012 & Wichtige Designaspekte & cfaessler, jfurrer, dbargen \\  
+v1.4 & 07.05.2012 & Wichtige Designaspekte & cfaessler, jfurrer, dbargen \\ 
+\hline
+v1.5 &  28.05.2012 & Versionen nachgetragen & cfaessler \\
+\hline
+v1.6 & 31.05.2012 & Restliche Korrekturen gemäss Review & cfaessler\\
 \bottomrule
 \end{tabular} 
 \newpage
@@ -70,18 +74,15 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 
 \subsection{Übersicht}
 
-Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die
-REST API und die Clientanwendung. Zwischen der API und der Android-Clientanwendung wird
+Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die REST API und die Clientanwendung (Siehe Skizze nächste Seite). Zwischen der API und der Android-Clientanwendung wird
 ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem
 API-Token authentifizieren und die Requests mit einem kryptografischen Verfahren signieren. 
 Logisch werden im Backend die Datenbank- und API-bezogenen Klassen in einem gemeinsamen Package
-geführt. Das Frontend wird nach dem MVC Pattern und gemäss Android Best Practices implementiert. 
-Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
+geführt. Das Frontend wird nach dem MVC Pattern und gemäss Android Best Practices implementiert.  Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
 Servlet-Container. Es wird aber aus Performance- und Optimierungsgründen ein Reverse Proxy
 davorgesetzt. Alle Daten werden im Backend persistent in einer Graphendatenbank gespeichert und
 durch Traversierung und eingebaute Algorithmen abgefragt. Das System soll in der Testphase bis zu
 50 gleichzeitige Nutzer bedienen können.
-
 
 \newpage
 \section{Systemübersicht}
@@ -99,7 +100,7 @@ und die Clientanwendung.
 
 \subsubsection{Datenbank}
 
-Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} zum Einsatz.
+Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} in der Version 1.7M01 zum Einsatz.
 Eine Graphendatenbank hat den Hauptvorteil, dass man sehr gut mit den Relationen arbeiten kann und
 so beispielsweise die Bier-Empfehlungen durch Traversierung realisieren kann. Näheres zum Entscheid
 zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
@@ -109,15 +110,14 @@ zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
 Für das Zwischenglied zwischen Daten und Client kommt ein
 RESTful\footnote{\texttt{http://en.wikipedia.org/wiki/Representational\_state\_transfer\#RESTful\_web\_services}}
 Web Service zum Zuge. Diese REST API wird mithilfe von
-Restlet\footnote{\texttt{http://www.restlet.org/}} realisiert. Die Domainobjekte werden in Form von
+Restlet\footnote{\texttt{http://www.restlet.org/}}  Version 2.0.11 realisiert. Die Domainobjekte werden in Form von
 abstrakten Ressourcen mit entsprechenden Repräsentationen zur Verfügung gestellt.
 
 Die REST-Ressourcen werden im Dokument \textit{REST.Interface.pdf} näher spezifiziert.
 
 \subsubsection{Clientanwendung}
 
-Die Android Clientanwendung greift auf die REST API zu und stellt die Informationen auf sinnvolle
-Art und Weise dar.
+Die Android Clientanwendung greift auf die REST API zu und stellt die Informationen auf sinnvolle Art und Weise dar. Für die Anwendung wird der Android SDK API Level 10 verwendet, dies garantiert die Kompatibilität ab Android Betriebssystem Version 2.3.3.
 
 
 \subsection{Schnittstellen}
@@ -174,11 +174,18 @@ Die logische Architektur des Gesamtprojektes wird in zwei Hauptkategorien bzw. P
 \textit{android} und \textit{back}. Beide Packages sind Unterpackages von
 \textit{ch.hsr.bieridee}.
 
-Im nachfolgenden Diagramm sieht man die Aufteilung der Projektteile in Packages.
-
+\subsection{Frontend}
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{PackageDiagramm.png}
-	\caption{Package Diagramm}
+	\includegraphics[width=\textwidth]{Package-Diagramm-Front.png}
+	\caption{Package Diagramm Frontend}
+	\label{fig:package_diagram}
+\end{figure}
+
+
+\subsection{Backend}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{Package-Diagramm-Back.png}
+	\caption{Package Diagramm Backend}
 	\label{fig:package_diagram}
 \end{figure}
 
@@ -259,24 +266,29 @@ Systemoperationen enthalten.
 
 \subsection{Typische Systemoperationen}
 \begin{figure}[H]
-	\includegraphics[height=\textwidth,angle=90]{BeerlistSSD.png}
+	\includegraphics[height=0.8\textwidth,angle=90]{BeerlistSSD.png}
 	\caption{Frontend zu Backend Kommunikation SSD}
 	\label{fig:beerlist_ssd}
 \end{figure}
 
 Das SSD Beerlist beschreibt den prinzipiellen Ablauf der Kommunikation zwischen der Android App und
-der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. Als Erstes wird zur HTTP
-Kommunikation aus der \texttt{ClientResourceFactory} eine \texttt{ClientResource} Instanz
-angefordert. Vor dem Absenden des Requests wird eine Completion Callback Methode definiert
-(\texttt{setOnResponse}). Somit kann der Request asynchron ausgeführt und das GUI später bei Erfolg
-aktualisiert werden. Als nächstes wird ein HTTP PUT Request auf die definierte URL abgesetzt.
+der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. 
+Als Erstes wird zur HTTP Kommunikation aus der \texttt{HttpHelper} Factory eine \texttt{HttpHelper} Instanz
+angefordert. Zum Ansynchronen handling der Kommunikation wird dann ein Async Task \texttt{GetBeerListTask} erstellt welcher die HttpHelper Instanz zur HTTP Kommunikation benutzen wird. 
+
+Der Async Task besitzt die drei Methoden onPreExecute, doInBackround und onPostExecute().
+In onPreExucute wird auf dem GUI ein Loading Dialog eingeblendet. Die doInBackround Methode startet einen separaten Thread in dem der ganze Datentransfer vorgenommen wird.
+In onPostExecute wird das GUI synchron dann über die empfangenen Daten informiert.
+
+
+In doInBackground wird ein HTTP GET Request auf die definierte URL abgesetzt.
 Serverseitig wird der Request verarbeitet; allenfalls werden wichtige Attribute wie Header, Query
 und Request Daten extrahiert und geparst. Der serverseitige Empfänger des Requests ist ein Resource
 Handler. Solche Resource Handler sind für jede URL im Dispatcher definiert.  Der Resource Handler
 veranlasst die Instanzierung der notwendigen Models, diese wiederum kümmern sich um Abfragen in der
 Datenbank und erstellen die Domain Objekte. Die Models werden danach in einen JSON String
 serialisiert und mittels HTTP an den Client geschickt. Das GUI wird anschliessend über den
-aktualisierten Datenbestand informiert.
+aktualisierten Datenbestand informiert (onPostExecute). Wichtig ist serverseitig noch zu erwähnen, dass das Objektmodell bei jedem Request neu aufgebaut wird, da es sich um einen zustandslosen REST Service handelt.
 
 \subsection{Wichtige Design Aspekte}
 
