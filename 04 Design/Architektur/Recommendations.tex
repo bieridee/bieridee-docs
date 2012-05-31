@@ -164,8 +164,8 @@ bezeichnet.
 $$S = \{ \textrm{s $|$ s ist die Bewertungs-Gewichtungssumme eines Like-Nachbars} \}$$
 
 Schlussendlich werden diese Bewertungssummen verwendet, um die Gewichtung $g_{user}$, also die
-Wichtigkeit, eines Like-Nachbars zu bestimmen. Da diese Gewichtung einen Wert zwischen 1-3 annehmen
-soll, werden die Summen linear in diesem Bereich verteilt.
+Wichtigkeit, eines Like-Nachbars zu bestimmen. Da diese Gewichtung einen Wert zwischen 1 und 3 annehmen
+soll, werden die Summen in diesem Bereich linear verteilt.
 
 $$g_{user} = 1 + 2 \cdot \frac{s}{\max(S)}$$
 
@@ -192,8 +192,8 @@ auf Seite~\pageref{fig:beispiel-like-nachbarn}.
 \newpage
 \subsection{Schritt 2: Biertyp-Gewichtung}
 
-Als nächster Schritt werden alle Biertypen gewichtet. Folgende Illustration zeigt ein Beispiel für
-die Biertyp-Gewichtungs-Berechnung.
+Als nächster Schritt werden die Biertypen der beliebte Biere des Zielusers gewichtet. Folgende 
+Illustration zeigt ein Beispiel für die Biertyp-Gewichtungs-Berechnung.
 
 \begin{figure}[H]
 	\begin{center}
@@ -245,7 +245,7 @@ Dann werden die Bewertungs-Gewichtungen gemäss Tabelle~\ref{table:bewertungs-ge
 (Seite~\pageref{table:bewertungs-gewichtungen}) auf die einzelnen Biere angewendet. Die Summe der
 Bewertungs-Gewichtungen pro Biertyp ergeben die Biertyp-Bewertungssumme $s$.
 
-$$s = \sum_{i=1}^k |B_i|$$
+$$s = \sum_{i=1}^k \textrm{gewichtung}(B_i)$$
 
 Im obigem Beispiel (Abbildung~\ref{fig:beispiel-biertyp-gewichtungen}) wären das folgende Werte:
 
@@ -292,18 +292,18 @@ Nachfolgend die konkreten Gewichtungen gemäss Abbildung~\ref{fig:beispiel-biert
 
 \subsection{Schritt 3: Biergewichtung}
 
-Nun werden alle beliebten Biere der Like-Nachbarn, welche dem Zieluser noch nicht bekannt sind,
+Nun werden alle beliebten Biere der Like-Nachbarn, abzüglich den Bieren die dem Zieluser schon bekannt sind,
 gewichtet, um die Gesamtgewichtung $G_{bier}$ zu erhalten. Darin fliessen folgende drei Faktoren
 ein:
 
 \begin{itemize}
 	\item Gewichtung der Like-Nachbarn $g_{user}$ (1 - 3)
 	\item Gewichtung der Biertypen $g_{biertyp}$ (1 - 2)
-	\item Gewichtung der Bewertungen durch Like-Nachbarn $g_{bier}$ (0.5 - 2)
+	\item Gewichtung der Bier-Bewertungen durch Like-Nachbarn $g_{bier}$ (0.5 - 2)
 \end{itemize}
 
 Wenn ein Bier von mehreren Like-Nachbarn bewertet wurde, wird jeweils der Durchschnitt der
-Like-Nachbar-Gewichtungen sowie der Bier-Bewertungs-Gewichtungen verwendet.
+Like-Nachbar-Gewichtungen, sowie der Bier-Bewertungs-Gewichtungen verwendet.
 
 Die Gesamtgewichtung wird folgendermassen berechnet:
 

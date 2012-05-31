@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage[utf8x]{inputenc} % Unicode-Encoding
 
+
 \linespread{1.3}
 
 \author{Danilo Bargen, Christian Fässler, Jonas Furrer} 
@@ -38,8 +39,8 @@
 \textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
 \midrule
 v1.0 & 07.05.2012 & Dokument erstellt, Load Tests dokumentiert & dbargen \\  
-%\hline 
-%v1.1 & 28.04.2012 & Grafiken für Modellierungsvarianten eingefügt & cfaessle \\
+\hline 
+v1.1 & 24.05.2012 & Korrekturen & jfurrer \\
 \hline 
 \bottomrule
 \end{tabular} 
@@ -129,7 +130,7 @@ Es gab jedoch Probleme -- 52.42\% der User Requests resultierten in Timeouts ode
 \paragraph*{Fehler}
 
 Der erste Fehler trat nach 57.72 Sekunden bei 193 concurrent Users auf. Die Fehler sind vermutlich
-auf Ressourcenüberlastung zurückzuführen, wie zB ungenügend freie File Descriptors oder zu kleine
+auf Ressourcenüberlastung zurückzuführen, wie zB ungenügend freie Filedescriptors oder zu kleine
 Connection Pools.
 
 \paragraph*{Timeouts}
@@ -148,22 +149,22 @@ Sekunde gesetzt. Man könnte die Timeouts mithilfe von Caching drastisch reduzie
 
 \subsection{Auswertung}
 
-Wie man am Test mit 50 gleichzeitien Benutzern sieht, können wir unser selbst gesteckte Auslastungs-Ziel
+Wie man am Test mit 50 gleichzeitien Benutzern sieht, können wir unser selbst gestecktes Auslastungs-Ziel
 problemlos erreichen. Die maximale Response-Zeit von 179ms bei 41 Hits / Sekunde ist äusserst tief,
 vor allem wenn man bedenkt dass die Requests von Virginia, USA aus erzeugt wurden. Bei dieser Menge
 an Anfragen trat kein einziger Timeout oder Fehler auf.
 
 Anders sieht es aus, wenn man die Anzahl paralleler Benutzer erhöht. Wie man in den Diagrammen sehr
-gut sehen kann, kann der Server ziemlich genau 50 Hits pro Sekunde bewältigen. Danach bleibt die
-Anzahl erfolgreich beantworteter Requests konstant, obwohl die Gesamtanzahl Hits weiterhin erhöht
-wurde. Die Anzahl der Timeouts steigt parallel zur Erhöhung der parallelen User. Dies heisst, dass
+gut sehen kann, bewältigen der Server ziemlich genau 50 Hits pro Sekunde ohne dass Probleme auftreten. 
+Danach bleibt die Anzahl erfolgreich beantworteter Requests konstant, obwohl die Gesamtanzahl Hits weiterhin erhöht
+wurde. Die Anzahl der Timeouts steigt parallel zur Erhöhung der parallelen User. Das heisst, dass
 die Grenze unseres Systems bei ziemlich genau \textbf{76 gleichzeitigen Benutzern} liegt. Dies ist
 ein sehr guter Wert, wenn man bedenkt dass auf dem Server bisher keinerlei Caching o.ä. eingerichtet
 wurde.
 
 Auch bei 200 gleichzeitigen Benutzern gab es lediglich viele Timeouts, jedoch keine kritischen
 Fehler. Das bedeutet, dass die Benutzung der App bei einer solchen Menge an Benutzern zwar sehr
-langsam wäre, jedoch in keinen Fehlermeldungen resultieren würde.
+langsam wäre, jedoch nicht in Fehlermeldungen resultieren würde.
 
 
 \end{document}
