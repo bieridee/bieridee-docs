@@ -1,0 +1,44 @@
+Protokoll 21.05.12
+===================
+
+
+Ort:
+-----
+Cafeteria HSR
+
+
+Anwesend
+----------
+- dbargen
+- cfaessle
+- jfurrer
+
+
+Retrospektive 
+--------------
+
+Positiv:
+- Grosser Einsatz von allen Teammitgliedern
+- Viele Features umgesetzt
+- Gute Review- und Testdisziplin
+
+Verbessern:
+- Zeitnaher Zeiterfassen
+- Basis Features sind wichtiger als Details
+
+
+Iterationsplanung
+-------------------
+
+- Präsentation fertigstellen (Wichtig!)
+- Präsentation üben
+- Letze Bugs beheben
+- Demo Usecases gut testen
+- Bugs gemäss UserTests nachprüfen und beheben
+
+
+Tickets erfassen & priorisieren 
+---------------------------------
+
+Siehe Redmine
+
