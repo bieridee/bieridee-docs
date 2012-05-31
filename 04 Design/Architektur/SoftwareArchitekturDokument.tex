@@ -204,7 +204,7 @@ Nachfolgend werden wichtige architektonische Klassen und deren Zusammenhang im B
 Nachfolgend ein detailliertes Backend-Architektur-Klassendiagramm am Beispiel eines Bier-Objektes.
 
 \begin{figure}[H]
-	\includegraphics[height=\textwidth,angle=90]{BackendArchitektur.png}
+	\includegraphics[height=0.95\textwidth,angle=90]{BackendArchitektur.png}
 	\caption{Backend Architektur}
 	\label{fig:backend_architecture}
 \end{figure}
@@ -268,13 +268,12 @@ Systemoperationen enthalten.
 
 \subsection{Typische Systemoperationen}
 \begin{figure}[H]
-	\includegraphics[height=0.8\textwidth,angle=90]{BeerlistSSD.png}
+	\includegraphics[height=0.75\textwidth,angle=90]{BeerlistSSD.png}
 	\caption{Frontend zu Backend Kommunikation SSD}
 	\label{fig:beerlist_ssd}
 \end{figure}
 
-Das SSD Beerlist beschreibt den prinzipiellen Ablauf der Kommunikation zwischen der Android App und
-der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. 
+Das SSD Beerlist beschreibt den prinzipiellen Ablauf der Kommunikation zwischen der Android App und der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. 
 Als Erstes wird zur HTTP Kommunikation aus der \texttt{HttpHelper} Factory eine \texttt{HttpHelper} Instanz
 angefordert. Zum Ansynchronen handling der Kommunikation wird dann ein Async Task \texttt{GetBeerListTask} erstellt welcher die HttpHelper Instanz zur HTTP Kommunikation benutzen wird. 
 
