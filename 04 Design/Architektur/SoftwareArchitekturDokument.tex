@@ -45,7 +45,11 @@ v1.2 & 05.05.2012 & Dokument überarbeitet & dbargen \\
 \hline 
 v1.3 & 05.05.2012 & SSDs hinzugefügt & cfaessler \\  
 \hline 
-v1.4 & 07.05.2012 & Wichtige Designaspekte & cfaessler, jfurrer, dbargen \\  
+v1.4 & 07.05.2012 & Wichtige Designaspekte & cfaessler, jfurrer, dbargen \\ 
+\hline
+v1.5 &  28.05.2012 & Versionen nachgetragen & cfaessler \\
+\hline
+v1.6 & 31.05.2012 & Restliche Korrekturen gemäss Review & cfaessler\\
 \bottomrule
 \end{tabular} 
 \newpage
@@ -74,7 +78,7 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 \subsection{Übersicht}
 
 Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die
-REST API und die Clientanwendung. Zwischen der API und der Android-Clientanwendung wird
+REST API und die Clientanwendung (Siehe Skizze nächste Seite). Zwischen der API und der Android-Clientanwendung wird
 ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem
 API-Token authentifizieren und die Requests mit einem kryptografischen Verfahren signieren. 
 Logisch werden im Backend die Datenbank- und API-bezogenen Klassen in einem gemeinsamen Package
@@ -102,7 +106,7 @@ und die Clientanwendung.
 
 \subsubsection{Datenbank}
 
-Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} zum Einsatz.
+Als Datenbank kommt die Graphendatenbank Neo4j\footnote{\texttt{http://neo4j.org/}} in der Version 1.7M01 zum Einsatz.
 Eine Graphendatenbank hat den Hauptvorteil, dass man sehr gut mit den Relationen arbeiten kann und
 so beispielsweise die Bier-Empfehlungen durch Traversierung realisieren kann. Näheres zum Entscheid
 zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
@@ -112,15 +116,14 @@ zur Verwendung einer Graphendatenbank siehe Dokument Evaluation.Datenbank.pdf
 Für das Zwischenglied zwischen Daten und Client kommt ein
 RESTful\footnote{\texttt{http://en.wikipedia.org/wiki/Representational\_state\_transfer\#RESTful\_web\_services}}
 Web Service zum Zuge. Diese REST API wird mithilfe von
-Restlet\footnote{\texttt{http://www.restlet.org/}} realisiert. Die Domainobjekte werden in Form von
+Restlet\footnote{\texttt{http://www.restlet.org/}}  Version 2.0.11 realisiert. Die Domainobjekte werden in Form von
 abstrakten Ressourcen mit entsprechenden Repräsentationen zur Verfügung gestellt.
 
 Die REST-Ressourcen werden im Dokument \textit{REST.Interface.pdf} näher spezifiziert.
 
 \subsubsection{Clientanwendung}
 
-Die Android Clientanwendung greift auf die REST API zu und stellt die Informationen auf sinnvolle
-Art und Weise dar.
+Die Android Clientanwendung greift auf die REST API zu und stellt die Informationen auf sinnvolle Art und Weise dar. Für die Anwendung wird der Android SDK API Level 10 verwendet, dies garantiert die Kompatibilität ab Android Betriebssystem Version 2.3.3.
 
 
 \subsection{Schnittstellen}
