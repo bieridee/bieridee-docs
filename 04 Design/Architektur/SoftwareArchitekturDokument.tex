@@ -180,11 +180,18 @@ Die logische Architektur des Gesamtprojektes wird in zwei Hauptkategorien bzw. P
 \textit{android} und \textit{back}. Beide Packages sind Unterpackages von
 \textit{ch.hsr.bieridee}.
 
-Im nachfolgenden Diagramm sieht man die Aufteilung der Projektteile in Packages.
-
+\subsection{Frontend}
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{PackageDiagramm.png}
-	\caption{Package Diagramm}
+	\includegraphics[width=\textwidth]{Package-Diagramm-Front.png}
+	\caption{Package Diagramm Frontend}
+	\label{fig:package_diagram}
+\end{figure}
+
+
+\subsection{Backend}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{Package-Diagramm-Back.png}
+	\caption{Package Diagramm Backend}
 	\label{fig:package_diagram}
 \end{figure}
 
@@ -265,24 +272,29 @@ Systemoperationen enthalten.
 
 \subsection{Typische Systemoperationen}
 \begin{figure}[H]
-	\includegraphics[height=\textwidth,angle=90]{BeerlistSSD.png}
+	\includegraphics[height=0.8\textwidth,angle=90]{BeerlistSSD.png}
 	\caption{Frontend zu Backend Kommunikation SSD}
 	\label{fig:beerlist_ssd}
 \end{figure}
 
 Das SSD Beerlist beschreibt den prinzipiellen Ablauf der Kommunikation zwischen der Android App und
-der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. Als Erstes wird zur HTTP
-Kommunikation aus der \texttt{ClientResourceFactory} eine \texttt{ClientResource} Instanz
-angefordert. Vor dem Absenden des Requests wird eine Completion Callback Methode definiert
-(\texttt{setOnResponse}). Somit kann der Request asynchron ausgeführt und das GUI später bei Erfolg
-aktualisiert werden. Als nächstes wird ein HTTP PUT Request auf die definierte URL abgesetzt.
+der Server API.  Einstiegspunkt ist das Starten des BeerList Screens. 
+Als Erstes wird zur HTTP Kommunikation aus der \texttt{HttpHelper} Factory eine \texttt{HttpHelper} Instanz
+angefordert. Zum Ansynchronen handling der Kommunikation wird dann ein Async Task \texttt{GetBeerListTask} erstellt welcher die HttpHelper Instanz zur HTTP Kommunikation benutzen wird. 
+
+Der Async Task besitzt die drei Methoden onPreExecute, doInBackround und onPostExecute().
+In onPreExucute wird auf dem GUI ein Loading Dialog eingeblendet. Die doInBackround Methode startet einen separaten Thread in dem der ganze Datentransfer vorgenommen wird.
+In onPostExecute wird das GUI synchron dann über die empfangenen Daten informiert.
+
+
+In doInBackground wird ein HTTP GET Request auf die definierte URL abgesetzt.
 Serverseitig wird der Request verarbeitet; allenfalls werden wichtige Attribute wie Header, Query
 und Request Daten extrahiert und geparst. Der serverseitige Empfänger des Requests ist ein Resource
 Handler. Solche Resource Handler sind für jede URL im Dispatcher definiert.  Der Resource Handler
 veranlasst die Instanzierung der notwendigen Models, diese wiederum kümmern sich um Abfragen in der
 Datenbank und erstellen die Domain Objekte. Die Models werden danach in einen JSON String
 serialisiert und mittels HTTP an den Client geschickt. Das GUI wird anschliessend über den
-aktualisierten Datenbestand informiert.
+aktualisierten Datenbestand informiert (onPostExecute). Wichtig ist serverseitig noch zu erwähnen, dass das Objektmodell bei jedem Request neu aufgebaut wird, da es sich um einen zustandslosen REST Service handelt.
 
 \subsection{Wichtige Design Aspekte}
 
