@@ -36,6 +36,8 @@
 \textbf{Version} & \textbf{Datum} & \textbf{Änderung} & \textbf{Person} \\  
 \midrule
 v1.0 & 08.05.2012 & Dokument erstellt & jfurrer \\  
+\midrule
+v1.1 & 08.26.2012 & Dokument ergänzt & jfurrer \\  
 \bottomrule
 \end{tabular} 
 \newpage
@@ -43,7 +45,7 @@ v1.0 & 08.05.2012 & Dokument erstellt & jfurrer \\
 \section{Einführung}
 
 \subsection{Zweck}
-In diesem Dokument werden die Code Metriken des Projektes BierIdee betrachtet und analysiert.
+In diesem Dokument werden die Code Metriken des Projektes BierIdee zusammengetragen und betrachtet.
 
 \subsection{Gültigkeitsbereich}
 Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte Modules FS2012. Das
@@ -61,23 +63,40 @@ Für die Analyse werden die folgende Tools verwendet:\\
 \newpage
 
 \section{Package Diagramm}
-\subsection{Interpackage Dependencies}
-\includegraphics[width=\textwidth]{Package-Diagramm.png}\\
+\subsection{Backend}
+\includegraphics[width=\textwidth]{Package-Diagramm-Back.png}\\
 \\
 Die Packages zeigt die Stuktur des Backends deutlich auf, die Resource-Handler greifen  
-auf die Models zu um Daten zu lesen und zu Persisteren. Die Models greifen dann über Utilities
+auf die Models zu um Daten zu lesen und zu Persisteren. Dazwischen liegt noch das Auth package, dass für die Authentisierung nötig ist. Die Models greifen dann über Utilities
 auf die Daten zu und persistieren die Domainobjekte.\\
 Die Konfigurationen aus dem Config Package sowie die Exceptions werden von den meisten anderen
 Packages benötigt.
 
-\subsubsection{External Dependencies}
-\includegraphics[scale=0.7, width=\textwidth]{dependecies.png}\\
+\subsection{Frontend}
+\includegraphics[width=\textwidth]{Package-Diagramm-Front.png}\\
 \\
-Durch die Verwendung von Restlet enstehen relativ viele externe Abhängigkeiten.
+Die Struktur der Packages im Frontend zeigt den schichtartigen Aufbau wie er von den Android-Best-Practices vorgegeben wird.
+
+\section{External Dependencies}
+\subsection{Backend}
+\includegraphics[scale=0.7, width=\textwidth]{External-Dependecies-Back.png}\\
+\\
+Durch die Verwendung von Restlet enstehen relativ viele externe Abhängigkeiten. 
+\subsection{Frontend}
+\includegraphics[width=\textwidth]{External-Dependecies-Front.png}\\
+\\
+Das Frontend ist sehr schlank, grundsätzlich auf Android Libraries zurückgegriffen werden kann.
+
 
 \section{Metriken}
-\includegraphics[scale=0.5, angle=90]{metrics.png}
+\subsection{Backend}
+\includegraphics[scale=0.4, angle=90]{metrics-back.png}
 
+Die einzige Metrik die im Backend einen kritischen Wert annimmt ist \"Numbers of Parameters\". Der Konstruktor des Beer Domain Objektes nimmt alls Parameter sämmtliche sieben Attribute an.
+\newpage
+\subsection{Frontend}
+\includegraphics[scale=0.4, angle=90]{metrics-front.png}
 
+Im Frontend ist ebenfalls nur eine Metrik als kritisch markiert. Bei der markierten Klasse handelt es sich um eine Klasse die von Google zur verfügung gestellt wird, deshalb ist diese Warnung für unsere Betrachtung nicht relevant.
 
 \end{document}
