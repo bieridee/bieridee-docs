@@ -77,18 +77,15 @@ Die Gültigkeit des Dokumentes beschränkt sich auf die Dauer des SE2-Projekte M
 
 \subsection{Übersicht}
 
-Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die
-REST API und die Clientanwendung (Siehe Skizze nächste Seite). Zwischen der API und der Android-Clientanwendung wird
+Das System der Bieridee kann in drei Kategorien/Teilbereiche unterteilt werden: Die Datenbank, die REST API und die Clientanwendung (Siehe Skizze nächste Seite). Zwischen der API und der Android-Clientanwendung wird
 ausschliesslich via HTTP kommuniziert. Um auf die API zuzugreifen, muss man sich mit einem
 API-Token authentifizieren und die Requests mit einem kryptografischen Verfahren signieren. 
 Logisch werden im Backend die Datenbank- und API-bezogenen Klassen in einem gemeinsamen Package
-geführt. Das Frontend wird nach dem MVC Pattern und gemäss Android Best Practices implementiert. 
-Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
+geführt. Das Frontend wird nach dem MVC Pattern und gemäss Android Best Practices implementiert.  Beim Deployment wird die API direkt über den eingebauten Webserver von Restlet gestartet, ohne
 Servlet-Container. Es wird aber aus Performance- und Optimierungsgründen ein Reverse Proxy
 davorgesetzt. Alle Daten werden im Backend persistent in einer Graphendatenbank gespeichert und
 durch Traversierung und eingebaute Algorithmen abgefragt. Das System soll in der Testphase bis zu
 50 gleichzeitige Nutzer bedienen können.
-
 
 \newpage
 \section{Systemübersicht}
