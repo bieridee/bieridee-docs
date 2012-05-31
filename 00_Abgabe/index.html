@@ -3,42 +3,72 @@
     <head>
         <title>Abgabe SE 2 Projekt "BierIdee"</title>
         <meta charset="utf-8">
+
+        <script src="js/tabber-minimized.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/tabber.css" />
         <style type="text/css">
-            body { background-color: black; color: #eee; font-family: georgia; }
+            body { background-color: #222; color: #eee; font-family: georgia; }
             a { color: #4682B4; text-decoration: none; }
             a:hover { color: #829DB3; }
+            #bier { width: 20%; float: left; }
+            #tabs { width: 78%; float: left; margin-left: 1%; font-size: 10pt; }
+            h4 { font-size: 15pt; }
         </style>
     </head>
     <body>
         <h1>Abgabe SE 2 Projekt "Bieridee"</h1>
-        <img src="img/bier.png" alt="Bier" style="max-height: 350px; float: left;" />
-        <div style="float: left;">
-            <h2>Inhalte</h2>
+        <img id="bier" src="img/bier.png" alt="Bier"/>
+        <div id="tabs" class="tabber">
 
-            <h3>Project Management</h3>
-            <ul>
-                <li><a href="01_Project_Management/01_Inception/Projektantrag.pdf">Projektantrag</a></li>
-            </ul>
+            <div class="tabbertab tabbertabdefault" id="tabs-1" title="1">
+                <h4>Project Management</h4>
+                <ul>
+                    <li><a href="01_Project_Management/01_Inception/Projektantrag.pdf">Projektantrag</a></li>
+                </ul>
+            </div>
 
-            <h3>Business Modeling</h3>
+            <div class="tabbertab" id="tabs-2" title="2">
+                <h4>Business Modeling</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Requirements</h3>
+            <div class="tabbertab" id="tabs-3" title="3">
+                <h4>Requirements</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Design</h3>
+            <div class="tabbertab" id="tabs-4" title="4">
+                <h4>Design</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Implementation and Test</h3>
+            <div class="tabbertab" id="tabs-5" title="5">
+                <h4>Implementation and Test</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Deployment</h3>
+            <div class="tabbertab" id="tabs-6" title="6">
+                <h4>Deployment</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Configuration and Change Management</h3>
+            <div class="tabbertab" id="tabs-7" title="7">
+                <h4>Configuration and Change Management</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Environment</h3>
+            <div class="tabbertab" id="tabs-8" title="8">
+                <h4>Environment</h4>
+                <p>fffu</p>
+            </div>
 
-            <h3>Presentation</h3>
-            <ul>
-                <li><a href="10_Presentation/prezi.exe">Schlusspräsentation (.exe)</a></li>
-            </ul>
-
+            <div class="tabbertab" id="tabs-10" title="10">
+                <h4>Presentation</h4>
+                <ul>
+                    <li><a href="10_Presentation/prezi.exe">Schlusspräsentation (.exe)</a></li>
+                </ul>
+            </div>
         </div>
         <div style="clear: both;" />
     </body>
