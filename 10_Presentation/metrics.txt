@@ -1,0 +1,15 @@
+metrics back:
+==============
+Lines of Code: 6132
+Number of Packages: 17
+Number of Classes: 121 (average per 7.1)
+Number of Methods: 434 (average per type: 3.5)
+Number of Tests: 59
+Test Coverage: 75.8%
+
+metrics front:
+===============
+Lines of Code: 3964
+Number of Packages: 10
+Number of Classes: 87 (average per package: 8,7)
+Number of Methods: 244 (average per type: 2.8)
